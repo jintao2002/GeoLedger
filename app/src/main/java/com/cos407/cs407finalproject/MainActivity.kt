@@ -2,7 +2,10 @@ package com.cos407.cs407finalproject
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,10 +22,40 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        //click the button to jump to the new main page
         findViewById<Button>(R.id.goToMainPageButton).setOnClickListener {
             val intent = Intent(this, mainPage::class.java)
             startActivity(intent)
         }
 
     }
+
+    //the menu bar
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_page_menu, menu)
+        return true
+    }
+
+    //click the items in the menu bar
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item1 -> {
+                Toast.makeText(this, "Item 1 selected", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            R.id.item2 -> {
+                Toast.makeText(this, "Item 2 selected", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            R.id.item3 -> {
+                Toast.makeText(this, "Item 3 selected", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 }
