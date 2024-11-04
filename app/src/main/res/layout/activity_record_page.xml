@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GeoLedger"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="16dp" />
+
+    <!-- Table Layout -->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:stretchColumns="0,1,2">
+
+        <!-- Table Headers -->
+        <TableRow>
+            <TextView
+                android:text="Stuff"
+                android:textStyle="bold"
+                android:padding="8dp" />
+            <TextView
+                android:text="Location"
+                android:textStyle="bold"
+                android:padding="8dp" />
+            <TextView
+                android:text="Amount"
+                android:textStyle="bold"
+                android:padding="8dp" />
+        </TableRow>
+
+        <!-- Sample Rows -->
+        <TableRow>
+            <TextView
+                android:text="Traveling"
+                android:padding="8dp" />
+            <TextView
+                android:text="Madison"
+                android:padding="8dp" />
+            <TextView
+                android:text="$400"
+                android:padding="8dp" />
+        </TableRow>
+
+        <!-- Add more rows as needed -->
+    </TableLayout>
+
+    <!-- Bottom Navigation -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Record"
+            android:layout_weight="1"
+            android:backgroundTint="#ADD8E6" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Summary"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Me"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+</LinearLayout>
