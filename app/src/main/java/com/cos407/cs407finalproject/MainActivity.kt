@@ -22,9 +22,14 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        //click the button to jump to the new main page
-        findViewById<Button>(R.id.goToMainPageButton).setOnClickListener {
-            val intent = Intent(this, mainPage::class.java)
+        //click the button to jump to the sign Up page
+        findViewById<Button>(R.id.signUpButton).setOnClickListener {
+            val intent = Intent(this, signUpPage::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.signInButton).setOnClickListener {
+            val intent = Intent(this, signInPage::class.java)
             startActivity(intent)
         }
 
@@ -32,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     //the menu bar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_page_menu, menu)
+        menuInflater.inflate(R.menu.page_menu, menu)
         return true
     }
 
