@@ -8,6 +8,15 @@
     android:background ="@color/mainWhite">
 
     <!-- Title -->
+    <ImageView
+        android:id="@+id/myProfilePhoto"
+        android:layout_width="61dp"
+        android:layout_height="52dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@drawable/profile"
+        android:contentDescription="@string/profile_photo" />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -19,44 +28,52 @@
         android:paddingBottom="16dp" />
 
     <!-- Table Layout -->
+
+    <!-- Temporary Logout Button -->
     <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="478dp"
         android:layout_weight="1"
         android:stretchColumns="0,1,2">
 
         <!-- Table Headers -->
         <TableRow>
+
             <TextView
+                android:padding="8dp"
                 android:text="Stuff"
-                android:textStyle="bold"
-                android:padding="8dp" />
+                android:textStyle="bold" />
+
             <TextView
+                android:padding="8dp"
                 android:text="Location"
-                android:textStyle="bold"
-                android:padding="8dp" />
-            <TextView
-                android:text="Amount"
-                android:textStyle="bold"
-                android:padding="8dp" />
+                android:textStyle="bold" />
+
         </TableRow>
 
         <!-- Sample Rows -->
         <TableRow>
+
             <TextView
-                android:text="Traveling"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:text="Traveling" />
+
             <TextView
-                android:text="Madison"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:text="Madison" />
+
             <TextView
-                android:text="$400"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:text="$400" />
+
+            <TextView
+                android:padding="8dp"
+                android:text="Amount"
+                android:textStyle="bold" />
         </TableRow>
 
     </TableLayout>
 
-    <!-- Temporary Logout Button -->
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
@@ -86,4 +103,5 @@
 
 
     </LinearLayout>
+
 </LinearLayout>
