@@ -20,10 +20,10 @@ class recordPage : AppCompatActivity() {
             finish() // Close the recordPage
         }
 
-        // 找到触发侧滑的按钮或图片
+        // Find the button that leads to slide.
         val profileButton = findViewById<ImageView>(R.id.myProfilePhoto)
 
-        // 设置点击事件
+        // Set up the intent
         profileButton.setOnClickListener {
             val intent = Intent(this, slideActivity::class.java)
             startActivity(intent)
