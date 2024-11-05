@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background ="@color/mainWhite">
 
     <!-- Title -->
     <TextView
@@ -67,27 +68,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Record"
             android:layout_weight="1"
-            android:backgroundTint="#ADD8E6" />
+            android:backgroundTint="#ADD8E6"
+            android:text="Record" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Summary"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="Summary" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Me"
-            android:layout_weight="1" />
 
     </LinearLayout>
 </LinearLayout>

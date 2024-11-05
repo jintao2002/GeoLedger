@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Cs407FinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".signInPage"
             android:exported="false" />
         <activity
@@ -22,7 +25,7 @@
             android:name=".recordPage"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".welcomePage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
