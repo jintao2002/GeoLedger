@@ -1,0 +1,101 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#bac4d1">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="Animation.json"
+        app:lottie_loop="true" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="616dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="clip_vertical"
+        android:layout_marginTop="100dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="start"
+        android:text=" Get your life"
+        android:textColor="@color/highlightYellow"
+        android:textSize="48sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="clip_vertical"
+        android:layout_marginTop="100dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="start"
+        android:text="Get your life"
+        android:textColor="@color/thirdBlue"
+        android:textSize="48sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="438dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="180dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="start"
+        android:text=" Organized"
+        android:textColor="@color/highlightYellow"
+        android:textSize="34sp" />
+
+    <TextView
+        android:layout_width="438dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="180dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="start"
+        android:text="Organized"
+        android:textColor="@color/thirdBlue"
+        android:textSize="34sp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="171dp"
+        android:layout_height="258dp"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="20dp"
+        android:gravity="start"
+        android:lineSpacingExtra="34sp"
+        android:text=" In\n A\n Click"
+        android:textColor="@color/highlightYellow"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <TextView
+        android:layout_width="160dp"
+        android:layout_height="258dp"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="20dp"
+        android:gravity="start"
+        android:lineSpacingExtra="34sp"
+        android:text="In\nA\nClick"
+        android:textColor="@color/thirdBlue"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startApp"
+        android:layout_width="176dp"
+        android:layout_height="67dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="50dp"
+        app:backgroundTint="@color/highlightYellow"
+        android:text="Get Started!"
+        android:textColor="@color/strokeBlack"
+        android:textSize="20sp" />
+
+</FrameLayout>

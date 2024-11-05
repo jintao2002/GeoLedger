@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context = ".slideActivity">
+
+    <com.cos407.cs407finalproject.slideMenu
+        android:id="@+id/mySlideMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/layout_menu" />
+        <include layout="@layout/activity_record_page" />
+
+    </com.cos407.cs407finalproject.slideMenu>
+
+</RelativeLayout>
