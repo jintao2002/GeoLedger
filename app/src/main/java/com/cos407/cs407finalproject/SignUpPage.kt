@@ -13,8 +13,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.cos407.cs407finalproject.database.AppDatabase
+import com.cos407.cs407finalproject.database.User
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class signUpPage : AppCompatActivity() {
+class SignUpPage : AppCompatActivity() {
+
+    // Lazy initialization of UserDao
+    private val userDao by lazy { AppDatabase.getDatabase(this).userDao() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,25 +41,20 @@ class signUpPage : AppCompatActivity() {
 
         // Navigate to Sign In page when 'Already have an account?' is clicked
         findViewById<Button>(R.id.btnAlreadyHaveAccount).setOnClickListener {
-            val intent = Intent(this, signInPage::class.java)
+            val intent = Intent(this, SignInPage::class.java)
             startActivity(intent)
         }
 
         findViewById<Button>(R.id.btnSignUp).setOnClickListener {
+            val firstName = findViewById<EditText>(R.id.etFirstName).text.toString().trim()
+            val lastName = findViewById<EditText>(R.id.etLastName).text.toString().trim()
             val email = findViewById<EditText>(R.id.etEmail).text.toString().trim()
             val password = findViewById<EditText>(R.id.etPassword).text.toString()
 
-            // Validate email and password
-            if (isValidEmail(email) && isValidPassword(password)) {
-                // Show success message
-                Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
-
-                // Delay for 1 second and then navigate to the Sign In page
-                Handler(Looper.getMainLooper()).postDelayed({
-                    val intent = Intent(this, signInPage::class.java)
-                    startActivity(intent)
-                    finish() // Close the Sign Up page
-                }, 1000) // 1000 milliseconds = 1 second
+            // Validate fields
+            if (isValidEmail(email) && isValidPassword(password) && firstName.isNotEmpty() && lastName.isNotEmpty()) {
+                // Register user in the database
+                registerUser(firstName, lastName, email, password)
             } else {
                 // Show error messages if validation fails
                 if (!isValidEmail(email)) {
@@ -62,6 +65,34 @@ class signUpPage : AppCompatActivity() {
                         this, "Password must be at least 6 characters", Toast.LENGTH_SHORT
                     ).show()
                 }
+                if (firstName.isEmpty() || lastName.isEmpty()) {
+                    Toast.makeText(this, "First and Last Name are required", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
+    // Function to register user by saving details in Room database
+    private fun registerUser(firstName: String, lastName: String, email: String, password: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            // Create a new User instance with the provided details
+            val newUser =
+                User(firstName = firstName, lastName = lastName, email = email, password = password)
+
+            // Insert the user into the database
+            userDao.insertUser(newUser)
+
+            // Show success message and navigate to sign-in page
+            runOnUiThread {
+                Toast.makeText(this@SignUpPage, "Registration successful!", Toast.LENGTH_SHORT)
+                    .show()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val intent = Intent(this@SignUpPage, SignInPage::class.java)
+                    startActivity(intent)
+                    finish() // Close the Sign Up page
+                }, 1000)
             }
         }
     }

@@ -24,12 +24,12 @@ class MainActivity : AppCompatActivity() {
 
         //click the button to jump to the sign Up page
         findViewById<Button>(R.id.signUpButton).setOnClickListener {
-            val intent = Intent(this, signUpPage::class.java)
+            val intent = Intent(this, SignUpPage::class.java)
             startActivity(intent)
         }
 
         findViewById<Button>(R.id.signInButton).setOnClickListener {
-            val intent = Intent(this, signInPage::class.java)
+            val intent = Intent(this, SignInPage::class.java)
             startActivity(intent)
         }
 
