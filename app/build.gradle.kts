@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.google.devtools.ksp") version "1.9.0-1.0.12" // 替换 Kapt 的 KSP 插件
+    id("com.google.devtools.ksp") version "1.9.0-1.0.13" // 替换 Kapt 的 KSP 插件
 }
 
 android {
@@ -47,7 +47,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    ksp("androidx.room:room-compiler:2.6.1") // 使用 KSP 代替 Kapt
+    ksp(libs.androidx.room.compiler.v261) // Use KSP instead of Kapt
+    implementation(libs.places) // Google Map API
 }
 
 ksp {
