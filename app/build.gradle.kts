@@ -1,3 +1,6 @@
+// Import necessary libraries for reading properties
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -14,8 +17,18 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Load the API Key in local.properties
+        val apiKey: String = project.rootProject.file("local.properties").inputStream().use {
+            val properties = Properties()
+            properties.load(it)
+            properties.getProperty("GOOGLE_MAPS_API_KEY") ?: ""
+        }
+        // Define MAPS_API_KEY to BuildConfig
+        buildConfigField("String", "MAPS_API_KEY", "\"$apiKey\"")
+        // Add this line to ensure that AndroidManifest.xml can use MAPS_API_KEY.
+        manifestPlaceholders["MAPS_API_KEY"] = apiKey
     }
 
     buildTypes {
@@ -27,12 +40,19 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+
+    // Enable buildConfig generation
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -45,14 +65,22 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Room database dependencies with KSP
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler.v261) // Use KSP instead of Kapt
-    implementation(libs.play.services.maps) // Google Maps SDK
-    implementation(libs.places.v250) // Google Places API
+    ksp(libs.androidx.room.compiler.v261)
+
+    // Google Places API & Maps SDK dependencies
+    implementation(libs.google.places)
+    implementation(libs.google.maps)
+
+    // Kotlin Coroutines for concurrency
+    implementation(libs.kotlinx.coroutines.android)
 }
 
 ksp {
+    // KSP arguments for Room schema location and incremental processing
     arg("room.schemaLocation", "$projectDir/schemas")
     arg("room.incremental", "true")
 }

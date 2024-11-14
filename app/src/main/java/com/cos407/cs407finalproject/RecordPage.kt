@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.cos407.cs407finalproject.database.AppDatabase
@@ -19,15 +20,16 @@ import com.cos407.cs407finalproject.database.Record
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
+
 class RecordPage : AppCompatActivity() {
 
     private lateinit var tableLayout: TableLayout
-    private val REQUEST_CODE_PLACE_PICKER = 1000
     private var selectedLocation: String = "Location not selected" // Store selected location
     private var selectedDate: String = "Date not selected" // Store selected date
     private var currentDialogView: View? = null // Reference to the current dialog view
@@ -42,12 +44,11 @@ class RecordPage : AppCompatActivity() {
         tableLayout = findViewById(R.id.tableLayout)
 
         // Initialize the Google Places API
+        val apiKey = BuildConfig.MAPS_API_KEY
         if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, "AIzaSyBL3lLEc6S0OTaBiwe6j2vVMfDcP7qmd8w")
+            Places.initialize(applicationContext, apiKey)
             Log.d("PlacesAPI", "Google Places API initialized")
         }
-
-        val placesClient = Places.createClient(this)
 
         // Initialize Room database
         database = AppDatabase.getDatabase(this)
@@ -132,27 +133,30 @@ class RecordPage : AppCompatActivity() {
         alertDialog?.show()
     }
 
+    // ActivityResultLauncher
+    private val autocompleteLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK && result.data != null) {
+            val place = Autocomplete.getPlaceFromIntent(result.data!!)
+            selectedLocation = place.name ?: "Unknown location"
+            // Update the position text in the dialog box
+            currentDialogView?.findViewById<TextView>(R.id.tvLocation)?.text = selectedLocation
+        } else if (result.resultCode == AutocompleteActivity.RESULT_ERROR) {
+            val status = Autocomplete.getStatusFromIntent(result.data!!)
+            Log.e("AutocompleteError", status.statusMessage ?: "Unknown error")
+        }
+    }
+
     private fun openPlacePicker() {
         val fields =
             listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-            .setCountry("US")  // Optionally restrict to a specific country
+            .setCountry("US")  // Country can be set as desired
             .build(this)
-        startActivityForResult(intent, REQUEST_CODE_PLACE_PICKER)
+        autocompleteLauncher.launch(intent)
     }
 
-
-    // Handle the result from the place picker
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_PLACE_PICKER && resultCode == RESULT_OK) {
-            val place = Autocomplete.getPlaceFromIntent(data!!)
-            selectedLocation = place.name ?: "Unknown location"
-
-            // Update the selected location in the dialog if it's open
-            currentDialogView?.findViewById<TextView>(R.id.tvLocation)?.text = selectedLocation
-        }
-    }
 
     // Function to open date picker dialog
     private fun openDatePicker(tvDate: TextView) {

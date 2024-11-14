@@ -16,6 +16,9 @@ roomCommon = "2.6.1"
 roomCompiler = "2.6.1"
 roomKtx = "2.6.1"
 roomKtxVersion = "2.4.1"
+google-places = "2.7.0"
+google-maps = "18.1.0"
+coroutines = "1.7.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +38,9 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 places = { module = "com.google.android.libraries.places:places", version.ref = "places" }
 places-v250 = { module = "com.google.android.libraries.places:places", version.ref = "placesVersion" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+google-places = { group = "com.google.android.libraries.places", name = "places", version.ref = "google-places" }
+google-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "google-maps" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
