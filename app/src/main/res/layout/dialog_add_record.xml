@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <!-- Title for the Dialog -->
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:text="Add New Record"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Input for Item -->
+    <EditText
+        android:id="@+id/etItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialogTitle"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Item"
+        android:padding="12dp" />
+
+    <!-- Input for Amount -->
+    <EditText
+        android:id="@+id/etAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etItem"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Amount"
+        android:padding="12dp" />
+
+    <!-- Button to Select Location -->
+    <Button
+        android:id="@+id/btnSelectLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etAmount"
+        android:layout_marginBottom="8dp"
+        android:text="Select Location" />
+
+    <!-- TextView to Display Selected Location -->
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSelectLocation"
+        android:layout_marginBottom="16dp"
+        android:padding="12dp"
+        android:text="Location not selected"
+        android:textSize="14sp" />
+
+    <!-- Button to Select Date -->
+    <Button
+        android:id="@+id/btnSelectDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLocation"
+        android:layout_marginBottom="8dp"
+        android:text="Select Date" />
+
+    <!-- TextView to Display Selected Date -->
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSelectDate"
+        android:layout_marginBottom="24dp"
+        android:padding="12dp"
+        android:text="Date not selected"
+        android:textSize="14sp" />
+
+    <!-- Horizontal Layout for Action Buttons at the Bottom -->
+    <LinearLayout
+        android:id="@+id/actionButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Cancel Button -->
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="Cancel" />
+
+        <!-- Add Record Button -->
+        <Button
+            android:id="@+id/btnAddRecord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Add Record" />
+    </LinearLayout>
+
+</RelativeLayout>
