@@ -96,7 +96,7 @@ class RecordPage : AppCompatActivity() {
         if (existingRecord != null) {
             // fill in with existing data
             etItem.setText(existingRecord.item)
-            etAmount.setText(existingRecord.amount)
+            etAmount.setText(existingRecord.amount.replace("$", ""))
             tvLocation.text = existingRecord.location
             tvDate.text = existingRecord.date
             btnAction.text = "Update"
@@ -294,7 +294,7 @@ class RecordPage : AppCompatActivity() {
 
         itemTextView.text = record.item
         locationTextView.text = record.location
-        amountTextView.text = record.amount
+        amountTextView.text = "$${record.amount}"
         dateTextView.text = record.date
     }
 
