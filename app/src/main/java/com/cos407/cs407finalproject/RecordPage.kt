@@ -30,8 +30,8 @@ import java.util.Calendar
 class RecordPage : AppCompatActivity() {
 
     private lateinit var tableLayout: TableLayout
-    private var selectedLocation: String = "Location not selected" // Store selected location
-    private var selectedDate: String = "Date not selected" // Store selected date
+    private var selectedLocation: String = "N/A" // Store selected location
+    private var selectedDate: String = "N/A" // Store selected date
     private var currentDialogView: View? = null // Reference to the current dialog view
     private var alertDialog: AlertDialog? = null
     private lateinit var database: AppDatabase // Database instance
@@ -78,8 +78,9 @@ class RecordPage : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-    private fun showAddRecordDialog() {
+    // share the same dialog with editing mode
+    private fun showAddRecordDialog(existingRecord: Record? = null, tableRow: TableRow? = null) {
+        Log.d("DEBUG", "Opening dialog. Existing record: $existingRecord, TableRow: $tableRow")
         // Inflate the dialog layout
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_record, null)
         currentDialogView = dialogView  // Store reference to the dialog view
@@ -89,9 +90,23 @@ class RecordPage : AppCompatActivity() {
         val tvLocation = dialogView.findViewById<TextView>(R.id.tvLocation)
         val tvDate = dialogView.findViewById<TextView>(R.id.tvDate)
 
-        // Set initial text for location and date fields
-        tvLocation.text = selectedLocation
-        tvDate.text = selectedDate
+        val btnAction = dialogView.findViewById<Button>(R.id.btnAddRecord)
+
+        //switching between editing and adding modes
+        if (existingRecord != null) {
+            // fill in with existing data
+            etItem.setText(existingRecord.item)
+            etAmount.setText(existingRecord.amount)
+            tvLocation.text = existingRecord.location
+            tvDate.text = existingRecord.date
+            btnAction.text = "Update"
+        } else {
+            // Set initial text for location and date fields
+            tvLocation.text = selectedLocation
+            tvDate.text = selectedDate
+            btnAction.text = "Add"
+        }
+
 
         // Set location button to open place picker
         dialogView.findViewById<Button>(R.id.btnSelectLocation).setOnClickListener {
@@ -107,14 +122,22 @@ class RecordPage : AppCompatActivity() {
         dialogView.findViewById<Button>(R.id.btnAddRecord).setOnClickListener {
             val item = etItem.text.toString()
             val amount = etAmount.text.toString()
+
             val record = Record(
-                amount = amount,
-                item = item,
-                location = selectedLocation,
-                date = selectedDate
+                id = existingRecord?.id ?: 0,
+                amount = amount.toString(),
+                item = item.toString(),
+                location = tvLocation.text.toString(),
+                date = tvDate.text.toString()
             )
-            saveRecord(record) // Save the record to the database
-            addRecord(record) // Add record to the table layout
+
+            if(existingRecord != null) {
+                updateRecord(record) // Update data
+                tableRow?.let { updateTableRow(record, it) } // Update tableRow
+            } else {
+                saveRecord(record) // Save the record to the database
+                addRecord(record) // Add record to the table layout
+            }
             currentDialogView = null  // Clear dialog reference after adding record
             alertDialog?.dismiss() // Close dialog
         }
@@ -181,22 +204,22 @@ class RecordPage : AppCompatActivity() {
         // Create and configure the item TextView
         val itemTextView = TextView(this)
         itemTextView.text = record.item
-        itemTextView.setPadding(8, 8, 8, 8)
+        itemTextView.setPadding(22, 8, 8, 8)
 
         // Create and configure the location TextView
         val locationTextView = TextView(this)
         locationTextView.text = record.location
-        locationTextView.setPadding(8, 8, 8, 8)
+        locationTextView.setPadding(22, 8, 8, 8)
 
         // Create and configure the amount TextView
         val amountTextView = TextView(this)
-        amountTextView.text = record.amount
-        amountTextView.setPadding(8, 8, 8, 8)
+        amountTextView.text = "$${record.amount}"
+        amountTextView.setPadding(22, 8, 8, 8)
 
         // Create and configure the date TextView
         val dateTextView = TextView(this)
         dateTextView.text = record.date
-        dateTextView.setPadding(8, 8, 8, 8)
+        dateTextView.setPadding(22, 8, 8, 8)
 
         // Add TextViews to the row
         tableRow.addView(itemTextView)
@@ -204,8 +227,47 @@ class RecordPage : AppCompatActivity() {
         tableRow.addView(amountTextView)
         tableRow.addView(dateTextView)
 
+        //show dialog when long pressing
+        tableRow.setOnLongClickListener {
+            showEditDeleteDialog(record, tableRow)
+            true
+        }
+
         // Add the row to the table layout
         tableLayout.addView(tableRow)
+    }
+
+    //dialog for editing and deleting records
+    private fun showEditDeleteDialog(record: Record, tableRow: TableRow) {
+        val options = arrayOf("Edit", "Delete")
+        AlertDialog.Builder(this)
+            .setTitle("Select an Action")
+            .setItems(options) { dialog, which ->
+                when (which) {
+                    0 -> { val updatedRecord = Record(
+                        id = record.id,
+                        item = (tableRow.getChildAt(0) as TextView).text.toString(),
+                        location = (tableRow.getChildAt(1) as TextView).text.toString(),
+                        amount = (tableRow.getChildAt(2) as TextView).text.toString(),
+                        date = (tableRow.getChildAt(3) as TextView).text.toString()
+                    )
+                        showAddRecordDialog(updatedRecord, tableRow)
+                    } // edit
+                    1 -> deleteRecord(record, tableRow) // delete
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    // Function to delete a record
+    private fun deleteRecord(record: Record, tableRow: TableRow) {
+        lifecycleScope.launch {
+            // delete data
+            database.recordDao().delete(record)
+            // remove tableview
+            tableLayout.removeView(tableRow)
+        }
     }
 
     // Function to save a record to the Room database
@@ -213,6 +275,27 @@ class RecordPage : AppCompatActivity() {
         lifecycleScope.launch {
             database.recordDao().insert(record)
         }
+    }
+
+    //update record
+    private fun updateRecord(record: Record) {
+        lifecycleScope.launch {
+            database.recordDao().update(record)
+            Log.d("DEBUG", "Updated record in database: $record")
+
+        }
+    }
+    private fun updateTableRow(record: Record, tableRow: TableRow) {
+
+        val itemTextView = tableRow.getChildAt(0) as TextView
+        val locationTextView = tableRow.getChildAt(1) as TextView
+        val amountTextView = tableRow.getChildAt(2) as TextView
+        val dateTextView = tableRow.getChildAt(3) as TextView
+
+        itemTextView.text = record.item
+        locationTextView.text = record.location
+        amountTextView.text = record.amount
+        dateTextView.text = record.date
     }
 
     // Function to load records from the Room database on app startup

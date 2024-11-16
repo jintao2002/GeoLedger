@@ -46,44 +46,48 @@
 
             <TextView
                 android:padding="8dp"
-                android:text="Stuff"
+                android:text="Item"
+                android:gravity="start"
                 android:textStyle="bold" />
 
             <TextView
                 android:padding="8dp"
                 android:text="Location"
+                android:gravity="start"
                 android:textStyle="bold" />
 
             <TextView
                 android:padding="8dp"
                 android:text="Amount"
+                android:gravity="start"
                 android:textStyle="bold" />
 
             <TextView
                 android:padding="8dp"
                 android:text="Date"
+                android:gravity="start"
                 android:textStyle="bold" />
         </TableRow>
 
         <!-- Sample Rows -->
-        <TableRow>
+<!--        <TableRow>-->
 
-            <TextView
-                android:padding="8dp"
-                android:text="Traveling" />
+<!--            <TextView-->
+<!--                android:padding="8dp"-->
+<!--                android:text="Traveling" />-->
 
-            <TextView
-                android:padding="8dp"
-                android:text="Madison" />
+<!--            <TextView-->
+<!--                android:padding="8dp"-->
+<!--                android:text="Madison" />-->
 
-            <TextView
-                android:padding="8dp"
-                android:text="$400" />
+<!--            <TextView-->
+<!--                android:padding="8dp"-->
+<!--                android:text="$400" />-->
 
-            <TextView
-                android:padding="8dp"
-                android:text="2023-11-14" />
-        </TableRow>
+<!--            <TextView-->
+<!--                android:padding="8dp"-->
+<!--                android:text="2023-11-14" />-->
+<!--        </TableRow>-->
 
     </TableLayout>
 
