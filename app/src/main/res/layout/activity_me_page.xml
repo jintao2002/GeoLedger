@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F9FAFB"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -12,6 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:paddingBottom="16dp"
         android:text="Me"
+        android:textColor="#37474F"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -19,59 +21,75 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#8B0000"
+        android:background="#90CAF9"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="8dp">
 
+        <!-- Profile Picture -->
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="#90CAF9"
             android:src="@drawable/temp_avatar_for_all" />
 
+        <!-- User Info -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#90CAF9"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Username"
-                android:textColor="@android:color/white"
+                android:layout_margin="0dp"
+                android:background="#90CAF9"
+                android:padding="0dp"
+                android:text="Johnny Qin"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:background="#90CAF9"
+                android:padding="0dp"
                 android:text="Location"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/black" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Settings and Add Budget Buttons -->
+    <!-- Buttons -->
     <Button
         android:id="@+id/btnSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Setting" />
+        android:backgroundTint="#56C596"
+        android:text="Setting"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/btnAddBudget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Add budget" />
+        android:backgroundTint="#56C596"
+        android:text="Add budget"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Logout" />
+        android:backgroundTint="#56C596"
+        android:text="Logout"
+        android:textColor="#FFFFFF" />
 
     <!-- Bottom Navigation -->
     <LinearLayout
@@ -86,21 +104,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Record" />
+            android:backgroundTint="#F9FAFB"
+            android:text="Record"
+            android:textColor="#37474F" />
 
         <Button
             android:id="@+id/btnSummary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Summary" />
+            android:backgroundTint="#F9FAFB"
+            android:text="Summary"
+            android:textColor="#37474F" />
 
         <Button
             android:id="@+id/btnMe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="#ADD8E6"
-            android:text="Me" />
+            android:backgroundTint="#FFA726"
+            android:text="Me"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 </LinearLayout>
