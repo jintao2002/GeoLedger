@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -22,26 +23,26 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        //click the button to jump to the sign Up page
+        // Navigate to the Sign Up page
         findViewById<Button>(R.id.signUpButton).setOnClickListener {
             val intent = Intent(this, SignUpPage::class.java)
             startActivity(intent)
         }
 
+        // Navigate to the Sign In page
         findViewById<Button>(R.id.signInButton).setOnClickListener {
             val intent = Intent(this, SignInPage::class.java)
             startActivity(intent)
         }
-
     }
 
-    //the menu bar
+    // Set up the menu bar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.page_menu, menu)
         return true
     }
 
-    //click the items in the menu bar
+    // Handle menu bar item clicks
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item1 -> {
@@ -62,5 +63,4 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 }

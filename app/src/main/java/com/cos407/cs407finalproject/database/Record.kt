@@ -9,5 +9,6 @@ data class Record(
     val amount: String,
     val item: String,
     val location: String,
-    val date: String
+    val date: String,
+    val userId: Int
 )

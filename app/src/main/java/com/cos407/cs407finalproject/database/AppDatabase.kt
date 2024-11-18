@@ -16,16 +16,27 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
+        // Create or get an instance of the database
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "geoledger_database"
+                    context.applicationContext, AppDatabase::class.java, "geoledger_database"
                 ).build()
                 INSTANCE = instance
                 instance
             }
+        }
+
+        // Dynamically switch database or reinitialize for a new user context
+        fun switchDatabase(context: Context, userId: Int): AppDatabase {
+            synchronized(this) {
+                // Optional: Add a user-specific prefix or suffix if needed for multi-user environments
+                val dbName = "geoledger_database_user_$userId"
+                INSTANCE = Room.databaseBuilder(
+                    context.applicationContext, AppDatabase::class.java, dbName
+                ).build()
+            }
+            return INSTANCE!!
         }
     }
 }

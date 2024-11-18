@@ -8,11 +8,12 @@ import androidx.room.Update
 
 @Dao
 interface RecordDao {
+
     @Insert
     suspend fun insert(record: Record)
 
-    @Query("SELECT * FROM records")
-    suspend fun getAllRecords(): List<Record>
+    @Query("SELECT * FROM records WHERE userId = :userId")
+    suspend fun getAllRecordsByUser(userId: Int): List<Record>
 
     @Delete
     suspend fun delete(record: Record)
