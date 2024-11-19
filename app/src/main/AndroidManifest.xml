@@ -37,6 +37,9 @@
             android:name=".RecordPage"
             android:exported="false" />
         <activity
+            android:name=".SummaryPage"
+            android:exported="false" />
+        <activity
             android:name=".MePage"
             android:exported="false" />
         <activity

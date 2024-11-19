@@ -68,9 +68,10 @@ class RecordPage : AppCompatActivity() {
             showAddRecordDialog()
         }
 
-        // Record button: opens input dialog for new record
-        findViewById<Button>(R.id.btnRecord).setOnClickListener {
-            showAddRecordDialog()
+        // Summary button: opens input dialog for new record
+        findViewById<Button>(R.id.btnSummary).setOnClickListener {
+            val intent = Intent(this, SummaryPage::class.java)
+            startActivity(intent)
         }
 
         // Me button: Go to the Me page
@@ -220,11 +221,11 @@ class RecordPage : AppCompatActivity() {
     private fun showEditDeleteDialog(record: Record, tableRow: TableRow) {
         val options = arrayOf("Edit", "Delete")
         AlertDialog.Builder(this).setTitle("Select an Action").setItems(options) { _, which ->
-                when (which) {
-                    0 -> showAddRecordDialog(record, tableRow)
-                    1 -> deleteRecord(record, tableRow)
-                }
-            }.setNegativeButton("Cancel", null).show()
+            when (which) {
+                0 -> showAddRecordDialog(record, tableRow)
+                1 -> deleteRecord(record, tableRow)
+            }
+        }.setNegativeButton("Cancel", null).show()
     }
 
     private fun deleteRecord(record: Record, tableRow: TableRow) {

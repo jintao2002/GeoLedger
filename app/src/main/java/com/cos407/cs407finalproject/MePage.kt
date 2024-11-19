@@ -33,7 +33,6 @@ class MePage : AppCompatActivity() {
         if (userId != -1) {
             // Load user data using userId
             CoroutineScope(Dispatchers.IO).launch {
-                // Fetch user data from Room and Firebase
                 fetchUserData(userId) { userName ->
                     runOnUiThread {
                         tvUserName.text = userName ?: "Username"
@@ -44,11 +43,8 @@ class MePage : AppCompatActivity() {
             tvUserName.text = "Username"
         }
 
-        // Navigate to Record page
-        findViewById<Button>(R.id.btnRecord).setOnClickListener {
-            val intent = Intent(this, RecordPage::class.java)
-            startActivity(intent)
-        }
+        // Bottom Navigation
+        setupBottomNavigation()
 
         // Logout button: clears the stored userId and returns to MainActivity
         findViewById<Button>(R.id.btnLogout).setOnClickListener {
@@ -63,14 +59,11 @@ class MePage : AppCompatActivity() {
     // Fetch user data from Room and Firebase
     private fun fetchUserData(userId: Int, onResult: (String?) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
-            // Try to fetch user data from Room database
             val user = userDao.getUserById(userId)
 
             if (user != null) {
-                // If user is found locally, return the name
                 onResult("${user.firstName} ${user.lastName}")
             } else {
-                // If user is not found in Room, fetch from Firebase
                 firebaseDb.collection("users").whereEqualTo("userId", userId).get()
                     .addOnSuccessListener { documents ->
                         val firebaseUser = documents.firstOrNull()
@@ -79,10 +72,26 @@ class MePage : AppCompatActivity() {
                         }
                         onResult(userName)
                     }.addOnFailureListener {
-                        // Handle Firebase fetch failure
                         onResult(null)
                     }
             }
+        }
+    }
+
+    // Bottom Navigation Setup
+    private fun setupBottomNavigation() {
+        findViewById<Button>(R.id.btnRecord).setOnClickListener {
+            val intent = Intent(this, RecordPage::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.btnSummary).setOnClickListener {
+            val intent = Intent(this, SummaryPage::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.btnMe).setOnClickListener {
+            // Do nothing as it’s the current page
         }
     }
 

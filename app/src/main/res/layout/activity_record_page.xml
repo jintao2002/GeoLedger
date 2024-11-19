@@ -1,17 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
-    <!-- Switch button to map view -->
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Map view" />
-<!--    temporarily use "Map view", need an icon instead-->
 
     <!-- Title -->
     <TextView
@@ -26,9 +17,6 @@
         android:textStyle="bold" />
 
     <!-- FloatingActionButton for Adding Record -->
-
-    <!-- Table Layout -->
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddRecord"
         android:layout_width="wrap_content"
@@ -41,6 +29,7 @@
         android:src="@android:drawable/ic_input_add"
         app:fabSize="mini" />
 
+    <!-- Table Layout -->
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
@@ -52,55 +41,30 @@
 
         <!-- Table Headers -->
         <TableRow>
-
             <TextView
                 android:padding="8dp"
                 android:text="Item"
                 android:gravity="start"
                 android:textStyle="bold" />
-
             <TextView
                 android:padding="8dp"
                 android:text="Location"
                 android:gravity="start"
                 android:textStyle="bold" />
-
             <TextView
                 android:padding="8dp"
                 android:text="Amount"
                 android:gravity="start"
                 android:textStyle="bold" />
-
             <TextView
                 android:padding="8dp"
                 android:text="Date"
                 android:gravity="start"
                 android:textStyle="bold" />
         </TableRow>
-
-        <!-- Sample Rows -->
-        <!--        <TableRow>-->
-
-        <!--            <TextView-->
-        <!--                android:padding="8dp"-->
-        <!--                android:text="Traveling" />-->
-
-        <!--            <TextView-->
-        <!--                android:padding="8dp"-->
-        <!--                android:text="Madison" />-->
-
-        <!--            <TextView-->
-        <!--                android:padding="8dp"-->
-        <!--                android:text="$400" />-->
-
-        <!--            <TextView-->
-        <!--                android:padding="8dp"-->
-        <!--                android:text="2023-11-14" />-->
-        <!--        </TableRow>-->
-
     </TableLayout>
 
-    <!-- Bottom Navigation Buttons -->
+    <!-- Bottom Navigation -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -113,24 +77,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="#ADD8E6"
-            android:text="Record" />
+            android:backgroundTint="#FFA726"
+            android:text="Record"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/btnSummary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Summary" />
+            android:backgroundTint="#FFFFFF"
+            android:text="Summary"
+            android:textColor="#37474F" />
 
         <Button
             android:id="@+id/btnMe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Me" />
-
+            android:backgroundTint="#FFFFFF"
+            android:text="Me"
+            android:textColor="#37474F" />
     </LinearLayout>
-
-
 </RelativeLayout>
