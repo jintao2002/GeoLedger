@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
@@ -15,6 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cos407.cs407finalproject.database.AppDatabase
 import com.cos407.cs407finalproject.database.User
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +25,9 @@ class SignUpPage : AppCompatActivity() {
 
     // Lazy initialization of UserDao
     private val userDao by lazy { AppDatabase.getDatabase(this).userDao() }
+
+    // Firebase Firestore instance
+    private val firebaseDb by lazy { FirebaseFirestore.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +58,7 @@ class SignUpPage : AppCompatActivity() {
 
             // Validate fields
             if (isValidEmail(email) && isValidPassword(password) && firstName.isNotEmpty() && lastName.isNotEmpty()) {
-                // Register user in the database
+                // Register user in the database and Firebase
                 registerUser(firstName, lastName, email, password)
             } else {
                 // Show error messages if validation fails
@@ -73,15 +78,24 @@ class SignUpPage : AppCompatActivity() {
         }
     }
 
-    // Function to register user by saving details in Room database
+    // Function to register user by saving details in Room database and Firebase
     private fun registerUser(firstName: String, lastName: String, email: String, password: String) {
         CoroutineScope(Dispatchers.IO).launch {
             // Create a new User instance with the provided details
             val newUser =
                 User(firstName = firstName, lastName = lastName, email = email, password = password)
 
-            // Insert the user into the database
+            // Insert the user into the local database
             userDao.insertUser(newUser)
+
+            // Save the user to Firebase Firestore
+            firebaseDb.collection("users").add(newUser).addOnSuccessListener {
+                // Log success or notify UI
+                Log.d("SignUpPage", "User saved to Firebase successfully")
+            }.addOnFailureListener { e ->
+                // Log failure or handle error
+                Log.e("SignUpPage", "Error saving user to Firebase", e)
+            }
 
             // Show success message and navigate to sign-in page
             runOnUiThread {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "783945949409",
+    "project_id": "geoledger-fe104",
+    "storage_bucket": "geoledger-fe104.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783945949409:android:821b97790727eddbd4d7a0",
+        "android_client_info": {
+          "package_name": "com.cos407.cs407finalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkrxhvIG3dNJGQFa0abk1B7fJKsMNcBzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,16 +15,18 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import com.cos407.cs407finalproject.database.AppDatabase
 import com.cos407.cs407finalproject.database.Record
+import com.cos407.cs407finalproject.repository.RecordRepository
+import com.cos407.cs407finalproject.viewmodel.RecordViewModel
+import com.cos407.cs407finalproject.viewmodel.RecordViewModelFactory
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class RecordPage : AppCompatActivity() {
@@ -34,11 +36,19 @@ class RecordPage : AppCompatActivity() {
     private var selectedDate: String = "N/A" // Store selected date
     private var currentDialogView: View? = null // Reference to the current dialog view
     private var alertDialog: AlertDialog? = null
-    private lateinit var database: AppDatabase // Database instance
+
+    // Initialize the RecordViewModel
+    private lateinit var recordViewModel: RecordViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record_page)
+
+        // Initialize the RecordViewModel using the Factory
+        val recordDao = AppDatabase.getDatabase(applicationContext).recordDao()
+        val repository = RecordRepository(recordDao)
+        val factory = RecordViewModelFactory(repository)
+        recordViewModel = ViewModelProvider(this, factory)[RecordViewModel::class.java]
 
         // Initialize tableLayout after setting content view
         tableLayout = findViewById(R.id.tableLayout)
@@ -49,9 +59,6 @@ class RecordPage : AppCompatActivity() {
             Places.initialize(applicationContext, apiKey)
             Log.d("PlacesAPI", "Google Places API initialized")
         }
-
-        // Initialize Room database
-        database = AppDatabase.getDatabase(this)
 
         // Load saved records for the current user
         loadRecords()
@@ -134,13 +141,16 @@ class RecordPage : AppCompatActivity() {
             alertDialog?.dismiss()
         }
 
-        alertDialog = AlertDialog.Builder(this).setTitle("Add Record").setView(dialogView).create()
+        alertDialog = AlertDialog.Builder(this)
+            .setTitle(if (existingRecord != null) "Edit Record" else "Add Record")
+            .setView(dialogView).create()
         alertDialog?.show()
     }
 
     private fun openPlacePicker() {
-        val fields =
-            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val fields = listOf(
+            Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG
+        )
         val intent =
             Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).setCountry("US")
                 .build(this)
@@ -218,22 +228,19 @@ class RecordPage : AppCompatActivity() {
     }
 
     private fun deleteRecord(record: Record, tableRow: TableRow) {
-        lifecycleScope.launch {
-            database.recordDao().delete(record)
-            tableLayout.removeView(tableRow)
-        }
+        // Use the ViewModel to delete the record
+        recordViewModel.deleteRecord(record)
+        tableLayout.removeView(tableRow)
     }
 
     private fun saveRecord(record: Record) {
-        lifecycleScope.launch {
-            database.recordDao().insert(record)
-        }
+        // Use the ViewModel to save the record
+        recordViewModel.saveRecord(record)
     }
 
     private fun updateRecord(record: Record) {
-        lifecycleScope.launch {
-            database.recordDao().update(record)
-        }
+        // Use the ViewModel to update the record
+        recordViewModel.updateRecord(record)
     }
 
     private fun updateTableRow(record: Record, tableRow: TableRow) {
@@ -249,11 +256,14 @@ class RecordPage : AppCompatActivity() {
     }
 
     private fun loadRecords() {
-        lifecycleScope.launch {
-            val userId = getCurrentUserId()
-            val records = database.recordDao().getAllRecordsByUser(userId)
+        val userId = getCurrentUserId()
+        // Use the ViewModel to get records
+        recordViewModel.getRecords(userId) { records ->
             records.forEach { addRecord(it) }
         }
+
+        // Optionally sync records from Firebase
+        recordViewModel.syncRecords(userId)
     }
 
     private fun getCurrentUserId(): Int {

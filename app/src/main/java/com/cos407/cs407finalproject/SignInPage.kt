@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.cos407.cs407finalproject.database.AppDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +22,9 @@ class SignInPage : AppCompatActivity() {
 
     // Lazy initialization of UserDao for database access
     private val userDao by lazy { AppDatabase.getDatabase(this).userDao() }
+
+    // Firebase Firestore instance
+    private val firebaseDb by lazy { FirebaseFirestore.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,41 +51,67 @@ class SignInPage : AppCompatActivity() {
             val enteredEmail = findViewById<EditText>(R.id.etEmail).text.toString().trim()
             val enteredPassword = findViewById<EditText>(R.id.etPassword).text.toString()
 
-            // Validate login by checking database for matching credentials
+            // Validate login by checking both Room database and Firebase
             validateUserCredentials(enteredEmail, enteredPassword)
         }
     }
 
-    // Function to validate user credentials using Room database
+    // Function to validate user credentials using Room database and Firebase
     private fun validateUserCredentials(email: String, password: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val user = userDao.getUserByEmail(email) // Query the database for the user
-            runOnUiThread {
-                if (user != null && user.password == password) {
-                    // Save userId to SharedPreferences
-                    saveUserIdToPreferences(user.userId)
+            // Query the local database for the user
+            val user = userDao.getUserByEmail(email)
 
-                    // Show success message and navigate to MePage
-                    Toast.makeText(this@SignInPage, "Login successful!", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@SignInPage, MePage::class.java).apply {
-                        putExtra("USER_ID", user.userId) // Pass the user's ID to MePage
+            // Check credentials locally first
+            if (user != null && user.password == password) {
+                // Save userId to SharedPreferences
+                saveUserIdToPreferences(user.userId)
+                navigateToMePage(user.userId)
+            } else {
+                // If not found locally, check Firebase
+                firebaseDb.collection("users").whereEqualTo("email", email).get()
+                    .addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            val firebasePassword = document.getString("password")
+                            if (firebasePassword == password) {
+                                // Retrieve userId and proceed
+                                val userId = document.getLong("userId")?.toInt() ?: 0
+                                saveUserIdToPreferences(userId)
+                                navigateToMePage(userId)
+                            } else {
+                                showErrorMessage("Incorrect email or password")
+                            }
+                        }
+                    }.addOnFailureListener {
+                        showErrorMessage("Login failed. Please try again.")
                     }
-                    startActivity(intent)
-                    finish() // Close the Sign In page
-                } else {
-                    // Show error message if login fails
-                    Toast.makeText(
-                        this@SignInPage, "Incorrect email or password", Toast.LENGTH_SHORT
-                    ).show()
-                }
             }
         }
     }
 
-    // Save userId to SharedPreferences for global access
+    // Function to save userId to SharedPreferences
     private fun saveUserIdToPreferences(userId: Int) {
         val sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putInt("CURRENT_USER_ID", userId).apply()
+    }
+
+    // Function to navigate to MePage after successful login
+    private fun navigateToMePage(userId: Int) {
+        runOnUiThread {
+            Toast.makeText(this@SignInPage, "Login successful!", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@SignInPage, MePage::class.java).apply {
+                putExtra("USER_ID", userId) // Pass the user's ID to MePage
+            }
+            startActivity(intent)
+            finish() // Close the Sign In page
+        }
+    }
+
+    // Function to show error messages on the UI thread
+    private fun showErrorMessage(message: String) {
+        runOnUiThread {
+            Toast.makeText(this@SignInPage, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
