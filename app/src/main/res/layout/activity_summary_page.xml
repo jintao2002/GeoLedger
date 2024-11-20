@@ -6,16 +6,42 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/summary"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:text="Summary"
-        android:textSize="26sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <!-- Left Spacer -->
+        <View
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.5" />
+
+        <!-- Summary in the center -->
+        <TextView
+            android:id="@+id/summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Summary"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <!-- Right Spacer -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1" />
+
+        <!-- Switch on the right -->
+        <Switch
+            android:id="@+id/switchToggle"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="Map View" />
+    </LinearLayout>
+
 
     <!-- Month Navigation -->
     <LinearLayout
@@ -25,9 +51,10 @@
         android:layout_marginTop="16dp"
         android:orientation="horizontal">
 
+
         <Button
             android:id="@+id/previous"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="Previous" />
@@ -37,12 +64,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
             android:text="Month"
-            android:textSize="24sp" />
+            android:textSize="26sp" />
 
         <Button
             android:id="@+id/next"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Next" />
@@ -72,7 +101,8 @@
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
             android:text="Record"
-            android:textColor="#37474F" />
+            android:textColor="#37474F"
+            android:maxWidth="200dp" />
 
         <Button
             android:id="@+id/btnSummary"
@@ -81,7 +111,8 @@
             android:layout_weight="1"
             android:backgroundTint="#FFA726"
             android:text="Summary"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:maxWidth="200dp" />
 
         <Button
             android:id="@+id/btnMe"
@@ -90,6 +121,9 @@
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
             android:text="Me"
-            android:textColor="#37474F" />
+            android:textColor="#37474F"
+            android:maxWidth="200dp" />
     </LinearLayout>
+
+
 </LinearLayout>
