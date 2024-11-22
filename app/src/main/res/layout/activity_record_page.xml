@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -37,6 +38,7 @@
         android:layout_below="@id/title"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="60dp"
         android:stretchColumns="0,1,2,3">
 
         <!-- Table Headers -->
@@ -59,6 +61,11 @@
             <TextView
                 android:padding="8dp"
                 android:text="Date"
+                android:gravity="start"
+                android:textStyle="bold" />
+            <TextView
+                android:padding="8dp"
+                android:text="Actions"
                 android:gravity="start"
                 android:textStyle="bold" />
         </TableRow>

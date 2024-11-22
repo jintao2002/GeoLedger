@@ -10,9 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -188,50 +190,141 @@ class RecordPage : AppCompatActivity() {
 
     fun addRecord(record: Record) {
         val tableRow = TableRow(this)
+        tableRow.layoutParams = TableLayout.LayoutParams(
+            TableLayout.LayoutParams.MATCH_PARENT,
+            TableLayout.LayoutParams.WRAP_CONTENT
+        )
 
+        // Item TextView
         val itemTextView = TextView(this)
         itemTextView.text = record.item
-        itemTextView.setPadding(22, 8, 8, 8)
+        itemTextView.setPadding(16, 8, 8, 8)
 
+        // Location TextView
         val locationTextView = TextView(this)
         locationTextView.text = record.location
-        locationTextView.setPadding(22, 8, 8, 8)
+        locationTextView.setPadding(16, 8, 8, 8)
 
+        // Amount TextView
         val amountTextView = TextView(this)
         amountTextView.text = "$${record.amount}"
-        amountTextView.setPadding(22, 8, 8, 8)
+        amountTextView.setPadding(16, 8, 8, 8)
 
+        // Date TextView
         val dateTextView = TextView(this)
         dateTextView.text = record.date
-        dateTextView.setPadding(22, 8, 8, 8)
+        dateTextView.setPadding(16, 8, 8, 8)
 
+        // Actions Layout
+        val actionsLayout = LinearLayout(this)
+        actionsLayout.orientation = LinearLayout.HORIZONTAL
+        actionsLayout.setPadding(8, 8, 8, 8)
+
+        // Edit Button
+        val editButton = Button(this)
+        editButton.text = "Edit"
+        editButton.textSize = 10f
+        editButton.setBackgroundColor(resources.getColor(android.R.color.holo_blue_light))
+        editButton.setTextColor(resources.getColor(android.R.color.white))
+        val editParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        editParams.marginEnd = 4
+        editButton.layoutParams = editParams
+
+        // Delete Button
+        val deleteButton = Button(this)
+        deleteButton.text = "Delete"
+        deleteButton.textSize = 10f
+        deleteButton.setBackgroundColor(resources.getColor(android.R.color.holo_red_light))
+        deleteButton.setTextColor(resources.getColor(android.R.color.white))
+        deleteButton.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        // Add buttons to actions layout
+        actionsLayout.addView(editButton)
+        actionsLayout.addView(deleteButton)
+
+        // Add all views to the table row
         tableRow.addView(itemTextView)
         tableRow.addView(locationTextView)
         tableRow.addView(amountTextView)
         tableRow.addView(dateTextView)
+        tableRow.addView(actionsLayout)
 
-        tableRow.setOnLongClickListener {
-            showEditDeleteDialog(record, tableRow)
-            true
+        // Set click listeners for buttons
+        editButton.setOnClickListener {
+            showAddRecordDialog(record, tableRow)
         }
 
+        deleteButton.setOnClickListener {
+            showDeleteConfirmationDialog(record, tableRow)
+        }
+
+        // Add the row to the table
         tableLayout.addView(tableRow)
     }
 
     private fun showEditDeleteDialog(record: Record, tableRow: TableRow) {
         val options = arrayOf("Edit", "Delete")
-        AlertDialog.Builder(this).setTitle("Select an Action").setItems(options) { _, which ->
-            when (which) {
-                0 -> showAddRecordDialog(record, tableRow)
-                1 -> deleteRecord(record, tableRow)
+        AlertDialog.Builder(this)
+            .setTitle("Select an Action")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> showAddRecordDialog(record, tableRow)
+                    1 -> showDeleteConfirmationDialog(record, tableRow)
+                }
             }
-        }.setNegativeButton("Cancel", null).show()
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun showDeleteConfirmationDialog(record: Record, tableRow: TableRow) {
+        AlertDialog.Builder(this)
+            .setTitle("Delete Record")
+            .setMessage("Are you sure you want to delete this record?\n\nItem: ${record.item}\nAmount: $${record.amount}")
+            .setPositiveButton("Delete") { _, _ ->
+                deleteRecord(record, tableRow)
+                Toast.makeText(this, "Record deleted successfully", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     private fun deleteRecord(record: Record, tableRow: TableRow) {
-        // Use the ViewModel to delete the record
-        recordViewModel.deleteRecord(record)
-        tableLayout.removeView(tableRow)
+        try {
+            // Delete from database using ViewModel
+            recordViewModel.deleteRecord(record)
+
+            // Remove from UI
+            tableLayout.removeView(tableRow)
+
+            // Sync with Firebase if needed
+            val userId = getCurrentUserId()
+            recordViewModel.syncRecords(userId)
+
+        } catch (e: Exception) {
+            Log.e("RecordPage", "Error deleting record", e)
+            Toast.makeText(this, "Error deleting record", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun swipeToDelete(tableRow: TableRow, record: Record) {
+        // Remove the row with animation
+        tableRow.animate()
+            .translationX(tableRow.width.toFloat())
+            .alpha(0f)
+            .setDuration(300)
+            .withEndAction {
+                deleteRecord(record, tableRow)
+            }
+    }
+
+    fun deleteRecord(record: Record) {
+        //TODO delete from databases
     }
 
     private fun saveRecord(record: Record) {
