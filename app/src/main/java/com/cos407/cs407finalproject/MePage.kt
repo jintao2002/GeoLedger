@@ -54,6 +54,19 @@ class MePage : AppCompatActivity() {
             Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
             finish()
         }
+
+        // Setup Settings button
+        findViewById<Button>(R.id.btnSettings).setOnClickListener {
+            val intent = Intent(this, SettingsPage::class.java)
+            startActivity(intent)
+        }
+
+        // Setup Add Budget button
+        findViewById<Button>(R.id.btnAddBudget).setOnClickListener {
+            val intent = Intent(this, AddBudget::class.java)
+            startActivity(intent)
+        }
+
     }
 
     // Fetch user data from Room and Firebase
