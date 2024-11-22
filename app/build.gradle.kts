@@ -91,6 +91,12 @@ dependencies {
 
     //MPAndroidChart
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    //Lottie
+    implementation("com.airbnb.android:lottie:6.3.0")
+
+    //Material design
+    implementation("com.google.android.material:material:1.11.0")
 }
 
 

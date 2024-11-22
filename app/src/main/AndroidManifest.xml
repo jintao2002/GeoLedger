@@ -18,9 +18,6 @@
         android:theme="@style/AppTheme"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".SettingPage"
-            android:exported="false" />
-        <activity
             android:name=".SettingsPage"
             android:exported="false" />
         <activity
@@ -33,6 +30,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
         <activity
             android:name=".SignInPage"
             android:exported="false" />
@@ -49,7 +49,7 @@
             android:name=".MePage"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".WelcomePage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

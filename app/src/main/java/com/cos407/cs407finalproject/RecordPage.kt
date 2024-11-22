@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -79,6 +80,15 @@ class RecordPage : AppCompatActivity() {
         // Me button: Go to the Me page
         findViewById<Button>(R.id.btnMe).setOnClickListener {
             val intent = Intent(this, MePage::class.java)
+            startActivity(intent)
+        }
+
+        // Find the button that leads to slide.
+        val profileButton = findViewById<ImageView>(R.id.myProfilePhoto)
+
+        // Set up the intent, from profile photo to slide menu
+        profileButton.setOnClickListener {
+            val intent = Intent(this, SlideActivity::class.java)
             startActivity(intent)
         }
     }

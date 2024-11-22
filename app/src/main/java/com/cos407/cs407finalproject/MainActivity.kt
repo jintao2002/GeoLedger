@@ -47,6 +47,17 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SignInPage::class.java)
             startActivity(intent)
         }
+
+        //Click the "Get Started" to navigate to the Sign Up page
+        findViewById<Button>(R.id.signUpButton).setOnClickListener {
+            val intent = Intent(this, SignUpPage::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.signInButton).setOnClickListener {
+            val intent = Intent(this, SignInPage::class.java)
+            startActivity(intent)
+        }
     }
 
     // Set up the menu bar

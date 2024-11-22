@@ -5,6 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
 
+
+    <ImageView
+        android:id="@+id/myProfilePhoto"
+        android:layout_width="61dp"
+        android:layout_height="52dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@drawable/profile"
+        android:contentDescription="@string/profile_photo" />
+
     <!-- Title -->
     <TextView
         android:id="@+id/title"
