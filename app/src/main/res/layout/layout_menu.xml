@@ -1,15 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="270dp"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <TextView
+    <!-- Welcome Text -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="hi"
-        android:textSize="60dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    </TextView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How's your day?"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"/>
+
+    <!-- Menu Options -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Account -->
+        <LinearLayout
+            android:id="@+id/menuAccount"
+            style="@style/MenuItemStyle">
+            
+            <ImageView
+                style="@style/MenuIconStyle"
+                app:srcCompat="@drawable/account"/>
+            
+            <TextView
+                style="@style/MenuTextStyle"
+                android:text="Account"/>
+        </LinearLayout>
+
+        <!-- Language -->
+        <LinearLayout
+            android:id="@+id/menuLanguage"
+            style="@style/MenuItemStyle">
+            
+            <ImageView
+                style="@style/MenuIconStyle"
+                app:srcCompat="@drawable/language"/>
+            
+            <TextView
+                style="@style/MenuTextStyle"
+                android:text="Language"/>
+        </LinearLayout>
+
+        <!-- Appearance -->
+        <LinearLayout
+            android:id="@+id/menuAppearance"
+            style="@style/MenuItemStyle">
+            
+            <ImageView
+                style="@style/MenuIconStyle"
+                app:srcCompat="@drawable/appearance"/>
+            
+            <TextView
+                style="@style/MenuTextStyle"
+                android:text="Appearance"/>
+        </LinearLayout>
+
+        <!-- Report -->
+        <LinearLayout
+            android:id="@+id/menuReport"
+            style="@style/MenuItemStyle">
+            
+            <ImageView
+                style="@style/MenuIconStyle"
+                app:srcCompat="@drawable/report"/>
+            
+            <TextView
+                style="@style/MenuTextStyle"
+                android:text="Report"/>
+        </LinearLayout>
+
+        <!-- Terms of Use -->
+        <LinearLayout
+            android:id="@+id/menuTerms"
+            style="@style/MenuItemStyle">
+            
+            <ImageView
+                style="@style/MenuIconStyle"
+                app:srcCompat="@drawable/terms"/>
+            
+            <TextView
+                style="@style/MenuTextStyle"
+                android:text="Terms of Use"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Sign Out button -->
+    <LinearLayout
+        android:id="@+id/menuSignOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            style="@style/MenuIconStyle"
+            app:srcCompat="@drawable/signout"
+            app:tint="#D32F2F"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Out"
+            android:textColor="#D32F2F"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+</LinearLayout>

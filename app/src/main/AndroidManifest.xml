@@ -50,6 +50,7 @@
             android:exported="false" />
         <activity
             android:name=".WelcomePage"
+            android:theme="@style/Theme.WelcomePage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
