@@ -88,6 +88,9 @@ dependencies {
 
     // Firebase Analytics
     implementation(libs.firebase.analytics)
+
+    //MPAndroidChart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
 
 
@@ -96,3 +99,5 @@ ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
     arg("room.incremental", "true")
 }
+
+
