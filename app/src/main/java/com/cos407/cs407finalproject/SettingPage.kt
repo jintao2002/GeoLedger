@@ -1,5 +1,6 @@
 package com.cos407.cs407finalproject
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -18,7 +19,8 @@ class SettingsPage : AppCompatActivity() {
 
         // Add click listeners for other settings buttons
         findViewById<Button>(R.id.btnEditProfile).setOnClickListener {
-            // TODO: Implement edit profile functionality
+            val intent = Intent(this, EditProfileActivity::class.java)
+            startActivity(intent)
         }
 
         findViewById<Button>(R.id.btnNotifications).setOnClickListener {
@@ -26,7 +28,8 @@ class SettingsPage : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnCurrency).setOnClickListener {
-            // TODO: Implement currency settings
+            //TODO need to change currency signs in other pages
+            showCurrencySettingsDialog()
         }
     }
 
@@ -49,5 +52,20 @@ class SettingsPage : AppCompatActivity() {
 
         val dialog = builder.create()
         dialog.show()
+    }
+
+    private fun showCurrencySettingsDialog() {
+
+        val currencies = arrayOf("USD", "EUR")
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Select Currency")
+
+        builder.setItems(currencies) { dialog, which ->
+            Toast.makeText(this, "Selected: ${currencies[which]}", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+
+        builder.create().show()
     }
 }

@@ -18,6 +18,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".SettingsPage"
             android:exported="false" />
         <activity
@@ -50,8 +53,8 @@
             android:exported="false" />
         <activity
             android:name=".WelcomePage"
-            android:theme="@style/Theme.WelcomePage"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
