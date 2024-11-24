@@ -333,9 +333,6 @@ class RecordPage : AppCompatActivity() {
             }
     }
 
-    fun deleteRecord(record: Record) {
-        //TODO delete from databases
-    }
 
     private fun saveRecord(record: Record) {
         // Use the ViewModel to save the record
