@@ -97,6 +97,8 @@ dependencies {
 
     //Material design
     implementation("com.google.android.material:material:1.11.0")
+
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
 }
 
 

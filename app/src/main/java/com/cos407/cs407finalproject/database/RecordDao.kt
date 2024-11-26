@@ -20,4 +20,8 @@ interface RecordDao {
 
     @Update
     suspend fun update(record: Record)
+
+    @Query("SELECT SUM(amount) FROM records WHERE date = :date AND userId = :userId")
+    suspend fun getDailyExpense(date: String, userId: Int): Float?
+
 }

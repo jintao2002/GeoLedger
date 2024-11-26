@@ -8,55 +8,38 @@ import kotlinx.coroutines.launch
 
 class RecordViewModel(private val repository: RecordRepository) : ViewModel() {
 
-    // Save a record using Repository
     fun saveRecord(record: Record) {
         viewModelScope.launch {
-            try {
-                repository.saveRecord(record)
-            } catch (e: Exception) {
-                // Log error or notify the user (optional)
-                e.printStackTrace()
-            }
+            repository.saveRecord(record)
         }
     }
 
-    // Synchronize records between Firebase and local Room database
     fun syncRecords(userId: Int) {
         viewModelScope.launch {
-            try {
-                repository.syncRecords(userId) // This should not have a return value
-            } catch (e: Exception) {
-                // Log error or notify the user (optional)
-                e.printStackTrace()
-            }
+            repository.syncRecords(userId)
         }
     }
 
-    // Delete function
     fun deleteRecord(record: Record) {
         viewModelScope.launch {
             repository.deleteRecord(record)
         }
     }
 
-    // Update function
     fun updateRecord(record: Record) {
         viewModelScope.launch {
             repository.updateRecord(record)
         }
     }
 
-    // Get all records for a specific user
     fun getRecords(userId: Int, onResult: (List<Record>) -> Unit) {
         viewModelScope.launch {
-            try {
-                val records = repository.getRecordsByUser(userId)
-                onResult(records) // Pass the records to the callback
-            } catch (e: Exception) {
-                // Handle error (optional)
-                e.printStackTrace()
-                onResult(emptyList()) // Return an empty list on error
-            }
+            val records = repository.getRecordsByUser(userId)
+            onResult(records)
         }
+    }
+
+    suspend fun getDailyExpenseSync(date: String, userId: Int): Float? {
+        return repository.getDailyExpenseSync(date, userId)
     }
 }

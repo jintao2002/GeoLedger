@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [User::class, Record::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
+
     // Data Access Objects (DAOs) for the entities
     abstract fun userDao(): UserDao
     abstract fun recordDao(): RecordDao
@@ -38,5 +39,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
             return INSTANCE!!
         }
+
+
     }
 }

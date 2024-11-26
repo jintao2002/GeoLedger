@@ -1,6 +1,8 @@
 package com.cos407.cs407finalproject.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import com.cos407.cs407finalproject.database.Record
 import com.cos407.cs407finalproject.database.RecordDao
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,85 +14,92 @@ class RecordRepository(private val recordDao: RecordDao) {
 
     private val firebaseDb = FirebaseFirestore.getInstance()
 
-    // Save a record to local database and Firebase
     suspend fun saveRecord(record: Record) {
-        // Switch to IO dispatcher for database operations
         withContext(Dispatchers.IO) {
-            // Save to local database
-            recordDao.insert(record)
+            try {
 
-            // Save to Firebase
-            firebaseDb.collection("records").add(record).addOnSuccessListener {
-                Log.d("RecordRepository", "Record saved to Firebase")
-            }.addOnFailureListener {
-                Log.e("RecordRepository", "Failed to save record to Firebase", it)
+                recordDao.insert(record)
+
+                val documentRef = firebaseDb.collection("records").add(record).await()
+                Log.d("RecordRepository", "Record saved with ID: ${documentRef.id}")
+            } catch (e: Exception) {
+                Log.e("RecordRepository", "Error saving record", e)
             }
         }
     }
 
-    // Synchronize records from Firebase to Room
     suspend fun syncRecords(userId: Int) {
         withContext(Dispatchers.IO) {
             try {
-                // Convert Firebase Task to a coroutine
-                val documents =
-                    firebaseDb.collection("records").whereEqualTo("userId", userId).get().await()
+                val documents = firebaseDb.collection("records")
+                    .whereEqualTo("userId", userId)
+                    .get()
+                    .await()
 
                 for (document in documents) {
                     val record = document.toObject(Record::class.java)
-                    recordDao.insert(record) // Save to local database
+                    recordDao.insert(record)
                 }
+                Log.d("RecordRepository", "Sync completed for user $userId")
             } catch (e: Exception) {
-                Log.e("RecordRepository", "Failed to fetch records from Firebase", e)
+                Log.e("RecordRepository", "Sync failed", e)
             }
         }
     }
 
-    // Delete data
     suspend fun deleteRecord(record: Record) {
         withContext(Dispatchers.IO) {
-            // Delete from local database
-            recordDao.delete(record)
-
-            // Delete from Firebase
             try {
-                // Assuming you store the Firebase document ID in the record or can query it
-                val querySnapshot =
-                    firebaseDb.collection("records").whereEqualTo("id", record.id).get().await()
+
+                recordDao.delete(record)
+
+
+                val querySnapshot = firebaseDb.collection("records")
+                    .whereEqualTo("id", record.id)
+                    .get()
+                    .await()
+
                 for (document in querySnapshot.documents) {
-                    firebaseDb.collection("records").document(document.id).delete().await()
+                    document.reference.delete().await()
                 }
-                Log.d("RecordRepository", "Record deleted from Firebase")
+                Log.d("RecordRepository", "Record deleted successfully")
             } catch (e: Exception) {
-                Log.e("RecordRepository", "Failed to delete record from Firebase", e)
+                Log.e("RecordRepository", "Error deleting record", e)
             }
         }
     }
 
-    // Update the data
     suspend fun updateRecord(record: Record) {
         withContext(Dispatchers.IO) {
-            // Update in local database
-            recordDao.update(record)
-
-            // Update in Firebase
             try {
-                val querySnapshot =
-                    firebaseDb.collection("records").whereEqualTo("id", record.id).get().await()
+
+                recordDao.update(record)
+
+
+                val querySnapshot = firebaseDb.collection("records")
+                    .whereEqualTo("id", record.id)
+                    .get()
+                    .await()
+
                 for (document in querySnapshot.documents) {
-                    firebaseDb.collection("records").document(document.id).set(record).await()
+                    document.reference.set(record).await()
                 }
-                Log.d("RecordRepository", "Record updated in Firebase")
+                Log.d("RecordRepository", "Record updated successfully")
             } catch (e: Exception) {
-                Log.e("RecordRepository", "Failed to update record in Firebase", e)
+                Log.e("RecordRepository", "Error updating record", e)
             }
         }
     }
 
-    // Retrieve all records for a user from local Room database
     suspend fun getRecordsByUser(userId: Int): List<Record> {
         return withContext(Dispatchers.IO) {
             recordDao.getAllRecordsByUser(userId)
+        }
+    }
+
+    suspend fun getDailyExpenseSync(date: String, userId: Int): Float? {
+        return withContext(Dispatchers.IO) {
+            recordDao.getDailyExpense(date, userId) ?: 0f
         }
     }
 }
