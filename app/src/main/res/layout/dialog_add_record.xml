@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="24dp">
 
     <!-- Title for the Dialog -->
@@ -76,6 +77,115 @@
         android:text="Date not selected"
         android:textSize="14sp" />
 
+    <!-- Added ScrollView -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@id/actionButtonsLayout"
+        android:layout_below="@id/tvDate"
+        android:layout_marginBottom="16dp">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:alignmentMode="alignBounds"
+            android:useDefaultMargins="true"
+            android:rowOrderPreserved="true">
+
+
+            <Button
+                android:id="@+id/btnRestaurant"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_gravity="fill"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:background="@drawable/category_button_bg"
+                app:icon="@drawable/restaurant"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="@color/quantum_yellow"
+                android:text="@string/food"/>
+
+            <Button
+                android:id="@+id/btnTransport"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_gravity="fill"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:background="@drawable/category_button_bg"
+                app:icon="@drawable/transportation"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="@color/quantum_yellow"
+                android:text="@string/transportation" />
+
+            <Button
+                android:id="@+id/btnShopping"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:layout_gravity="fill"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:background="@drawable/category_button_bg"
+                app:icon="@drawable/shopping"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="@color/quantum_yellow"
+                android:text="@string/shopping"/>
+
+            <Button
+                android:id="@+id/btnGrocery"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="0"
+                android:layout_column="3"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/grocery"
+                app:icon="@drawable/grocery"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="@color/quantum_yellow"/>
+
+            <Button
+                android:id="@+id/btnUtility"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/grocery"
+                app:icon="@drawable/utility"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="@color/quantum_yellow"/>
+
+            <!-- More categories to add -->
+        </GridLayout>
+    </ScrollView>
+
     <!-- Horizontal Layout for Action Buttons at the Bottom -->
     <LinearLayout
         android:id="@+id/actionButtonsLayout"
@@ -103,5 +213,7 @@
             android:layout_weight="1"
             android:text="Add Record" />
     </LinearLayout>
+
+
 
 </RelativeLayout>
