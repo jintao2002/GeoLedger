@@ -109,8 +109,8 @@
                 app:iconGravity="top"
                 app:iconSize="54dp"
                 app:iconPadding="2dp"
-                app:iconTint="@color/quantum_yellow"
-                android:text="@string/food"/>
+                app:iconTint="#FFF176"
+                android:text="@string/restaurant"/>
 
             <Button
                 android:id="@+id/btnTransport"
@@ -126,7 +126,7 @@
                 app:iconGravity="top"
                 app:iconSize="54dp"
                 app:iconPadding="2dp"
-                app:iconTint="@color/quantum_yellow"
+                app:iconTint="#FFF176"
                 android:text="@string/transportation" />
 
             <Button
@@ -143,7 +143,7 @@
                 app:iconGravity="top"
                 app:iconSize="54dp"
                 app:iconPadding="2dp"
-                app:iconTint="@color/quantum_yellow"
+                app:iconTint="#FFF176"
                 android:text="@string/shopping"/>
 
             <Button
@@ -162,10 +162,10 @@
                 app:iconGravity="top"
                 app:iconSize="54dp"
                 app:iconPadding="2dp"
-                app:iconTint="@color/quantum_yellow"/>
+                app:iconTint="#FFF176"/>
 
             <Button
-                android:id="@+id/btnUtility"
+                android:id="@+id/btnPower"
                 android:layout_width="0dp"
                 android:layout_height="76dp"
                 android:layout_row="1"
@@ -175,12 +175,138 @@
                 android:layout_margin="8dp"
                 android:padding="8dp"
                 android:background="@drawable/category_button_bg"
-                android:text="@string/grocery"
-                app:icon="@drawable/utility"
+                android:text="@string/power"
+                app:icon="@drawable/power"
                 app:iconGravity="top"
                 app:iconSize="54dp"
                 app:iconPadding="2dp"
-                app:iconTint="@color/quantum_yellow"/>
+                app:iconTint="#FFF176"/>
+
+            <Button
+                android:id="@+id/btnEducation"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/education"
+                app:icon="@drawable/education"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
+
+            <Button
+                android:id="@+id/btnSnack"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/snack"
+                app:icon="@drawable/snack"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
+
+            <Button
+                android:id="@+id/btnCloths"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="1"
+                android:layout_column="3"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/cloths"
+                app:icon="@drawable/cloths"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
+
+            <Button
+                android:id="@+id/btnFurniture"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/furniture"
+                app:icon="@drawable/furniture"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
+
+            <Button
+                android:id="@+id/btnFitness"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/fitness"
+                app:icon="@drawable/fitness"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
+
+            <Button
+                android:id="@+id/btnCommunication"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="2"
+                android:layout_column="2"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/communication"
+                app:icon="@drawable/communication"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
+
+            <Button
+                android:id="@+id/btnTravel"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="2"
+                android:layout_column="3"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/travel"
+                app:icon="@drawable/travel"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
 
             <!-- More categories to add -->
         </GridLayout>
@@ -202,7 +328,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="Cancel" />
+            android:text="@string/cancelButtonAtAddNewPage" />
 
         <!-- Add Record Button -->
         <Button
@@ -211,7 +337,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:text="Add Record" />
+            android:text="@string/add_recordButtonAtAddNewPage" />
     </LinearLayout>
 
 

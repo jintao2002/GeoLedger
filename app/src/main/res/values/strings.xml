@@ -7,6 +7,17 @@
     <string name="shopping">shopping</string>
     <string name="food">food</string>
     <string name="grocery">grocery</string>
+    <string name="power">power</string>
+    <string name="education">education</string>
+    <string name="snack">snack</string>
+    <string name="cloths">cloths</string>
+    <string name="cancelButtonAtAddNewPage">Cancel</string>
+    <string name="add_recordButtonAtAddNewPage">Add Record</string>
+    <string name="travel">travel</string>
+    <string name="communication">communication</string>
+    <string name="fitness">fitness</string>
+    <string name="furniture">furniture</string>
+    <string name="restaurant">restaurant</string>
     <string-array name="budget_categories">
         <item>Food</item>
         <item>Transportation</item>
