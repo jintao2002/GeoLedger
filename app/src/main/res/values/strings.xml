@@ -18,6 +18,8 @@
     <string name="fitness">fitness</string>
     <string name="furniture">furniture</string>
     <string name="restaurant">restaurant</string>
+    <string name="daily_average">Daily Average</string>
+    <string name="total_expenses">Total Expenses</string>
     <string-array name="budget_categories">
         <item>Food</item>
         <item>Transportation</item>

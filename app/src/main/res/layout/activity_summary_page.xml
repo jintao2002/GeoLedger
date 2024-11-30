@@ -74,7 +74,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Expenses"
+                    android:text="@string/total_expenses"
                     android:textSize="16sp"
                     android:textColor="#666666"/>
 
@@ -97,7 +97,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Daily Average"
+                    android:text="@string/daily_average"
                     android:textSize="16sp"
                     android:textColor="#666666"/>
 

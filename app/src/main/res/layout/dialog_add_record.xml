@@ -308,6 +308,78 @@
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <Button
+                android:id="@+id/btnGift"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/travel"
+                app:icon="@drawable/gift"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
+
+            <Button
+                android:id="@+id/btnGames"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/travel"
+                app:icon="@drawable/games"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
+
+            <Button
+                android:id="@+id/btnPets"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="3"
+                android:layout_column="2"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/travel"
+                app:icon="@drawable/pets"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
+
+            <Button
+                android:id="@+id/btnMedicals"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_row="3"
+                android:layout_column="3"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:background="@drawable/category_button_bg"
+                android:text="@string/travel"
+                app:icon="@drawable/medical"
+                app:iconGravity="top"
+                app:iconSize="54dp"
+                app:iconPadding="2dp"
+                app:iconTint="#FFF176"/>
+
             <!-- More categories to add -->
         </GridLayout>
     </ScrollView>
