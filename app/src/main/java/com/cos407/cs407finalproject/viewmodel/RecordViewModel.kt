@@ -39,7 +39,7 @@ class RecordViewModel(private val repository: RecordRepository) : ViewModel() {
         }
     }
 
-    suspend fun getDailyExpenseSync(date: String, userId: Int): Float? {
-        return repository.getDailyExpenseSync(date, userId)
-    }
+//    suspend fun getDailyExpenseSync(date: String, userId: Int): Float? {
+//        return repository.getDailyExpenseSync(date, userId)
+//    }
 }

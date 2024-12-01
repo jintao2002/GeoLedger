@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TableLayout
@@ -18,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cos407.cs407finalproject.database.AppDatabase
 import com.cos407.cs407finalproject.database.Record
@@ -31,12 +33,16 @@ import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class RecordPage : AppCompatActivity() {
 
+    private lateinit var recordRepository: RecordRepository
     private lateinit var tableLayout: TableLayout
     private var selectedLocation: String = "N/A" // Store selected location
     private var selectedDate: String = "N/A" // Store selected date
+    private var selectedCategory: String = "Uncategorized" // Store category
     private var currentDialogView: View? = null // Reference to the current dialog view
     private var alertDialog: AlertDialog? = null
 
@@ -104,11 +110,18 @@ class RecordPage : AppCompatActivity() {
 
         val btnAction = dialogView.findViewById<Button>(R.id.btnAddRecord)
 
+        val categoryGrid = dialogView.findViewById<GridLayout>(R.id.categoryGrid)
+        setupCategoryButtons(categoryGrid)
+
         if (existingRecord != null) {
             etItem.setText(existingRecord.item)
-            etAmount.setText(existingRecord.amount.replace("$", ""))
+            etAmount.setText(existingRecord.amount.toString())
             tvLocation.text = existingRecord.location
-            tvDate.text = existingRecord.date
+
+            val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val date = Date(existingRecord.date)
+            tvDate.text = dateFormat.format(date)
+
             btnAction.text = "Update"
         } else {
             tvLocation.text = selectedLocation
@@ -130,10 +143,11 @@ class RecordPage : AppCompatActivity() {
 
             val record = Record(
                 id = existingRecord?.id ?: 0,
-                amount = amount,
+                amount = amount.toDouble(),
+                category = selectedCategory,
                 item = item,
                 location = tvLocation.text.toString(),
-                date = tvDate.text.toString(),
+                date = System.currentTimeMillis(),
                 userId = getCurrentUserId() // Assign the current user's ID
             )
 
@@ -148,6 +162,7 @@ class RecordPage : AppCompatActivity() {
             currentDialogView = null
             alertDialog?.dismiss()
         }
+
 
         dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
             currentDialogView = null
@@ -188,8 +203,12 @@ class RecordPage : AppCompatActivity() {
         val datePicker = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
-                selectedDate = "$year-${month + 1}-$dayOfMonth"
-                tvDate.text = selectedDate
+                calendar.set(year, month, dayOfMonth, 0, 0, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
+                val timestamp = calendar.timeInMillis
+
+                val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                tvDate.text = dateFormat.format(Date(timestamp))
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -222,7 +241,8 @@ class RecordPage : AppCompatActivity() {
 
         // Date TextView
         val dateTextView = TextView(this)
-        dateTextView.text = record.date
+        val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        dateTextView.text = dateFormat.format(Date(record.date))
         dateTextView.setPadding(16, 8, 8, 8)
 
         // Actions Layout
@@ -230,67 +250,131 @@ class RecordPage : AppCompatActivity() {
         actionsLayout.orientation = LinearLayout.HORIZONTAL
         actionsLayout.setPadding(8, 8, 8, 8)
 
-        // Edit Button
-        val editButton = Button(this)
-        editButton.text = "Edit"
-        editButton.textSize = 10f
-        editButton.setBackgroundColor(resources.getColor(android.R.color.holo_blue_light))
-        editButton.setTextColor(resources.getColor(android.R.color.white))
-        val editParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        editParams.marginEnd = 4
-        editButton.layoutParams = editParams
-
-        // Delete Button
-        val deleteButton = Button(this)
-        deleteButton.text = "Delete"
-        deleteButton.textSize = 10f
-        deleteButton.setBackgroundColor(resources.getColor(android.R.color.holo_red_light))
-        deleteButton.setTextColor(resources.getColor(android.R.color.white))
-        deleteButton.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        // Add buttons to actions layout
-        actionsLayout.addView(editButton)
-        actionsLayout.addView(deleteButton)
-
+//        // Edit Button
+//        val editButton = Button(this)
+//        editButton.text = "Edit"
+//        editButton.textSize = 10f
+//        editButton.setBackgroundColor(resources.getColor(android.R.color.holo_blue_light))
+//        editButton.setTextColor(resources.getColor(android.R.color.white))
+//        val editParams = LinearLayout.LayoutParams(
+//            LinearLayout.LayoutParams.WRAP_CONTENT,
+//            LinearLayout.LayoutParams.WRAP_CONTENT
+//        )
+//        editParams.marginEnd = 4
+//        editButton.layoutParams = editParams
+//
+//        // Delete Button
+//        val deleteButton = Button(this)
+//        deleteButton.text = "Delete"
+//        deleteButton.textSize = 10f
+//        deleteButton.setBackgroundColor(resources.getColor(android.R.color.holo_red_light))
+//        deleteButton.setTextColor(resources.getColor(android.R.color.white))
+//        deleteButton.layoutParams = LinearLayout.LayoutParams(
+//            LinearLayout.LayoutParams.WRAP_CONTENT,
+//            LinearLayout.LayoutParams.WRAP_CONTENT
+//        )
+//
+//        // Add buttons to actions layout
+//        actionsLayout.addView(editButton)
+//        actionsLayout.addView(deleteButton)
+//
         // Add all views to the table row
         tableRow.addView(itemTextView)
         tableRow.addView(locationTextView)
         tableRow.addView(amountTextView)
         tableRow.addView(dateTextView)
         tableRow.addView(actionsLayout)
-
-        // Set click listeners for buttons
-        editButton.setOnClickListener {
-            showAddRecordDialog(record, tableRow)
-        }
-
-        deleteButton.setOnClickListener {
-            showDeleteConfirmationDialog(record, tableRow)
-        }
+//
+//        // Set click listeners for buttons
+//        editButton.setOnClickListener {
+//            showAddRecordDialog(record, tableRow)
+//        }
+//
+//        deleteButton.setOnClickListener {
+//            showDeleteConfirmationDialog(record, tableRow)
+//        }
 
         // Add the row to the table
         tableLayout.addView(tableRow)
-    }
+        Log.d("RecordPage", """
+        ID: ${record.id}
+        Item: ${record.item}
+        Amount: $${String.format("%.2f", record.amount)}
+        Category: ${record.category}
+        Location: ${record.location}
+        Date: ${java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date(record.date))}
+        User ID: ${record.userId}
+        """.trimIndent())    }
 
-    private fun showEditDeleteDialog(record: Record, tableRow: TableRow) {
-        val options = arrayOf("Edit", "Delete")
-        AlertDialog.Builder(this)
-            .setTitle("Select an Action")
-            .setItems(options) { _, which ->
-                when (which) {
-                    0 -> showAddRecordDialog(record, tableRow)
-                    1 -> showDeleteConfirmationDialog(record, tableRow)
+//    private fun showEditDeleteDialog(record: Record, tableRow: TableRow) {
+//        val options = arrayOf("Edit", "Delete")
+//        AlertDialog.Builder(this)
+//            .setTitle("Select an Action")
+//            .setItems(options) { _, which ->
+//                when (which) {
+//                    0 -> showAddRecordDialog(record, tableRow)
+//                    1 -> showDeleteConfirmationDialog(record, tableRow)
+//                }
+//            }
+//            .setNegativeButton("Cancel", null)
+//            .show()
+//    }
+
+
+    private fun setupCategoryButtons(gridLayout: GridLayout) {
+
+        // Store the original background for all buttons
+        val originalBackground = ResourcesCompat.getDrawable(resources, R.drawable.category_button_bg, null)
+        val selectedBackground = ResourcesCompat.getDrawable(resources, R.drawable.category_button_selected_bg, null)
+
+        // Create a map of button IDs to their corresponding categories
+        val categoryButtonMap = mapOf(
+            R.id.btnRestaurant to "Restaurant",
+            R.id.btnTransport to "Transportation",
+            R.id.btnShopping to "Shopping",
+            R.id.btnGrocery to "Grocery",
+            R.id.btnPower to "Power",
+            R.id.btnEducation to "Education",
+            R.id.btnSnack to "Snack",
+            R.id.btnCloths to "Clothes",
+            R.id.btnFurniture to "Furniture",
+            R.id.btnFitness to "Fitness",
+            R.id.btnCommunication to "Communication",
+            R.id.btnTravel to "Travel",
+            R.id.btnGift to "Gift",
+            R.id.btnGames to "Games",
+            R.id.btnPets to "Pets",
+            R.id.btnMedicals to "Medical"
+        )
+        var currentlySelectedButton: Button? = null
+
+        // Set up click listeners for each category button
+        categoryButtonMap.forEach { (buttonId, category) ->
+            gridLayout.findViewById<Button>(buttonId)?.apply {
+                setOnClickListener {
+
+                    // Reset previous selection
+                    currentlySelectedButton?.background = originalBackground
+
+                    // Update the new selection
+                    currentlySelectedButton = this
+                    background = selectedBackground
+
+                    // Update selected category
+                    selectedCategory = category
+
+                    // Log for debugging
+                    Log.d("RecordPage", """
+                    Category Button Clicked:
+                    Selected Category: $category
+                    Button ID: $buttonId
+                    Current selectedCategory value: $selectedCategory
+                """.trimIndent())
                 }
             }
-            .setNegativeButton("Cancel", null)
-            .show()
+        }
     }
+
 
     private fun showDeleteConfirmationDialog(record: Record, tableRow: TableRow) {
         AlertDialog.Builder(this)
@@ -353,7 +437,7 @@ class RecordPage : AppCompatActivity() {
         itemTextView.text = record.item
         locationTextView.text = record.location
         amountTextView.text = "$${record.amount}"
-        dateTextView.text = record.date
+        dateTextView.text = String.format("$%.2f", record.amount)
     }
 
     private fun loadRecords() {

@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [User::class, Record::class], version = 1, exportSchema = false)
+@Database(entities = [User::class, Record::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
 
@@ -22,7 +22,8 @@ abstract class AppDatabase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext, AppDatabase::class.java, "geoledger_database"
-                ).build()
+                ).fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }
@@ -35,7 +36,8 @@ abstract class AppDatabase : RoomDatabase() {
                 val dbName = "geoledger_database_user_$userId"
                 INSTANCE = Room.databaseBuilder(
                     context.applicationContext, AppDatabase::class.java, dbName
-                ).build()
+                ).fallbackToDestructiveMigration()
+                    .build()
             }
             return INSTANCE!!
         }

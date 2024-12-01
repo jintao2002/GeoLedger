@@ -55,27 +55,27 @@
         <TableRow>
             <TextView
                 android:padding="8dp"
-                android:text="Item"
+                android:text="@string/item"
                 android:gravity="start"
                 android:textStyle="bold" />
             <TextView
                 android:padding="8dp"
-                android:text="Location"
+                android:text="@string/location"
                 android:gravity="start"
                 android:textStyle="bold" />
             <TextView
                 android:padding="8dp"
-                android:text="Amount"
+                android:text="@string/amount"
                 android:gravity="start"
                 android:textStyle="bold" />
             <TextView
                 android:padding="8dp"
-                android:text="Date"
+                android:text="@string/date"
                 android:gravity="start"
                 android:textStyle="bold" />
             <TextView
                 android:padding="8dp"
-                android:text="Actions"
+                android:text="@string/actions"
                 android:gravity="start"
                 android:textStyle="bold" />
         </TableRow>

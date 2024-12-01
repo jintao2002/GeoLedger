@@ -1,6 +1,7 @@
 package com.cos407.cs407finalproject.repository
 
 import android.util.Log
+import java.util.Calendar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.cos407.cs407finalproject.database.Record
@@ -10,9 +11,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
+data class MonthlyStatistics(
+    val categoryExpenses: Map<String, Double>, // summarize by categories
+    val dailyExpenses: Map<String, Double>,    // summarize by date
+    val totalExpense: Double                   // monthly total
+)
+
 class RecordRepository(private val recordDao: RecordDao) {
 
     private val firebaseDb = FirebaseFirestore.getInstance()
+
+
 
     suspend fun saveRecord(record: Record) {
         withContext(Dispatchers.IO) {
@@ -97,9 +106,72 @@ class RecordRepository(private val recordDao: RecordDao) {
         }
     }
 
-    suspend fun getDailyExpenseSync(date: String, userId: Int): Float? {
+//    suspend fun getDailyExpenseSync(
+//        userId: Int,
+//        startDate: Long,
+//        endDate: Long
+//    ): Map<String, Double> {
+//        return withContext(Dispatchers.IO) {
+//            recordDao.getDailyExpense(userId, startDate, endDate)
+//        }
+//    }
+
+    suspend fun getMonthlyStatistics(userId: Int, year: Int, month: Int): MonthlyStatistics {
         return withContext(Dispatchers.IO) {
-            recordDao.getDailyExpense(date, userId) ?: 0f
+            // set up time
+            val calendar = Calendar.getInstance().apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, month - 1)
+                set(Calendar.DAY_OF_MONTH, 1)
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+
+            }
+
+            val startDate = calendar.timeInMillis
+            calendar.add(Calendar.MONTH, 1)
+            val endDate = calendar.timeInMillis - 1
+
+            // convert to map
+            val dailyExpenses = recordDao.getDailyExpense(userId, startDate, endDate)
+                .associate { it.day to it.total }
+
+            // convert to map
+            val categoryExpenses = recordDao.getMonthlyExpensesByCategory(userId, startDate, endDate)
+                .associate { it.category to it.total }
+
+            MonthlyStatistics(
+                categoryExpenses = categoryExpenses,
+                dailyExpenses = dailyExpenses,
+                totalExpense = recordDao.getMonthlyTotal(userId, startDate, endDate) ?: 0.0
+            )
         }
     }
+
+
+    suspend fun getStatisticsForDateRange(
+        userId: Int,
+        startDate: Long,
+        endDate: Long
+    ): MonthlyStatistics {
+        return withContext(Dispatchers.IO) {
+
+            // convert to map
+            val dailyExpenses = recordDao.getDailyExpense(userId, startDate, endDate)
+                .associate { it.day to it.total }
+
+            // convert to map
+            val categoryExpenses = recordDao.getMonthlyExpensesByCategory(userId, startDate, endDate)
+                .associate { it.category to it.total }
+
+            MonthlyStatistics(
+                categoryExpenses = categoryExpenses,
+                dailyExpenses = dailyExpenses,
+                totalExpense = recordDao.getMonthlyTotal(userId, startDate, endDate) ?: 0.0
+            )
+        }
+    }
+
+
 }
