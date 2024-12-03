@@ -25,6 +25,10 @@
     <string name="amount">Amount</string>
     <string name="date">Date</string>
     <string name="actions">Actions</string>
+    <string name="summary">Summary</string>
+    <string name="record">Record</string>
+    <string name="me">Me</string>
+    <string name="add_record">Add Record</string>
     <string-array name="budget_categories">
         <item>Food</item>
         <item>Transportation</item>

@@ -36,9 +36,21 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="8dp"
-        android:contentDescription="Add Record"
+        android:contentDescription="@string/add_record"
         android:src="@android:drawable/ic_input_add"
         app:fabSize="mini" />
+
+
+    <!-- Add ScrollView to wrap up TableLayout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title"
+        android:layout_above="@id/navigationLayout"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="8dp"
+        android:fillViewport="true">
+
 
     <!-- Table Layout -->
     <TableLayout
@@ -80,9 +92,12 @@
                 android:textStyle="bold" />
         </TableRow>
     </TableLayout>
+    </ScrollView>
+
 
     <!-- Bottom Navigation -->
     <LinearLayout
+        android:id="@+id/navigationLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -95,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#FFA726"
-            android:text="Record"
+            android:text="@string/record"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -104,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
-            android:text="Summary"
+            android:text="@string/summary"
             android:textColor="#37474F" />
 
         <Button
@@ -113,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
-            android:text="Me"
+            android:text="@string/me"
             android:textColor="#37474F" />
     </LinearLayout>
 </RelativeLayout>
