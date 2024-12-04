@@ -85,11 +85,11 @@
                 android:text="@string/date"
                 android:gravity="start"
                 android:textStyle="bold" />
-            <TextView
-                android:padding="8dp"
-                android:text="@string/actions"
-                android:gravity="start"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:padding="8dp"-->
+<!--                android:text="@string/actions"-->
+<!--                android:gravity="start"-->
+<!--                android:textStyle="bold" />-->
         </TableRow>
     </TableLayout>
     </ScrollView>

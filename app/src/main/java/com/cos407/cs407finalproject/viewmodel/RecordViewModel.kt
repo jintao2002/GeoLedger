@@ -1,5 +1,6 @@
 package com.cos407.cs407finalproject.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cos407.cs407finalproject.database.Record
@@ -8,9 +9,16 @@ import kotlinx.coroutines.launch
 
 class RecordViewModel(private val repository: RecordRepository) : ViewModel() {
 
-    fun saveRecord(record: Record) {
+    fun saveRecord(record: Record, onSaved: (Long) -> Unit) {
         viewModelScope.launch {
-            repository.saveRecord(record)
+            try {
+                // get new id
+                val newId = repository.saveRecord(record)
+                // pass back id
+                onSaved(newId)
+            } catch (e: Exception) {
+                Log.e("RecordViewModel", "Error saving record", e)
+            }
         }
     }
 

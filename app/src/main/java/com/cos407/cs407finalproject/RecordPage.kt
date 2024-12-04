@@ -118,7 +118,7 @@ class RecordPage : AppCompatActivity() {
             etAmount.setText(existingRecord.amount.toString())
             tvLocation.text = existingRecord.location
 
-            val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val dateFormat = java.text.SimpleDateFormat("MM-dd", Locale.getDefault())
             val date = Date(existingRecord.date)
             tvDate.text = dateFormat.format(date)
 
@@ -152,11 +152,34 @@ class RecordPage : AppCompatActivity() {
             )
 
             if (existingRecord != null) {
-                updateRecord(record)
-                tableRow?.let { updateTableRow(record, it) }
+                // get the existing record
+                val currentRecord = Record(
+                    id = existingRecord.id,  // keep existing id
+                    amount = amount.toDouble(),
+                    category = selectedCategory,
+                    item = item,
+                    location = tvLocation.text.toString(),
+                    date = System.currentTimeMillis(),
+                    userId = getCurrentUserId()
+                )
+                updateRecord(currentRecord)
+                tableRow?.let { updateTableRow(currentRecord, it) }
             } else {
-                saveRecord(record)
-                addRecord(record)
+                // create a new record
+                val newRecord = Record(
+                    amount = amount.toDouble(),
+                    category = selectedCategory,
+                    item = item,
+                    location = tvLocation.text.toString(),
+                    date = System.currentTimeMillis(),
+                    userId = getCurrentUserId()
+                )
+                recordViewModel.saveRecord(newRecord) { newId ->
+                    runOnUiThread {
+                        val completeRecord = newRecord.copy(id = newId.toInt())
+                        addRecord(completeRecord)
+                    }
+                }
             }
 
             currentDialogView = null
@@ -217,7 +240,7 @@ class RecordPage : AppCompatActivity() {
         datePicker.show()
     }
 
-    fun addRecord(record: Record) {
+    private fun addRecord(record: Record) {
         val tableRow = TableRow(this)
         tableRow.layoutParams = TableLayout.LayoutParams(
             TableLayout.LayoutParams.MATCH_PARENT,
@@ -241,7 +264,7 @@ class RecordPage : AppCompatActivity() {
 
         // Date TextView
         val dateTextView = TextView(this)
-        val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateFormat = java.text.SimpleDateFormat("MM-dd", Locale.getDefault())
         dateTextView.text = dateFormat.format(Date(record.date))
         dateTextView.setPadding(16, 8, 8, 8)
 
@@ -294,6 +317,11 @@ class RecordPage : AppCompatActivity() {
 //            showDeleteConfirmationDialog(record, tableRow)
 //        }
 
+        tableRow.setOnLongClickListener {
+            showEditDeleteDialog(record, tableRow)
+            true
+        }
+
         // Add the row to the table
         tableLayout.addView(tableRow)
         Log.d("RecordPage", """
@@ -302,23 +330,25 @@ class RecordPage : AppCompatActivity() {
         Amount: $${String.format("%.2f", record.amount)}
         Category: ${record.category}
         Location: ${record.location}
-        Date: ${java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date(record.date))}
+        Date: ${java.text.SimpleDateFormat("MM-dd HH:mm:ss", Locale.getDefault()).format(Date(record.date))}
         User ID: ${record.userId}
-        """.trimIndent())    }
+        """.trimIndent())
 
-//    private fun showEditDeleteDialog(record: Record, tableRow: TableRow) {
-//        val options = arrayOf("Edit", "Delete")
-//        AlertDialog.Builder(this)
-//            .setTitle("Select an Action")
-//            .setItems(options) { _, which ->
-//                when (which) {
-//                    0 -> showAddRecordDialog(record, tableRow)
-//                    1 -> showDeleteConfirmationDialog(record, tableRow)
-//                }
-//            }
-//            .setNegativeButton("Cancel", null)
-//            .show()
-//    }
+    }
+
+    private fun showEditDeleteDialog(record: Record, tableRow: TableRow) {
+        val options = arrayOf("Edit", "Delete")
+        AlertDialog.Builder(this)
+            .setTitle("Select an Action")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> showAddRecordDialog(record, tableRow)
+                    1 -> showDeleteConfirmationDialog(record, tableRow)
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
 
 
     private fun setupCategoryButtons(gridLayout: GridLayout) {
@@ -370,6 +400,7 @@ class RecordPage : AppCompatActivity() {
                     Button ID: $buttonId
                     Current selectedCategory value: $selectedCategory
                 """.trimIndent())
+
                 }
             }
         }
@@ -406,26 +437,27 @@ class RecordPage : AppCompatActivity() {
         }
     }
 
-    private fun swipeToDelete(tableRow: TableRow, record: Record) {
-        // Remove the row with animation
-        tableRow.animate()
-            .translationX(tableRow.width.toFloat())
-            .alpha(0f)
-            .setDuration(300)
-            .withEndAction {
-                deleteRecord(record, tableRow)
-            }
-    }
+//    private fun swipeToDelete(tableRow: TableRow, record: Record) {
+//        // Remove the row with animation
+//        tableRow.animate()
+//            .translationX(tableRow.width.toFloat())
+//            .alpha(0f)
+//            .setDuration(300)
+//            .withEndAction {
+//                deleteRecord(record, tableRow)
+//            }
+//    }
 
 
-    private fun saveRecord(record: Record) {
-        // Use the ViewModel to save the record
-        recordViewModel.saveRecord(record)
-    }
+//    private fun saveRecord(record: Record) {
+//        // Use the ViewModel to save the record
+//        recordViewModel.saveRecord(record)
+//    }
 
     private fun updateRecord(record: Record) {
         // Use the ViewModel to update the record
         recordViewModel.updateRecord(record)
+
     }
 
     private fun updateTableRow(record: Record, tableRow: TableRow) {
@@ -437,7 +469,8 @@ class RecordPage : AppCompatActivity() {
         itemTextView.text = record.item
         locationTextView.text = record.location
         amountTextView.text = "$${record.amount}"
-        dateTextView.text = String.format("$%.2f", record.amount)
+        dateTextView.text = java.text.SimpleDateFormat("MM-dd", Locale.getDefault())
+            .format(Date(record.date))
     }
 
     private fun loadRecords() {

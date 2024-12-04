@@ -23,17 +23,17 @@ class RecordRepository(private val recordDao: RecordDao) {
 
 
 
-    suspend fun saveRecord(record: Record) {
-        withContext(Dispatchers.IO) {
+    suspend fun saveRecord(record: Record): Long {
+        return withContext(Dispatchers.IO) {
+            val id = recordDao.insert(record)
+
             try {
-
-                recordDao.insert(record)
-
                 val documentRef = firebaseDb.collection("records").add(record).await()
                 Log.d("RecordRepository", "Record saved with ID: ${documentRef.id}")
             } catch (e: Exception) {
                 Log.e("RecordRepository", "Error saving record", e)
             }
+            id
         }
     }
 

@@ -11,7 +11,7 @@ import androidx.room.Update
 interface RecordDao {
 
     @Insert
-    suspend fun insert(record: Record)
+    suspend fun insert(record: Record): Long
 
     @Query("SELECT * FROM records WHERE userId = :userId")
     suspend fun getAllRecordsByUser(userId: Int): List<Record>
