@@ -10,15 +10,14 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 data class MonthlyStatistics(
-    val categoryExpenses: Map<String, Double>, // summarize by categories
-    val dailyExpenses: Map<String, Double>,    // summarize by date
-    val totalExpense: Double                   // monthly total
+    val categoryExpenses: Map<String, Double>,
+    val dailyExpenses: Map<String, Double>,
+    val totalExpense: Double
 )
 
 class RecordRepository(private val recordDao: RecordDao) {
 
     private val firebaseDb = FirebaseFirestore.getInstance()
-
 
     suspend fun getDailyExpenseSync(
         userId: Int,
@@ -31,16 +30,10 @@ class RecordRepository(private val recordDao: RecordDao) {
         }
     }
 
+    // Modify point: insert only locally, don't wait for Firebase operation
     suspend fun saveRecord(record: Record): Long {
         return withContext(Dispatchers.IO) {
             val id = recordDao.insert(record)
-
-            try {
-                val documentRef = firebaseDb.collection("records").add(record).await()
-                Log.d("RecordRepository", "Record saved with ID: ${documentRef.id}")
-            } catch (e: Exception) {
-                Log.e("RecordRepository", "Error saving record", e)
-            }
             id
         }
     }
@@ -67,9 +60,7 @@ class RecordRepository(private val recordDao: RecordDao) {
     suspend fun deleteRecord(record: Record) {
         withContext(Dispatchers.IO) {
             try {
-
                 recordDao.delete(record)
-
 
                 val querySnapshot = firebaseDb.collection("records")
                     .whereEqualTo("id", record.id)
@@ -89,9 +80,7 @@ class RecordRepository(private val recordDao: RecordDao) {
     suspend fun updateRecord(record: Record) {
         withContext(Dispatchers.IO) {
             try {
-
                 recordDao.update(record)
-
 
                 val querySnapshot = firebaseDb.collection("records")
                     .whereEqualTo("id", record.id)
@@ -114,19 +103,8 @@ class RecordRepository(private val recordDao: RecordDao) {
         }
     }
 
-//    suspend fun getDailyExpenseSync(
-//        userId: Int,
-//        startDate: Long,
-//        endDate: Long
-//    ): Map<String, Double> {
-//        return withContext(Dispatchers.IO) {
-//            recordDao.getDailyExpense(userId, startDate, endDate)
-//        }
-//    }
-
     suspend fun getMonthlyStatistics(userId: Int, year: Int, month: Int): MonthlyStatistics {
         return withContext(Dispatchers.IO) {
-            // set up time
             val calendar = Calendar.getInstance().apply {
                 set(Calendar.YEAR, year)
                 set(Calendar.MONTH, month - 1)
@@ -134,18 +112,15 @@ class RecordRepository(private val recordDao: RecordDao) {
                 set(Calendar.HOUR_OF_DAY, 0)
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
-
             }
 
             val startDate = calendar.timeInMillis
             calendar.add(Calendar.MONTH, 1)
             val endDate = calendar.timeInMillis - 1
 
-            // convert to map
             val dailyExpenses = recordDao.getDailyExpense(userId, startDate, endDate)
                 .associate { it.day to it.total }
 
-            // convert to map
             val categoryExpenses = recordDao.getMonthlyExpensesByCategory(userId, startDate, endDate)
                 .associate { it.category to it.total }
 
@@ -157,19 +132,15 @@ class RecordRepository(private val recordDao: RecordDao) {
         }
     }
 
-
     suspend fun getStatisticsForDateRange(
         userId: Int,
         startDate: Long,
         endDate: Long
     ): MonthlyStatistics {
         return withContext(Dispatchers.IO) {
-
-            // convert to map
             val dailyExpenses = recordDao.getDailyExpense(userId, startDate, endDate)
                 .associate { it.day to it.total }
 
-            // convert to map
             val categoryExpenses = recordDao.getMonthlyExpensesByCategory(userId, startDate, endDate)
                 .associate { it.category to it.total }
 

@@ -49,8 +49,9 @@ class SummaryPage : AppCompatActivity() {
         // Initialize ViewModel
         val recordDao = AppDatabase.getDatabase(applicationContext).recordDao()
         val repository = RecordRepository(recordDao)
-        val factory = RecordViewModelFactory(application)
+        val factory = RecordViewModelFactory(repository)
         recordViewModel = ViewModelProvider(this, factory)[RecordViewModel::class.java]
+
 
         // Initialize month and total expense TextViews
         monthTextView = findViewById(R.id.month)

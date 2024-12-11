@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -19,10 +18,10 @@ import com.cos407.cs407finalproject.viewmodel.RecordViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
-    // Initialize the ViewModel
     private val recordViewModel: RecordViewModel by viewModels {
         val recordDao = AppDatabase.getDatabase(applicationContext).recordDao()
-        RecordViewModelFactory(application)
+        val repository = RecordRepository(recordDao)
+        RecordViewModelFactory(repository) // <-- Use repository here
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,28 +1,28 @@
 package com.cos407.cs407finalproject.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.cos407.cs407finalproject.database.AppDatabase
 import com.cos407.cs407finalproject.database.Record
 import com.cos407.cs407finalproject.repository.RecordRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class RecordViewModel(application: Application) : AndroidViewModel(application) {
-    private val recordDao = AppDatabase.getDatabase(application).recordDao()
-    private val repository = RecordRepository(recordDao)
+class RecordViewModel(private val repository: RecordRepository) :
+    AndroidViewModel(android.app.Application()) {
     private val firebaseDb = FirebaseFirestore.getInstance()
 
     fun saveRecord(record: Record, callback: ((Long) -> Unit)? = null) {
         viewModelScope.launch {
             try {
-
+                // Create new scratch file from selection
                 val id = repository.saveRecord(record)
 
+                // Immediately call the callback so that the UI is updated as soon as the local data is inserted.
+                callback?.invoke(id)
+
+                // Then do the Firebase insertion asynchronously, without blocking the flow of the UI update
                 val userRecord = hashMapOf(
                     "userId" to record.userId,
                     "item" to record.item,
@@ -32,17 +32,13 @@ class RecordViewModel(application: Application) : AndroidViewModel(application) 
                     "date" to record.date
                 )
 
-                firebaseDb.collection("records")
-                    .add(userRecord)
+                firebaseDb.collection("records").add(userRecord)
                     .addOnSuccessListener { documentReference ->
                         println("DocumentSnapshot added with ID: ${documentReference.id}")
-                    }
-                    .addOnFailureListener { e ->
+                    }.addOnFailureListener { e ->
                         println("Error adding document: $e")
                     }
 
-
-                callback?.invoke(id)
             } catch (e: Exception) {
                 println("Error saving record: ${e.message}")
             }
@@ -80,8 +76,6 @@ class RecordViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     suspend fun getMonthlyStatistics(
-        userId: Int,
-        year: Int,
-        month: Int
+        userId: Int, year: Int, month: Int
     ) = repository.getMonthlyStatistics(userId, year, month)
 }

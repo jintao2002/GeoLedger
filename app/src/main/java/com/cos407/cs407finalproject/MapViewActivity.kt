@@ -52,9 +52,10 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun initViewModel() {
         val recordDao = AppDatabase.getDatabase(applicationContext).recordDao()
         val repository = RecordRepository(recordDao)
-        val factory = RecordViewModelFactory(application)
+        val factory = RecordViewModelFactory(repository)
         recordViewModel = ViewModelProvider(this, factory)[RecordViewModel::class.java]
     }
+
 
     private fun checkAndRequestPermissions() {
         if (ContextCompat.checkSelfPermission(
