@@ -70,6 +70,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LanguageActivity" />
+        <activity android:name=".AppearanceActivity" />
+        <activity android:name=".ReportActivity" />
+        <activity android:name=".TermsActivity" />
     </application>
 
 </manifest>
