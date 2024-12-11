@@ -34,14 +34,13 @@
             android:exported="false" />
         <activity
             android:name=".AddBudget"
-            android:exported="false" /> <!-- Google Places API metadata -->
+            android:exported="false" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="${MAPS_API_KEY}" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -74,6 +73,9 @@
         <activity android:name=".AppearanceActivity" />
         <activity android:name=".ReportActivity" />
         <activity android:name=".TermsActivity" />
+        <activity
+            android:name=".SlideActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
