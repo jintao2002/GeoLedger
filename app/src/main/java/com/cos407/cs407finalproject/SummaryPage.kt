@@ -21,6 +21,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -206,8 +207,11 @@ class SummaryPage : AppCompatActivity() {
     }
 
     private fun updateMonthTextView() {
-        val monthFormat = android.text.format.DateFormat.format("MMMM yyyy", currentMonth.time) as String
-        monthTextView.text = monthFormat
+        val dateFormat = SimpleDateFormat("MMM. yyyy", Locale.ENGLISH)
+
+        val formattedDate = dateFormat.format(currentMonth.time)
+
+        monthTextView.text = formattedDate
     }
 
     private fun getCurrentUserId(): Int {
