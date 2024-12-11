@@ -98,6 +98,10 @@ class RecordPage : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    override fun onResume() {
+        super.onResume()
+        loadRecords()
+    }
 
     private fun showAddRecordDialog(existingRecord: Record? = null, tableRow: TableRow? = null) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_record, null)
@@ -175,9 +179,10 @@ class RecordPage : AppCompatActivity() {
                     userId = getCurrentUserId()
                 )
                 recordViewModel.saveRecord(newRecord) { newId ->
-                    runOnUiThread {
-                        val completeRecord = newRecord.copy(id = newId.toInt())
-                        addRecord(completeRecord)
+                    if (newId != -1L) {
+                        loadRecords()
+                    } else {
+                        Toast.makeText(this, "Failed to save record", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -241,100 +246,72 @@ class RecordPage : AppCompatActivity() {
     }
 
     private fun addRecord(record: Record) {
-        val tableRow = TableRow(this)
-        tableRow.layoutParams = TableLayout.LayoutParams(
-            TableLayout.LayoutParams.MATCH_PARENT,
-            TableLayout.LayoutParams.WRAP_CONTENT
-        )
+            val tableRow = TableRow(this)
+            tableRow.layoutParams = TableLayout.LayoutParams(
+                TableLayout.LayoutParams.MATCH_PARENT,
+                TableLayout.LayoutParams.WRAP_CONTENT
+            )
 
-        // Item TextView
-        val itemTextView = TextView(this)
-        itemTextView.text = record.item
-        itemTextView.setPadding(16, 8, 8, 8)
+            // Item TextView
+            val itemTextView = TextView(this)
+            itemTextView.text = record.item
+            itemTextView.setPadding(16, 8, 8, 8)
 
-        // Location TextView
-        val locationTextView = TextView(this)
-        locationTextView.text = record.location
-        locationTextView.setPadding(16, 8, 8, 8)
+            // Location TextView
+            val locationTextView = TextView(this)
+            locationTextView.text = record.location
+            locationTextView.setPadding(16, 8, 8, 8)
 
-        // Amount TextView
-        val amountTextView = TextView(this)
-        amountTextView.text = "$${record.amount}"
-        amountTextView.setPadding(16, 8, 8, 8)
+            // Amount TextView
+            val amountTextView = TextView(this)
+            amountTextView.text = "$${record.amount}"
+            amountTextView.setPadding(16, 8, 8, 8)
 
-        // Date TextView
-        val dateTextView = TextView(this)
-        val dateFormat = java.text.SimpleDateFormat("MM-dd", Locale.getDefault())
-        dateTextView.text = dateFormat.format(Date(record.date))
-        dateTextView.setPadding(16, 8, 8, 8)
+            // Date TextView
+            val dateTextView = TextView(this)
+            val dateFormat = java.text.SimpleDateFormat("MM-dd", Locale.getDefault())
+            dateTextView.text = dateFormat.format(Date(record.date))
+            dateTextView.setPadding(16, 8, 8, 8)
 
-        // Actions Layout
-        val actionsLayout = LinearLayout(this)
-        actionsLayout.orientation = LinearLayout.HORIZONTAL
-        actionsLayout.setPadding(8, 8, 8, 8)
+            // Actions Layout
+            val actionsLayout = LinearLayout(this)
+            actionsLayout.orientation = LinearLayout.HORIZONTAL
+            actionsLayout.setPadding(8, 8, 8, 8)
 
-//        // Edit Button
-//        val editButton = Button(this)
-//        editButton.text = "Edit"
-//        editButton.textSize = 10f
-//        editButton.setBackgroundColor(resources.getColor(android.R.color.holo_blue_light))
-//        editButton.setTextColor(resources.getColor(android.R.color.white))
-//        val editParams = LinearLayout.LayoutParams(
-//            LinearLayout.LayoutParams.WRAP_CONTENT,
-//            LinearLayout.LayoutParams.WRAP_CONTENT
-//        )
-//        editParams.marginEnd = 4
-//        editButton.layoutParams = editParams
-//
-//        // Delete Button
-//        val deleteButton = Button(this)
-//        deleteButton.text = "Delete"
-//        deleteButton.textSize = 10f
-//        deleteButton.setBackgroundColor(resources.getColor(android.R.color.holo_red_light))
-//        deleteButton.setTextColor(resources.getColor(android.R.color.white))
-//        deleteButton.layoutParams = LinearLayout.LayoutParams(
-//            LinearLayout.LayoutParams.WRAP_CONTENT,
-//            LinearLayout.LayoutParams.WRAP_CONTENT
-//        )
-//
-//        // Add buttons to actions layout
-//        actionsLayout.addView(editButton)
-//        actionsLayout.addView(deleteButton)
-//
-        // Add all views to the table row
-        tableRow.addView(itemTextView)
-        tableRow.addView(locationTextView)
-        tableRow.addView(amountTextView)
-        tableRow.addView(dateTextView)
-        tableRow.addView(actionsLayout)
-//
-//        // Set click listeners for buttons
-//        editButton.setOnClickListener {
-//            showAddRecordDialog(record, tableRow)
-//        }
-//
-//        deleteButton.setOnClickListener {
-//            showDeleteConfirmationDialog(record, tableRow)
-//        }
+            // Add all views to the table row
+            tableRow.addView(itemTextView)
+            tableRow.addView(locationTextView)
+            tableRow.addView(amountTextView)
+            tableRow.addView(dateTextView)
+            tableRow.addView(actionsLayout)
 
-        tableRow.setOnLongClickListener {
-            showEditDeleteDialog(record, tableRow)
-            true
-        }
 
-        // Add the row to the table
-        tableLayout.addView(tableRow)
-        Log.d("RecordPage", """
+            tableRow.setOnLongClickListener {
+                showEditDeleteDialog(record, tableRow)
+                true
+            }
+
+            // Add the row to the table
+            tableLayout.addView(tableRow)
+            tableLayout.requestLayout()
+            tableLayout.invalidate()
+
+            Log.d(
+                "RecordPage", """
         ID: ${record.id}
         Item: ${record.item}
         Amount: $${String.format("%.2f", record.amount)}
         Category: ${record.category}
         Location: ${record.location}
-        Date: ${java.text.SimpleDateFormat("MM-dd HH:mm:ss", Locale.getDefault()).format(Date(record.date))}
+        Date: ${
+                    java.text.SimpleDateFormat("MM-dd HH:mm:ss", Locale.getDefault())
+                        .format(Date(record.date))
+                }
         User ID: ${record.userId}
-        """.trimIndent())
+        """.trimIndent()
+            )
+        }
 
-    }
 
     private fun showEditDeleteDialog(record: Record, tableRow: TableRow) {
         val options = arrayOf("Edit", "Delete")
@@ -425,11 +402,11 @@ class RecordPage : AppCompatActivity() {
             recordViewModel.deleteRecord(record)
 
             // Remove from UI
-            tableLayout.removeView(tableRow)
+            runOnUiThread {
+                tableLayout.removeView(tableRow)
+                Log.d("RecordPage", "Record deleted: ${record.id}")
+            }
 
-            // Sync with Firebase if needed
-            val userId = getCurrentUserId()
-            recordViewModel.syncRecords(userId)
 
         } catch (e: Exception) {
             Log.e("RecordPage", "Error deleting record", e)
@@ -437,22 +414,6 @@ class RecordPage : AppCompatActivity() {
         }
     }
 
-//    private fun swipeToDelete(tableRow: TableRow, record: Record) {
-//        // Remove the row with animation
-//        tableRow.animate()
-//            .translationX(tableRow.width.toFloat())
-//            .alpha(0f)
-//            .setDuration(300)
-//            .withEndAction {
-//                deleteRecord(record, tableRow)
-//            }
-//    }
-
-
-//    private fun saveRecord(record: Record) {
-//        // Use the ViewModel to save the record
-//        recordViewModel.saveRecord(record)
-//    }
 
     private fun updateRecord(record: Record) {
         // Use the ViewModel to update the record
@@ -473,15 +434,17 @@ class RecordPage : AppCompatActivity() {
             .format(Date(record.date))
     }
 
+
     private fun loadRecords() {
         val userId = getCurrentUserId()
-        // Use the ViewModel to get records
         recordViewModel.getRecords(userId) { records ->
-            records.forEach { addRecord(it) }
+            runOnUiThread {
+                tableLayout.removeAllViews()
+                records.forEach { record ->
+                    addRecord(record)
+                }
+            }
         }
-
-        // Optionally sync records from Firebase
-        recordViewModel.syncRecords(userId)
     }
 
     private fun getCurrentUserId(): Int {

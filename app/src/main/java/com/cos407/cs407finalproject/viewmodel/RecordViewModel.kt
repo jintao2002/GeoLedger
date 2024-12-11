@@ -5,19 +5,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cos407.cs407finalproject.database.Record
 import com.cos407.cs407finalproject.repository.RecordRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RecordViewModel(private val repository: RecordRepository) : ViewModel() {
 
-    fun saveRecord(record: Record, onSaved: (Long) -> Unit) {
+    fun saveRecord(record: Record, callback: (Long) -> Unit) {
         viewModelScope.launch {
             try {
-                // get new id
-                val newId = repository.saveRecord(record)
-                // pass back id
-                onSaved(newId)
+                val id = withContext(Dispatchers.IO) {
+                    repository.saveRecord(record)
+                }
+                withContext(Dispatchers.Main) {
+                    callback(id)
+                }
             } catch (e: Exception) {
                 Log.e("RecordViewModel", "Error saving record", e)
+                callback(-1)
             }
         }
     }
@@ -47,7 +52,4 @@ class RecordViewModel(private val repository: RecordRepository) : ViewModel() {
         }
     }
 
-//    suspend fun getDailyExpenseSync(date: String, userId: Int): Float? {
-//        return repository.getDailyExpenseSync(date, userId)
-//    }
 }

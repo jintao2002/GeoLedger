@@ -83,6 +83,18 @@
         android:textColor="#FFFFFF" />
 
     <Button
+        android:id="@+id/btnMapView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#56C596"
+        android:text="Switch to Map View"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:background="#FFFFFF" />
+
+
+    <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

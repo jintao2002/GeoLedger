@@ -44,14 +44,6 @@
             android:textColor="#FFFFFF" />
 
         <!-- Currency Settings -->
-        <Button
-            android:id="@+id/btnCurrency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="#56C596"
-            android:text="Currency"
-            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <!-- Back Button -->

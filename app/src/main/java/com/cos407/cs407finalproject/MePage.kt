@@ -66,6 +66,9 @@ class MePage : AppCompatActivity() {
             val intent = Intent(this, AddBudget::class.java)
             startActivity(intent)
         }
+        findViewById<Button>(R.id.btnMapView).setOnClickListener {
+            startActivity(Intent(this, MapViewActivity::class.java))
+        }
 
     }
 

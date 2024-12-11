@@ -27,10 +27,7 @@ class SettingsPage : AppCompatActivity() {
             showNotificationSettingsDialog()
         }
 
-        findViewById<Button>(R.id.btnCurrency).setOnClickListener {
-            //TODO need to change currency signs in other pages
-            showCurrencySettingsDialog()
-        }
+
     }
 
     private fun showNotificationSettingsDialog() {
