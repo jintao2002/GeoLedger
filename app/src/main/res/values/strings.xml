@@ -29,7 +29,6 @@
     <string name="record">Record</string>
     <string name="me">Me</string>
     <string name="add_record">Add Record</string>
-    <string name="terms_of_use">Terms of Use</string>
     <string-array name="budget_categories">
         <item>Food</item>
         <item>Transportation</item>
@@ -38,4 +37,28 @@
         <item>Bills</item>
         <item>Others</item>
     </string-array>
+    <!-- Common Issues -->
+    <string name="faq_title">Common Issues and Solutions</string>
+    <string name="faq_1_title">1. App crashes on startup</string>
+    <string name="faq_1_solution">Solution: Clear app cache and data, then restart the app</string>
+    <string name="faq_2_title">2. Unable to save changes</string>
+    <string name="faq_2_solution">Solution: Check your internet connection and try again</string>
+    <string name="faq_3_title">3. Performance issues</string>
+    <string name="faq_3_solution">Solution: Ensure your device has sufficient storage space</string>
+    <string name="contact">Contact us: bding26@wisc.edu</string>
+
+    <!-- Terms of Use -->
+    <string name="terms_of_use">
+        Terms of Use\n\n
+        1. Acceptance of Terms\n
+        By accessing and using this application, you accept and agree to be bound by the terms and provision of this agreement.\n\n
+        2. Use License\n
+        Permission is granted to temporarily download one copy of the application for personal, non-commercial transitory viewing only.\n\n
+        3. Disclaimer\n
+        The materials on this application are provided on an \'as is\' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.\n\n
+        4. Limitations\n
+        In no event shall we or our suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on our application.\n\n
+        5. Revisions and Errata\n
+        The materials appearing on our application could include technical, typographical, or photographic errors. We do not warrant that any of the materials on its application are accurate, complete or current.
+    </string>
 </resources>

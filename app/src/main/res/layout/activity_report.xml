@@ -4,24 +4,69 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/faqContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- FAQ Title -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Common Issues and Solutions"
+            android:text="@string/faq_title"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp"/>
 
-        <!-- FAQ Items -->
+        <!-- FAQ 1 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contact us: bding26@wisc.edu"
+            android:text="@string/faq_1_title"
+            android:textStyle="bold"
             android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/faq_1_solution"
+            android:layout_marginTop="8dp"/>
+
+        <!-- FAQ 2 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/faq_2_title"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/faq_2_solution"
+            android:layout_marginTop="8dp"/>
+
+        <!-- FAQ 3 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/faq_3_title"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/faq_3_solution"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Contact Information -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contact"
+            android:layout_marginTop="32dp"/>
+
     </LinearLayout>
 </ScrollView> 
