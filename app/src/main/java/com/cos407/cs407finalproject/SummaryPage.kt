@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.cos407.cs407finalproject.database.AppDatabase
@@ -28,6 +29,8 @@ class SummaryPage : AppCompatActivity() {
     private lateinit var barChart: BarChart
     private lateinit var db: FirebaseFirestore
     private lateinit var recordViewModel: RecordViewModel
+    private lateinit var monthTextView: TextView
+    private var currentMonth: Calendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,10 @@ class SummaryPage : AppCompatActivity() {
         val factory = RecordViewModelFactory(application)
         recordViewModel = ViewModelProvider(this, factory)[RecordViewModel::class.java]
 
+        // Initialize month TextView
+        monthTextView = findViewById(R.id.month)
+        updateMonthTextView()
+
         // Update chart data
         CoroutineScope(Dispatchers.Main).launch {
             updateChartData()
@@ -55,6 +62,8 @@ class SummaryPage : AppCompatActivity() {
         val btnRecord = findViewById<Button>(R.id.btnRecord)
         val btnSummary = findViewById<Button>(R.id.btnSummary)
         val btnMe = findViewById<Button>(R.id.btnMe)
+        val btnPrevious = findViewById<Button>(R.id.previous)
+        val btnNext = findViewById<Button>(R.id.next)
 
         btnRecord.setOnClickListener {
             val intent = Intent(this, RecordPage::class.java)
@@ -71,6 +80,22 @@ class SummaryPage : AppCompatActivity() {
         btnMe.setOnClickListener {
             val intent = Intent(this, MePage::class.java)
             startActivity(intent)
+        }
+
+        btnPrevious.setOnClickListener {
+            currentMonth.add(Calendar.MONTH, -1)
+            updateMonthTextView()
+            CoroutineScope(Dispatchers.Main).launch {
+                updateChartData()
+            }
+        }
+
+        btnNext.setOnClickListener {
+            currentMonth.add(Calendar.MONTH, 1)
+            updateMonthTextView()
+            CoroutineScope(Dispatchers.Main).launch {
+                updateChartData()
+            }
         }
     }
 
@@ -105,11 +130,14 @@ class SummaryPage : AppCompatActivity() {
         val entries = ArrayList<BarEntry>()
         val labels = ArrayList<String>()
 
-        val userId = getCurrentUserId()
+        val userId = getCurrentUserId() // 获取当前用户ID
 
-        for (i in 6 downTo 0) {
-            val calendar = Calendar.getInstance()
-            calendar.add(Calendar.DAY_OF_YEAR, -i)
+
+        val daysInMonth = currentMonth.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        for (i in 1..daysInMonth) {
+            val calendar = currentMonth.clone() as Calendar
+            calendar.set(Calendar.DAY_OF_MONTH, i)
             val startOfDay = calendar.apply {
                 set(Calendar.HOUR_OF_DAY, 0)
                 set(Calendar.MINUTE, 0)
@@ -124,12 +152,9 @@ class SummaryPage : AppCompatActivity() {
                 set(Calendar.MILLISECOND, 999)
             }.timeInMillis
 
-            val dailyExpenses = withContext(Dispatchers.IO) {
-                recordViewModel.getDailyExpenses(userId, startOfDay, endOfDay)
-            }
-            val expenseAmount = dailyExpenses.values.firstOrNull()?.toFloat() ?: 0f
+            val expenseAmount = withContext(Dispatchers.IO) { getDailyExpenseFromFirebase(userId, startOfDay, endOfDay) }
 
-            entries.add(BarEntry((6 - i).toFloat(), expenseAmount))
+            entries.add(BarEntry(i.toFloat(), expenseAmount))
 
             val dateStr = android.text.format.DateFormat.format("MM/dd", calendar.time) as String
             labels.add(dateStr)
@@ -146,6 +171,32 @@ class SummaryPage : AppCompatActivity() {
 
         barChart.data = barData
         barChart.invalidate()
+    }
+
+    private suspend fun getDailyExpenseFromFirebase(userId: Int, startDate: Long, endDate: Long): Float {
+        var totalExpense = 0f
+
+        try {
+            val records = db.collection("records")
+                .whereEqualTo("userId", userId)
+                .whereGreaterThanOrEqualTo("date", startDate)
+                .whereLessThanOrEqualTo("date", endDate)
+                .get()
+                .await()
+
+            for (document in records) {
+                val amount = document.getDouble("amount") ?: 0.0
+                totalExpense += amount.toFloat()
+            }
+        } catch (e: Exception) {
+            Log.e("SummaryPage", "Error getting daily expense", e)
+        }
+        return totalExpense
+    }
+
+    private fun updateMonthTextView() {
+        val monthFormat = android.text.format.DateFormat.format("MMMM yyyy", currentMonth.time) as String
+        monthTextView.text = monthFormat
     }
 
     private fun getCurrentUserId(): Int {

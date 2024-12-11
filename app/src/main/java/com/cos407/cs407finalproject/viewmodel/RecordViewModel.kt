@@ -2,6 +2,7 @@ package com.cos407.cs407finalproject.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.cos407.cs407finalproject.database.AppDatabase
 import com.cos407.cs407finalproject.database.Record
@@ -73,12 +74,9 @@ class RecordViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    suspend fun getDailyExpenses(
-        userId: Int,
-        startDate: Long,
-        endDate: Long
-    ): Map<String, Double> = withContext(Dispatchers.IO) {
-        repository.getDailyExpenseSync(userId, startDate, endDate)
+    fun getDailyExpenses(userId: Int, startDate: Long, endDate: Long) = liveData(Dispatchers.IO) {
+        val dailyExpenses = repository.getDailyExpenseSync(userId, startDate, endDate)
+        emit(dailyExpenses)
     }
 
     suspend fun getMonthlyStatistics(
