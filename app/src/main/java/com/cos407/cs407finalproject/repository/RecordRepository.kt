@@ -22,6 +22,16 @@ class RecordRepository(private val recordDao: RecordDao) {
     private val firebaseDb = FirebaseFirestore.getInstance()
 
 
+    suspend fun getDailyExpenseSync(
+        userId: Int,
+        startDate: Long,
+        endDate: Long
+    ): Map<String, Double> {
+        return withContext(Dispatchers.IO) {
+            recordDao.getDailyExpense(userId, startDate, endDate)
+                .associate { it.day to it.total }
+        }
+    }
 
     suspend fun saveRecord(record: Record): Long {
         return withContext(Dispatchers.IO) {

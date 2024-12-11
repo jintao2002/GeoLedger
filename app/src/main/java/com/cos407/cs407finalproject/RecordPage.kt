@@ -56,7 +56,7 @@ class RecordPage : AppCompatActivity() {
         // Initialize the RecordViewModel using the Factory
         val recordDao = AppDatabase.getDatabase(applicationContext).recordDao()
         val repository = RecordRepository(recordDao)
-        val factory = RecordViewModelFactory(repository)
+        val factory = RecordViewModelFactory(application)
         recordViewModel = ViewModelProvider(this, factory)[RecordViewModel::class.java]
 
         // Initialize tableLayout after setting content view
@@ -436,6 +436,7 @@ class RecordPage : AppCompatActivity() {
             Toast.makeText(this, "Error deleting record", Toast.LENGTH_SHORT).show()
         }
     }
+
 
 //    private fun swipeToDelete(tableRow: TableRow, record: Record) {
 //        // Remove the row with animation

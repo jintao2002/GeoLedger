@@ -1,36 +1,57 @@
 package com.cos407.cs407finalproject.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.cos407.cs407finalproject.database.AppDatabase
 import com.cos407.cs407finalproject.database.Record
 import com.cos407.cs407finalproject.repository.RecordRepository
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class RecordViewModel(private val repository: RecordRepository) : ViewModel() {
+class RecordViewModel(application: Application) : AndroidViewModel(application) {
+    private val recordDao = AppDatabase.getDatabase(application).recordDao()
+    private val repository = RecordRepository(recordDao)
+    private val firebaseDb = FirebaseFirestore.getInstance()
 
-    fun saveRecord(record: Record, onSaved: (Long) -> Unit) {
+    fun saveRecord(record: Record, callback: ((Long) -> Unit)? = null) {
         viewModelScope.launch {
             try {
-                // get new id
-                val newId = repository.saveRecord(record)
-                // pass back id
-                onSaved(newId)
+
+                val id = repository.saveRecord(record)
+
+                val userRecord = hashMapOf(
+                    "userId" to record.userId,
+                    "item" to record.item,
+                    "amount" to record.amount,
+                    "category" to record.category,
+                    "location" to record.location,
+                    "date" to record.date
+                )
+
+                firebaseDb.collection("records")
+                    .add(userRecord)
+                    .addOnSuccessListener { documentReference ->
+                        println("DocumentSnapshot added with ID: ${documentReference.id}")
+                    }
+                    .addOnFailureListener { e ->
+                        println("Error adding document: $e")
+                    }
+
+
+                callback?.invoke(id)
             } catch (e: Exception) {
-                Log.e("RecordViewModel", "Error saving record", e)
+                println("Error saving record: ${e.message}")
             }
         }
     }
 
-    fun syncRecords(userId: Int) {
+    fun getRecords(userId: Int, callback: (List<Record>) -> Unit) {
         viewModelScope.launch {
-            repository.syncRecords(userId)
-        }
-    }
-
-    fun deleteRecord(record: Record) {
-        viewModelScope.launch {
-            repository.deleteRecord(record)
+            val records = repository.getRecordsByUser(userId)
+            callback(records)
         }
     }
 
@@ -40,14 +61,29 @@ class RecordViewModel(private val repository: RecordRepository) : ViewModel() {
         }
     }
 
-    fun getRecords(userId: Int, onResult: (List<Record>) -> Unit) {
+    fun deleteRecord(record: Record) {
         viewModelScope.launch {
-            val records = repository.getRecordsByUser(userId)
-            onResult(records)
+            repository.deleteRecord(record)
         }
     }
 
-//    suspend fun getDailyExpenseSync(date: String, userId: Int): Float? {
-//        return repository.getDailyExpenseSync(date, userId)
-//    }
+    fun syncRecords(userId: Int) {
+        viewModelScope.launch {
+            repository.syncRecords(userId)
+        }
+    }
+
+    suspend fun getDailyExpenses(
+        userId: Int,
+        startDate: Long,
+        endDate: Long
+    ): Map<String, Double> = withContext(Dispatchers.IO) {
+        repository.getDailyExpenseSync(userId, startDate, endDate)
+    }
+
+    suspend fun getMonthlyStatistics(
+        userId: Int,
+        year: Int,
+        month: Int
+    ) = repository.getMonthlyStatistics(userId, year, month)
 }

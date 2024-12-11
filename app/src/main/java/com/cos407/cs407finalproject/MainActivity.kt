@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     // Initialize the ViewModel
     private val recordViewModel: RecordViewModel by viewModels {
         val recordDao = AppDatabase.getDatabase(applicationContext).recordDao()
-        RecordViewModelFactory(RecordRepository(recordDao))
+        RecordViewModelFactory(application)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
