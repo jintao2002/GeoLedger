@@ -24,7 +24,7 @@ android {
         val apiKey: String = project.rootProject.file("local.properties").inputStream().use {
             val properties = Properties()
             properties.load(it)
-            properties.getProperty("GOOGLE_MAPS_API_KEY") ?: ""
+            properties.getProperty("MAPS_API_KEY") ?: ""
         }
         // Define MAPS_API_KEY to BuildConfig
         buildConfigField("String", "MAPS_API_KEY", "\"$apiKey\"")
@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.firestore.ktx)
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

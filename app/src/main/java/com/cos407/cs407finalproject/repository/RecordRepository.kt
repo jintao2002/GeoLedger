@@ -2,8 +2,6 @@ package com.cos407.cs407finalproject.repository
 
 import android.util.Log
 import java.util.Calendar
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
 import com.cos407.cs407finalproject.database.Record
 import com.cos407.cs407finalproject.database.RecordDao
 import com.google.firebase.firestore.FirebaseFirestore
@@ -182,6 +180,4 @@ class RecordRepository(private val recordDao: RecordDao) {
             )
         }
     }
-
-
 }

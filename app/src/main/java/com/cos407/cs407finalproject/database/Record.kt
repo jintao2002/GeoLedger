@@ -33,6 +33,7 @@ object ExpenseCategories {
     const val GIFT = "Gift"
     const val GAMES = "Games"
     const val PETS = "Pets"
+    const val MEDICAL = "Medical"
 
     // more categories...
 }
