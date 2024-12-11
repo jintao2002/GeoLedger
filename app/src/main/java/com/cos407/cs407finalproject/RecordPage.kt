@@ -273,49 +273,13 @@ class RecordPage : AppCompatActivity() {
         actionsLayout.orientation = LinearLayout.HORIZONTAL
         actionsLayout.setPadding(8, 8, 8, 8)
 
-//        // Edit Button
-//        val editButton = Button(this)
-//        editButton.text = "Edit"
-//        editButton.textSize = 10f
-//        editButton.setBackgroundColor(resources.getColor(android.R.color.holo_blue_light))
-//        editButton.setTextColor(resources.getColor(android.R.color.white))
-//        val editParams = LinearLayout.LayoutParams(
-//            LinearLayout.LayoutParams.WRAP_CONTENT,
-//            LinearLayout.LayoutParams.WRAP_CONTENT
-//        )
-//        editParams.marginEnd = 4
-//        editButton.layoutParams = editParams
-//
-//        // Delete Button
-//        val deleteButton = Button(this)
-//        deleteButton.text = "Delete"
-//        deleteButton.textSize = 10f
-//        deleteButton.setBackgroundColor(resources.getColor(android.R.color.holo_red_light))
-//        deleteButton.setTextColor(resources.getColor(android.R.color.white))
-//        deleteButton.layoutParams = LinearLayout.LayoutParams(
-//            LinearLayout.LayoutParams.WRAP_CONTENT,
-//            LinearLayout.LayoutParams.WRAP_CONTENT
-//        )
-//
-//        // Add buttons to actions layout
-//        actionsLayout.addView(editButton)
-//        actionsLayout.addView(deleteButton)
-//
+
         // Add all views to the table row
         tableRow.addView(itemTextView)
         tableRow.addView(locationTextView)
         tableRow.addView(amountTextView)
         tableRow.addView(dateTextView)
         tableRow.addView(actionsLayout)
-//
-//        // Set click listeners for buttons
-//        editButton.setOnClickListener {
-//            showAddRecordDialog(record, tableRow)
-//        }
-//
-//        deleteButton.setOnClickListener {
-//            showDeleteConfirmationDialog(record, tableRow)
-//        }
 
         tableRow.setOnLongClickListener {
             showEditDeleteDialog(record, tableRow)
@@ -421,39 +385,20 @@ class RecordPage : AppCompatActivity() {
 
     private fun deleteRecord(record: Record, tableRow: TableRow) {
         try {
-            // Delete from database using ViewModel
             recordViewModel.deleteRecord(record)
 
-            // Remove from UI
-            tableLayout.removeView(tableRow)
+            runOnUiThread {
+                tableLayout.removeView(tableRow)
+                Log.d("RecordPage", "Record deleted: ${record.id}")
+            }
 
-            // Sync with Firebase if needed
-            val userId = getCurrentUserId()
-            recordViewModel.syncRecords(userId)
-
+            loadRecords()
         } catch (e: Exception) {
             Log.e("RecordPage", "Error deleting record", e)
             Toast.makeText(this, "Error deleting record", Toast.LENGTH_SHORT).show()
         }
     }
 
-
-//    private fun swipeToDelete(tableRow: TableRow, record: Record) {
-//        // Remove the row with animation
-//        tableRow.animate()
-//            .translationX(tableRow.width.toFloat())
-//            .alpha(0f)
-//            .setDuration(300)
-//            .withEndAction {
-//                deleteRecord(record, tableRow)
-//            }
-//    }
-
-
-//    private fun saveRecord(record: Record) {
-//        // Use the ViewModel to save the record
-//        recordViewModel.saveRecord(record)
-//    }
 
     private fun updateRecord(record: Record) {
         // Use the ViewModel to update the record
@@ -476,13 +421,15 @@ class RecordPage : AppCompatActivity() {
 
     private fun loadRecords() {
         val userId = getCurrentUserId()
-        // Use the ViewModel to get records
-        recordViewModel.getRecords(userId) { records ->
-            records.forEach { addRecord(it) }
-        }
+        tableLayout.removeAllViews()
 
-        // Optionally sync records from Firebase
-        recordViewModel.syncRecords(userId)
+        recordViewModel.getRecords(userId) { records ->
+            runOnUiThread {
+                tableLayout.removeAllViews()
+                records.forEach { addRecord(it) }
+                Log.d("RecordPage", "Records loaded successfully: ${records.size} records")
+            }
+        }
     }
 
     private fun getCurrentUserId(): Int {
