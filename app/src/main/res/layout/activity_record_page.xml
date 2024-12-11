@@ -12,7 +12,7 @@
         android:layout_height="52dp"
         android:clickable="true"
         android:focusable="true"
-        app:srcCompat="@drawable/profile"
+        app:srcCompat="@drawable/photo"
         android:contentDescription="@string/profile_photo" />
 
     <!-- Title -->

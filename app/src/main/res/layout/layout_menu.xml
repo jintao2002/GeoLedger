@@ -115,19 +115,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:layout_marginBottom="16dp">
-
-        <ImageView
-            style="@style/MenuIconStyle"
-            app:srcCompat="@drawable/signout"
-            app:tint="#D32F2F"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign Out"
-            android:textColor="#D32F2F"
-            android:textSize="16sp"/>
-    </LinearLayout>
+        android:layout_marginBottom="16dp"/>
 
 </LinearLayout>
