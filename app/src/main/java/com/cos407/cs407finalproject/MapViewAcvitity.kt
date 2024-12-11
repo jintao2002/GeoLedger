@@ -52,19 +52,31 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun initViewModel() {
         val recordDao = AppDatabase.getDatabase(applicationContext).recordDao()
         val repository = RecordRepository(recordDao)
-        val factory = RecordViewModelFactory(repository)
+        val factory = RecordViewModelFactory(application)
         recordViewModel = ViewModelProvider(this, factory)[RecordViewModel::class.java]
     }
 
     private fun checkAndRequestPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
         } else {
             initMap()
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
@@ -109,7 +121,10 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     addresses?.firstOrNull()?.let { address ->
                         val location = LatLng(address.latitude, address.longitude)
-                        Log.d("MapDebug", "Adding marker at: ${location.latitude}, ${location.longitude}")
+                        Log.d(
+                            "MapDebug",
+                            "Adding marker at: ${location.latitude}, ${location.longitude}"
+                        )
 
                         mMap.addMarker(MarkerOptions().apply {
                             position(location)
