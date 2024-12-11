@@ -1,28 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cos407.cs407finalproject.SlideMenu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/slideMenu"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- Language options -->
-    <RadioGroup
-        android:id="@+id/languageGroup"
+    <!-- Include the side menu layout as the first child -->
+    <include
+        layout="@layout/layout_menu" />
+
+    <!-- The main content for LanguageActivity as the second child -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <RadioButton
-            android:id="@+id/rbEnglish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="English"
-            android:padding="16dp"/>
+        <ImageView
+            android:id="@+id/myProfilePhoto"
+            android:layout_width="61dp"
+            android:layout_height="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/profile_photo"
+            android:src="@drawable/photo" />
 
-        <RadioButton
-            android:id="@+id/rbChinese"
+        <!-- Language options (original content from your snippet) -->
+        <RadioGroup
+            android:id="@+id/languageGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="中文"
-            android:padding="16dp"/>
-    </RadioGroup>
-</LinearLayout> 
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbEnglish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="English"
+                android:padding="16dp"/>
+
+            <RadioButton
+                android:id="@+id/rbChinese"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="中文"
+                android:padding="16dp"/>
+        </RadioGroup>
+    </LinearLayout>
+</com.cos407.cs407finalproject.SlideMenu>

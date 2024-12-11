@@ -1,72 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+  Root layout uses SlideMenu. The first child is layout_menu.
+-->
+<com.cos407.cs407finalproject.SlideMenu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/slideMenu"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.cos407.cs407finalproject.ReportActivity">
 
-    <LinearLayout
-        android:id="@+id/faqContainer"
+    <!-- Include side menu layout -->
+    <include
+        layout="@layout/layout_menu" />
+
+    <!-- Main content area -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <!-- FAQ Title -->
-        <TextView
+        <!-- Button to open/close side menu -->
+        <ImageView
+            android:id="@+id/myProfilePhoto"
+            android:layout_width="61dp"
+            android:layout_height="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/profile_photo"
+            android:src="@drawable/photo"
+            android:layout_margin="16dp"/>
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/faq_title"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"/>
+            android:layout_height="match_parent"
+            android:layout_below="@id/myProfilePhoto"
+            android:layout_marginTop="20dp">
 
-        <!-- FAQ 1 -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/faq_1_title"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
+            <LinearLayout
+                android:id="@+id/faqContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/faq_1_solution"
-            android:layout_marginTop="8dp"/>
+                <!-- FAQ Title -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/faq_title"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"/>
 
-        <!-- FAQ 2 -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/faq_2_title"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
+                <!-- FAQ 1 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/faq_1_title"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/faq_2_solution"
-            android:layout_marginTop="8dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/faq_1_solution"
+                    android:layout_marginTop="8dp"/>
 
-        <!-- FAQ 3 -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/faq_3_title"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
+                <!-- FAQ 2 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/faq_2_title"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/faq_3_solution"
-            android:layout_marginTop="8dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/faq_2_solution"
+                    android:layout_marginTop="8dp"/>
 
-        <!-- Contact Information -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/contact"
-            android:layout_marginTop="32dp"/>
+                <!-- FAQ 3 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/faq_3_title"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"/>
 
-    </LinearLayout>
-</ScrollView> 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/faq_3_solution"
+                    android:layout_marginTop="8dp"/>
+
+                <!-- Contact Information -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contact"
+                    android:layout_marginTop="32dp"/>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</com.cos407.cs407finalproject.SlideMenu>

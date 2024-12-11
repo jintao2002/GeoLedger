@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Side menu layout -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="270dp"
@@ -37,29 +38,29 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <!-- Account -->
+        <!-- Record (replacing Account) -->
         <LinearLayout
-            android:id="@+id/menuAccount"
+            android:id="@+id/menuRecord"
             style="@style/MenuItemStyle">
-            
+
             <ImageView
                 style="@style/MenuIconStyle"
                 app:srcCompat="@drawable/account"/>
-            
+
             <TextView
                 style="@style/MenuTextStyle"
-                android:text="Account"/>
+                android:text="Record"/>
         </LinearLayout>
 
         <!-- Language -->
         <LinearLayout
             android:id="@+id/menuLanguage"
             style="@style/MenuItemStyle">
-            
+
             <ImageView
                 style="@style/MenuIconStyle"
                 app:srcCompat="@drawable/language"/>
-            
+
             <TextView
                 style="@style/MenuTextStyle"
                 android:text="Language"/>
@@ -69,11 +70,11 @@
         <LinearLayout
             android:id="@+id/menuAppearance"
             style="@style/MenuItemStyle">
-            
+
             <ImageView
                 style="@style/MenuIconStyle"
                 app:srcCompat="@drawable/appearance"/>
-            
+
             <TextView
                 style="@style/MenuTextStyle"
                 android:text="Appearance"/>
@@ -83,11 +84,11 @@
         <LinearLayout
             android:id="@+id/menuReport"
             style="@style/MenuItemStyle">
-            
+
             <ImageView
                 style="@style/MenuIconStyle"
                 app:srcCompat="@drawable/report"/>
-            
+
             <TextView
                 style="@style/MenuTextStyle"
                 android:text="Report"/>
@@ -97,18 +98,18 @@
         <LinearLayout
             android:id="@+id/menuTerms"
             style="@style/MenuItemStyle">
-            
+
             <ImageView
                 style="@style/MenuIconStyle"
                 app:srcCompat="@drawable/terms"/>
-            
+
             <TextView
                 style="@style/MenuTextStyle"
                 android:text="Terms of Use"/>
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Sign Out button -->
+    <!-- Sign Out button (if needed) -->
     <LinearLayout
         android:id="@+id/menuSignOut"
         android:layout_width="match_parent"

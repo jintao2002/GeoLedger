@@ -8,7 +8,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.GridLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TableLayout
+import android.widget.TableRow
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -25,7 +33,9 @@ import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class RecordPage : AppCompatActivity() {
 
@@ -93,9 +103,8 @@ class RecordPage : AppCompatActivity() {
      * Set click listeners for side menu buttons.
      */
     private fun setupMenuButtons() {
-        // Account - navigate to MePage
-        findViewById<LinearLayout>(R.id.menuAccount)?.setOnClickListener {
-            startActivity(Intent(this, MePage::class.java))
+        // Record - Do nothing
+        findViewById<LinearLayout>(R.id.menuRecord)?.setOnClickListener {
         }
 
         // Language - navigate to LanguageActivity
@@ -118,7 +127,6 @@ class RecordPage : AppCompatActivity() {
             startActivity(Intent(this, TermsActivity::class.java))
         }
 
-        // If you have a sign-out or other menu items, set them here as well.
     }
 
     /**

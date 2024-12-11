@@ -1,11 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+  Root uses SlideMenu. The first child side menu.
+-->
+<com.cos407.cs407finalproject.SlideMenu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/slideMenu"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.cos407.cs407finalproject.TermsActivity">
 
-    <TextView
+    <!-- Include side menu layout -->
+    <include
+        layout="@layout/layout_menu" />
+
+    <!-- Main content area -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@string/terms_of_use"/>
-</ScrollView> 
+        android:layout_height="match_parent">
+
+        <!-- Button to open/close side menu -->
+        <ImageView
+            android:id="@+id/myProfilePhoto"
+            android:layout_width="61dp"
+            android:layout_height="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/profile_photo"
+            android:src="@drawable/photo"
+            android:layout_margin="16dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/myProfilePhoto"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/terms_of_use"/>
+        </ScrollView>
+    </RelativeLayout>
+</com.cos407.cs407finalproject.SlideMenu>
