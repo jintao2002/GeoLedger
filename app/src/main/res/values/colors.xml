@@ -7,4 +7,21 @@
     <color name="secondaryBlue">#e3f6f5</color>
     <color name="thirdBlue">#bae8e8</color>
     <color name="highlightYellow">#ffd803</color>
+    <!-- Colors used for charts -->
+    <color name="colorCategory1">#E57373</color>   <!-- red lighten -->
+    <color name="colorCategory2">#F06292</color>   <!-- pink -->
+    <color name="colorCategory3">#BA68C8</color>   <!-- purple -->
+    <color name="colorCategory4">#9575CD</color>   <!-- deep purple -->
+    <color name="colorCategory5">#7986CB</color>   <!-- indigo -->
+    <color name="colorCategory6">#64B5F6</color>   <!-- blue -->
+    <color name="colorCategory7">#4FC3F7</color>   <!-- light blue -->
+    <color name="colorCategory8">#4DD0E1</color>   <!-- cyan -->
+    <color name="colorCategory9">#4DB6AC</color>   <!-- teal -->
+    <color name="colorCategory10">#81C784</color>  <!-- green -->
+    <color name="colorCategory11">#AED581</color>  <!-- light green -->
+    <color name="colorCategory12">#DCE775</color>  <!-- lime -->
+    <color name="colorCategory13">#FFF176</color>  <!-- yellow -->
+    <color name="colorCategory14">#FFD54F</color>  <!-- amber -->
+    <color name="colorCategory15">#FFB74D</color>  <!-- orange -->
+    <color name="colorCategory16">#FF8A65</color>  <!-- deep orange -->
 </resources>

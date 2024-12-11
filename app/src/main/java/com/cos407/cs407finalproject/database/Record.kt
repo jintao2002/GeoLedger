@@ -5,15 +5,14 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "records")
 data class Record(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val amount: Double = 0.0,
     val item: String = "",
     val category: String = "Uncategorized",
     val location: String = "",
     val date: Long = 0L,
     val userId: Int = 0
-)   {
+) {
     constructor() : this(0, 0.0, "", "Uncategorized", "", 0L, 0)
 }
 

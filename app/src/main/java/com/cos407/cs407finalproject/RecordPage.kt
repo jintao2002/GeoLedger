@@ -24,9 +24,8 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RecordPage : AppCompatActivity() {
 
@@ -37,7 +36,11 @@ class RecordPage : AppCompatActivity() {
     private var currentDialogView: View? = null
     private var alertDialog: AlertDialog? = null
 
+    // ViewModel
     private lateinit var recordViewModel: RecordViewModel
+
+    // Date format for consistent display and parsing
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,7 @@ class RecordPage : AppCompatActivity() {
 
         val recordDao = AppDatabase.getDatabase(applicationContext).recordDao()
         val repository = RecordRepository(recordDao)
-        val factory = RecordViewModelFactory(repository) // Now using repository in factory
+        val factory = RecordViewModelFactory(repository)
         recordViewModel = ViewModelProvider(this, factory)[RecordViewModel::class.java]
 
         tableLayout = findViewById(R.id.tableLayout)
@@ -88,6 +91,7 @@ class RecordPage : AppCompatActivity() {
         val tvLocation = dialogView.findViewById<TextView>(R.id.tvLocation)
         val tvDate = dialogView.findViewById<TextView>(R.id.tvDate)
         val btnAction = dialogView.findViewById<Button>(R.id.btnAddRecord)
+
         val categoryGrid = dialogView.findViewById<GridLayout>(R.id.categoryGrid)
         setupCategoryButtons(categoryGrid)
 
@@ -95,11 +99,11 @@ class RecordPage : AppCompatActivity() {
             etItem.setText(existingRecord.item)
             etAmount.setText(existingRecord.amount.toString())
             tvLocation.text = existingRecord.location
-
-            val dateFormat = java.text.SimpleDateFormat("MM-dd", Locale.getDefault())
-            val date = Date(existingRecord.date)
-            tvDate.text = dateFormat.format(date)
+            // Display the existing record date as yyyy-MM-dd
+            tvDate.text = dateFormat.format(Date(existingRecord.date))
             btnAction.text = "Update"
+            // Set selectedCategory to the existing record's category
+            selectedCategory = existingRecord.category
         } else {
             tvLocation.text = selectedLocation
             tvDate.text = selectedDate
@@ -119,14 +123,12 @@ class RecordPage : AppCompatActivity() {
             val amountStr = etAmount.text.toString()
             val amount = amountStr.toDoubleOrNull() ?: 0.0
 
-            // If no date selected, use current time
             val chosenDateStr = tvDate.text.toString()
             val recordTimestamp = if (chosenDateStr == "N/A") {
                 System.currentTimeMillis()
             } else {
-                // parse yyyy-MM-dd format from openDatePicker
-                val sdf = java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val parsedDate = sdf.parse(chosenDateStr)
+                // Parse as yyyy-MM-dd
+                val parsedDate = dateFormat.parse(chosenDateStr)
                 parsedDate?.time ?: System.currentTimeMillis()
             }
 
@@ -198,7 +200,8 @@ class RecordPage : AppCompatActivity() {
         val datePicker = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
-                val formattedDate = String.format("%d-%02d-%02d", year, month+1, dayOfMonth)
+                // Use yyyy-MM-dd format consistently
+                val formattedDate = String.format("%d-%02d-%02d", year, month + 1, dayOfMonth)
                 tvDate.text = formattedDate
             },
             calendar.get(Calendar.YEAR),
@@ -215,20 +218,28 @@ class RecordPage : AppCompatActivity() {
             TableLayout.LayoutParams.WRAP_CONTENT
         )
 
+        // Item column
         val itemTextView = TextView(this)
         itemTextView.text = record.item
         itemTextView.setPadding(16, 8, 8, 8)
 
+        // Category column
+        val categoryTextView = TextView(this)
+        categoryTextView.text = record.category
+        categoryTextView.setPadding(16, 8, 8, 8)
+
+        // Location column
         val locationTextView = TextView(this)
         locationTextView.text = record.location
         locationTextView.setPadding(16, 8, 8, 8)
 
+        // Amount column
         val amountTextView = TextView(this)
         amountTextView.text = "$${record.amount}"
         amountTextView.setPadding(16, 8, 8, 8)
 
+        // Date column (display as yyyy-MM-dd)
         val dateTextView = TextView(this)
-        val dateFormat = java.text.SimpleDateFormat("MM-dd", Locale.getDefault())
         dateTextView.text = dateFormat.format(Date(record.date))
         dateTextView.setPadding(16, 8, 8, 8)
 
@@ -236,7 +247,9 @@ class RecordPage : AppCompatActivity() {
         actionsLayout.orientation = LinearLayout.HORIZONTAL
         actionsLayout.setPadding(8, 8, 8, 8)
 
+        // Add views in order: Item, Category, Location, Amount, Date, Actions
         tableRow.addView(itemTextView)
+        tableRow.addView(categoryTextView)
         tableRow.addView(locationTextView)
         tableRow.addView(amountTextView)
         tableRow.addView(dateTextView)
@@ -290,16 +303,18 @@ class RecordPage : AppCompatActivity() {
     }
 
     private fun updateTableRow(record: Record, tableRow: TableRow) {
+        // Update the row based on the new record
         val itemTextView = tableRow.getChildAt(0) as TextView
-        val locationTextView = tableRow.getChildAt(1) as TextView
-        val amountTextView = tableRow.getChildAt(2) as TextView
-        val dateTextView = tableRow.getChildAt(3) as TextView
+        val categoryTextView = tableRow.getChildAt(1) as TextView
+        val locationTextView = tableRow.getChildAt(2) as TextView
+        val amountTextView = tableRow.getChildAt(3) as TextView
+        val dateTextView = tableRow.getChildAt(4) as TextView
 
         itemTextView.text = record.item
+        categoryTextView.text = record.category
         locationTextView.text = record.location
         amountTextView.text = "$${record.amount}"
-        dateTextView.text = java.text.SimpleDateFormat("MM-dd", Locale.getDefault())
-            .format(Date(record.date))
+        dateTextView.text = dateFormat.format(Date(record.date))
     }
 
     private fun loadRecords() {
