@@ -30,6 +30,8 @@ class SummaryPage : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var recordViewModel: RecordViewModel
     private lateinit var monthTextView: TextView
+    private lateinit var totalExpenseTextView: TextView
+    private lateinit var dailyAverageTextView: TextView
     private var currentMonth: Calendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,8 +51,10 @@ class SummaryPage : AppCompatActivity() {
         val factory = RecordViewModelFactory(application)
         recordViewModel = ViewModelProvider(this, factory)[RecordViewModel::class.java]
 
-        // Initialize month TextView
+        // Initialize month and total expense TextViews
         monthTextView = findViewById(R.id.month)
+        totalExpenseTextView = findViewById(R.id.totalExpense)
+        dailyAverageTextView = findViewById(R.id.averageExpense)
         updateMonthTextView()
 
         // Update chart data
@@ -129,10 +133,9 @@ class SummaryPage : AppCompatActivity() {
     private suspend fun updateChartData() {
         val entries = ArrayList<BarEntry>()
         val labels = ArrayList<String>()
+        var totalExpense = 0f
 
-        val userId = getCurrentUserId() // 获取当前用户ID
-
-
+        val userId = getCurrentUserId()
         val daysInMonth = currentMonth.getActualMaximum(Calendar.DAY_OF_MONTH)
 
         for (i in 1..daysInMonth) {
@@ -153,6 +156,7 @@ class SummaryPage : AppCompatActivity() {
             }.timeInMillis
 
             val expenseAmount = withContext(Dispatchers.IO) { getDailyExpenseFromFirebase(userId, startOfDay, endOfDay) }
+            totalExpense += expenseAmount
 
             entries.add(BarEntry(i.toFloat(), expenseAmount))
 
@@ -171,6 +175,13 @@ class SummaryPage : AppCompatActivity() {
 
         barChart.data = barData
         barChart.invalidate()
+
+        // Update total expense TextView
+        totalExpenseTextView.text = String.format("$%.2f", totalExpense)
+
+        // Calculate and update daily average TextView
+        val dailyAverage = if (daysInMonth > 0) totalExpense / daysInMonth else 0f
+        dailyAverageTextView.text = String.format("$%.2f", dailyAverage)
     }
 
     private suspend fun getDailyExpenseFromFirebase(userId: Int, startDate: Long, endDate: Long): Float {
