@@ -36,10 +36,9 @@ class RecordPage : AppCompatActivity() {
     private var currentDialogView: View? = null
     private var alertDialog: AlertDialog? = null
 
-    // ViewModel
     private lateinit var recordViewModel: RecordViewModel
 
-    // Date format for consistent display and parsing
+    // Using yyyy-MM-dd format for consistency
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,27 +60,70 @@ class RecordPage : AppCompatActivity() {
 
         loadRecords()
 
+        // FloatingActionButton to add a new record
         findViewById<FloatingActionButton>(R.id.fabAddRecord).setOnClickListener {
             showAddRecordDialog()
         }
 
+        // Navigate to SummaryPage
         findViewById<Button>(R.id.btnSummary).setOnClickListener {
             val intent = Intent(this, SummaryPage::class.java)
             startActivity(intent)
         }
 
+        // Navigate to MePage
         findViewById<Button>(R.id.btnMe).setOnClickListener {
             val intent = Intent(this, MePage::class.java)
             startActivity(intent)
         }
 
+        // Handle side menu via SlideMenu
+        val slideMenu = findViewById<SlideMenu>(R.id.slideMenu)
         val profileButton = findViewById<ImageView>(R.id.myProfilePhoto)
         profileButton.setOnClickListener {
-            val intent = Intent(this, SlideActivity::class.java)
-            startActivity(intent)
+            // Toggle the side menu
+            slideMenu.switchMenu()
         }
+
+        // Set menu buttons click listeners to navigate to different pages or perform actions
+        setupMenuButtons()
     }
 
+    /**
+     * Set click listeners for side menu buttons.
+     */
+    private fun setupMenuButtons() {
+        // Account - navigate to MePage
+        findViewById<LinearLayout>(R.id.menuAccount)?.setOnClickListener {
+            startActivity(Intent(this, MePage::class.java))
+        }
+
+        // Language - navigate to LanguageActivity
+        findViewById<LinearLayout>(R.id.menuLanguage)?.setOnClickListener {
+            startActivity(Intent(this, LanguageActivity::class.java))
+        }
+
+        // Appearance - navigate to AppearanceActivity
+        findViewById<LinearLayout>(R.id.menuAppearance)?.setOnClickListener {
+            startActivity(Intent(this, AppearanceActivity::class.java))
+        }
+
+        // Report - navigate to ReportActivity
+        findViewById<LinearLayout>(R.id.menuReport)?.setOnClickListener {
+            startActivity(Intent(this, ReportActivity::class.java))
+        }
+
+        // Terms - navigate to TermsActivity
+        findViewById<LinearLayout>(R.id.menuTerms)?.setOnClickListener {
+            startActivity(Intent(this, TermsActivity::class.java))
+        }
+
+        // If you have a sign-out or other menu items, set them here as well.
+    }
+
+    /**
+     * Show a dialog to add or edit a record.
+     */
     private fun showAddRecordDialog(existingRecord: Record? = null, tableRow: TableRow? = null) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_record, null)
         currentDialogView = dialogView
@@ -95,14 +137,13 @@ class RecordPage : AppCompatActivity() {
         val categoryGrid = dialogView.findViewById<GridLayout>(R.id.categoryGrid)
         setupCategoryButtons(categoryGrid)
 
+        // If editing existing record, populate fields
         if (existingRecord != null) {
             etItem.setText(existingRecord.item)
             etAmount.setText(existingRecord.amount.toString())
             tvLocation.text = existingRecord.location
-            // Display the existing record date as yyyy-MM-dd
             tvDate.text = dateFormat.format(Date(existingRecord.date))
             btnAction.text = "Update"
-            // Set selectedCategory to the existing record's category
             selectedCategory = existingRecord.category
         } else {
             tvLocation.text = selectedLocation
@@ -127,7 +168,6 @@ class RecordPage : AppCompatActivity() {
             val recordTimestamp = if (chosenDateStr == "N/A") {
                 System.currentTimeMillis()
             } else {
-                // Parse as yyyy-MM-dd
                 val parsedDate = dateFormat.parse(chosenDateStr)
                 parsedDate?.time ?: System.currentTimeMillis()
             }
@@ -143,14 +183,15 @@ class RecordPage : AppCompatActivity() {
             )
 
             if (existingRecord != null) {
+                // Update existing record
                 val updatedRecord = record.copy(id = existingRecord.id)
                 recordViewModel.updateRecord(updatedRecord)
                 tableRow?.let { updateTableRow(updatedRecord, it) }
             } else {
+                // Add new record
                 recordViewModel.saveRecord(record) { newId ->
                     runOnUiThread {
                         val completeRecord = record.copy(id = newId.toInt())
-                        // Immediately display the new record
                         addRecord(completeRecord)
                         tableLayout.requestLayout()
                     }
@@ -172,13 +213,16 @@ class RecordPage : AppCompatActivity() {
         alertDialog?.show()
     }
 
+    /**
+     * Open Google Place Picker for selecting location.
+     */
     private fun openPlacePicker() {
         val fields = listOf(
             Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG
         )
-        val intent =
-            Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).setCountry("US")
-                .build(this)
+        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+            .setCountry("US")
+            .build(this)
         autocompleteLauncher.launch(intent)
     }
 
@@ -195,12 +239,14 @@ class RecordPage : AppCompatActivity() {
         }
     }
 
+    /**
+     * Open a DatePickerDialog to select a date.
+     */
     private fun openDatePicker(tvDate: TextView) {
         val calendar = Calendar.getInstance()
         val datePicker = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
-                // Use yyyy-MM-dd format consistently
                 val formattedDate = String.format("%d-%02d-%02d", year, month + 1, dayOfMonth)
                 tvDate.text = formattedDate
             },
@@ -211,6 +257,9 @@ class RecordPage : AppCompatActivity() {
         datePicker.show()
     }
 
+    /**
+     * Add a record to the table layout.
+     */
     private fun addRecord(record: Record) {
         val tableRow = TableRow(this)
         tableRow.layoutParams = TableLayout.LayoutParams(
@@ -218,27 +267,22 @@ class RecordPage : AppCompatActivity() {
             TableLayout.LayoutParams.WRAP_CONTENT
         )
 
-        // Item column
         val itemTextView = TextView(this)
         itemTextView.text = record.item
         itemTextView.setPadding(16, 8, 8, 8)
 
-        // Category column
         val categoryTextView = TextView(this)
         categoryTextView.text = record.category
         categoryTextView.setPadding(16, 8, 8, 8)
 
-        // Location column
         val locationTextView = TextView(this)
         locationTextView.text = record.location
         locationTextView.setPadding(16, 8, 8, 8)
 
-        // Amount column
         val amountTextView = TextView(this)
         amountTextView.text = "$${record.amount}"
         amountTextView.setPadding(16, 8, 8, 8)
 
-        // Date column (display as yyyy-MM-dd)
         val dateTextView = TextView(this)
         dateTextView.text = dateFormat.format(Date(record.date))
         dateTextView.setPadding(16, 8, 8, 8)
@@ -247,7 +291,6 @@ class RecordPage : AppCompatActivity() {
         actionsLayout.orientation = LinearLayout.HORIZONTAL
         actionsLayout.setPadding(8, 8, 8, 8)
 
-        // Add views in order: Item, Category, Location, Amount, Date, Actions
         tableRow.addView(itemTextView)
         tableRow.addView(categoryTextView)
         tableRow.addView(locationTextView)
@@ -263,6 +306,9 @@ class RecordPage : AppCompatActivity() {
         tableLayout.addView(tableRow)
     }
 
+    /**
+     * Show dialog to edit or delete a record when long-pressed.
+     */
     private fun showEditDeleteDialog(record: Record, tableRow: TableRow) {
         val options = arrayOf("Edit", "Delete")
         AlertDialog.Builder(this)
@@ -277,6 +323,9 @@ class RecordPage : AppCompatActivity() {
             .show()
     }
 
+    /**
+     * Show a confirmation dialog to delete a record.
+     */
     private fun showDeleteConfirmationDialog(record: Record, tableRow: TableRow) {
         AlertDialog.Builder(this)
             .setTitle("Delete Record")
@@ -289,6 +338,9 @@ class RecordPage : AppCompatActivity() {
             .show()
     }
 
+    /**
+     * Delete a record from the database and UI.
+     */
     private fun deleteRecord(record: Record, tableRow: TableRow) {
         try {
             recordViewModel.deleteRecord(record)
@@ -302,8 +354,10 @@ class RecordPage : AppCompatActivity() {
         }
     }
 
+    /**
+     * Update a table row after editing a record.
+     */
     private fun updateTableRow(record: Record, tableRow: TableRow) {
-        // Update the row based on the new record
         val itemTextView = tableRow.getChildAt(0) as TextView
         val categoryTextView = tableRow.getChildAt(1) as TextView
         val locationTextView = tableRow.getChildAt(2) as TextView
@@ -317,6 +371,9 @@ class RecordPage : AppCompatActivity() {
         dateTextView.text = dateFormat.format(Date(record.date))
     }
 
+    /**
+     * Load records from the database and display them in the table.
+     */
     private fun loadRecords() {
         val userId = getCurrentUserId()
         tableLayout.removeAllViews()
@@ -334,9 +391,14 @@ class RecordPage : AppCompatActivity() {
         return sharedPreferences.getInt("CURRENT_USER_ID", -1)
     }
 
+    /**
+     * Set up category buttons to select a category for the record.
+     */
     private fun setupCategoryButtons(gridLayout: GridLayout) {
-        val originalBackground = ResourcesCompat.getDrawable(resources, R.drawable.category_button_bg, null)
-        val selectedBackground = ResourcesCompat.getDrawable(resources, R.drawable.category_button_selected_bg, null)
+        val originalBackground =
+            ResourcesCompat.getDrawable(resources, R.drawable.category_button_bg, null)
+        val selectedBackground =
+            ResourcesCompat.getDrawable(resources, R.drawable.category_button_selected_bg, null)
 
         val categoryButtonMap = mapOf(
             R.id.btnRestaurant to "Restaurant",

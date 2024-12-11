@@ -1,134 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<!--
+This layout uses SlideMenu as the root.
+The first child is the side menu layout.
+The second child is the main Record Page layout.
+-->
+<com.cos407.cs407finalproject.SlideMenu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp">
+    android:id="@+id/slideMenu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <!-- First child -->
+    <include
+        layout="@layout/layout_menu"
+        android:layout_width="270dp"
+        android:layout_height="match_parent" />
 
-    <ImageView
-        android:id="@+id/myProfilePhoto"
-        android:layout_width="61dp"
-        android:layout_height="52dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:srcCompat="@drawable/photo"
-        android:contentDescription="@string/profile_photo" />
-
-    <!-- Title -->
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp"
-        android:text="GeoLedger"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <!-- FloatingActionButton for Adding Record -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddRecord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="@string/add_record"
-        android:src="@android:drawable/ic_input_add"
-        app:fabSize="mini" />
-
-
-    <!-- Add ScrollView to wrap up TableLayout -->
-    <ScrollView
+    <!-- Second child -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title"
-        android:layout_above="@id/navigationLayout"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="8dp"
-        android:fillViewport="true">
+        android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/myProfilePhoto"
+            android:layout_width="61dp"
+            android:layout_height="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/profile_photo"
+            android:src="@drawable/photo" />
 
-    <!-- Table Layout -->
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@id/title"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="60dp"
-        android:stretchColumns="0,1,2,3">
-
-        <!-- Table Headers -->
-        <TableRow>
-            <TextView
-                android:padding="8dp"
-                android:text="@string/item"
-                android:gravity="start"
-                android:textStyle="bold" />
-            <TextView
-                android:padding="8dp"
-                android:text="@string/location"
-                android:gravity="start"
-                android:textStyle="bold" />
-            <TextView
-                android:padding="8dp"
-                android:text="@string/amount"
-                android:gravity="start"
-                android:textStyle="bold" />
-            <TextView
-                android:padding="8dp"
-                android:text="@string/date"
-                android:gravity="start"
-                android:textStyle="bold" />
-<!--            <TextView-->
-<!--                android:padding="8dp"-->
-<!--                android:text="@string/actions"-->
-<!--                android:gravity="start"-->
-<!--                android:textStyle="bold" />-->
-        </TableRow>
-    </TableLayout>
-    </ScrollView>
-
-
-    <!-- Bottom Navigation -->
-    <LinearLayout
-        android:id="@+id/navigationLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnRecord"
-            android:layout_width="0dp"
+        <!-- Title -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#FFA726"
-            android:text="@string/record"
-            android:textColor="#FFFFFF" />
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:text="GeoLedger"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnSummary"
-            android:layout_width="0dp"
+        <!-- FloatingActionButton for Adding a Record -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddRecord"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
-            android:text="@string/summary"
-            android:textColor="#37474F" />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/add_record"
+            android:src="@android:drawable/ic_input_add"
+            app:fabSize="mini" />
 
-        <Button
-            android:id="@+id/btnMe"
-            android:layout_width="0dp"
+        <!-- ScrollView + TableLayout for the Records -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/title"
+            android:layout_above="@id/navigationLayout"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="8dp"
+            android:fillViewport="true">
+
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="0,1,2,3,4">
+
+                <!-- Table Headers: Item, Category, Location, Amount, Date -->
+                <TableRow>
+                    <TextView
+                        android:padding="8dp"
+                        android:text="@string/item"
+                        android:gravity="start"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:padding="8dp"
+                        android:text="@string/category"
+                        android:gravity="start"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:padding="8dp"
+                        android:text="@string/location"
+                        android:gravity="start"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:padding="8dp"
+                        android:text="@string/amount"
+                        android:gravity="start"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:padding="8dp"
+                        android:text="@string/date"
+                        android:gravity="start"
+                        android:textStyle="bold" />
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+
+        <!-- Bottom Navigation -->
+        <LinearLayout
+            android:id="@+id/navigationLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
-            android:text="@string/me"
-            android:textColor="#37474F" />
-    </LinearLayout>
-</RelativeLayout>
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnRecord"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#FFA726"
+                android:text="@string/record"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnSummary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:text="@string/summary"
+                android:textColor="#37474F" />
+
+            <Button
+                android:id="@+id/btnMe"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:text="@string/me"
+                android:textColor="#37474F" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</com.cos407.cs407finalproject.SlideMenu>

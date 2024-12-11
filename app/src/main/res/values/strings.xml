@@ -62,4 +62,5 @@
         5. Revisions and Errata\n
         The materials appearing on our application could include technical, typographical, or photographic errors. We do not warrant that any of the materials on its application are accurate, complete or current.
     </string>
+    <string name="category">Category</string>
 </resources>

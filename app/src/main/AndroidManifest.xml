@@ -73,9 +73,6 @@
         <activity android:name=".AppearanceActivity" />
         <activity android:name=".ReportActivity" />
         <activity android:name=".TermsActivity" />
-        <activity
-            android:name=".SlideActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
