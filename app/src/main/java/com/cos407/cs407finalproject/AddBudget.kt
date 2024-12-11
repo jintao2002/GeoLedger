@@ -3,17 +3,23 @@ package com.cos407.cs407finalproject
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.FirebaseFirestore
 
 class AddBudget : AppCompatActivity() {
+    private lateinit var db: FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_budget)
+
+
+        db = FirebaseFirestore.getInstance()
 
         // Setup category spinner
         val spinner = findViewById<Spinner>(R.id.spinnerCategory)
         ArrayAdapter.createFromResource(
             this,
-            R.array.budget_categories, // You'll need to add this to strings.xml
+            R.array.budget_categories,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -31,9 +37,22 @@ class AddBudget : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // TODO Save budget to database
-            Toast.makeText(this, "Budget saved successfully", Toast.LENGTH_SHORT).show()
-            finish()
+
+            val budget = hashMapOf(
+                "name" to budgetName,
+                "amount" to budgetAmount,
+                "category" to category
+            )
+
+            db.collection("budgets")
+                .add(budget)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Budget saved successfully", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error saving budget: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
         }
 
         // Handle back button click
