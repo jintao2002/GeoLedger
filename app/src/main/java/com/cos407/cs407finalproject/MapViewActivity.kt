@@ -68,6 +68,7 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
                 LOCATION_PERMISSION_REQUEST_CODE
             )
         } else {
+            Log.d("MapViewActivity", "Location permission granted")
             initMap()
         }
     }
@@ -110,14 +111,14 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun loadRecordsAndAddMarkers() {
         val userId = getCurrentUserId()
         recordViewModel.getRecords(userId) { records ->
+            Log.d("MapViewActivity", "Number of records: ${records.size}")
             records.forEach { record ->
-                Log.d("MapDebug", "Processing record at location: ${record.location}")
+                Log.d("MapViewActivity", "Processing record: $record")
 
                 try {
                     val geocoder = Geocoder(this, Locale.getDefault())
                     val addresses = geocoder.getFromLocationName(record.location, 1)
                     Log.d("MapDebug", "Geocoder found ${addresses?.size ?: 0} addresses")
-
 
                     addresses?.firstOrNull()?.let { address ->
                         val location = LatLng(address.latitude, address.longitude)
