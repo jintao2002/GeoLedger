@@ -6,36 +6,38 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Title -->
+    <!-- Title: Use @string/add_budget -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingBottom="16dp"
-        android:text="Add Budget"
+        android:text="@string/add_budget"
         android:textColor="#37474F"
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <!-- Budget Form -->
+    <!-- Budget Name: Use @string/budget_name -->
     <EditText
         android:id="@+id/etBudgetName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Budget Name"
+        android:hint="@string/budget_name"
         android:inputType="text"
         android:padding="12dp" />
 
+    <!-- Amount: Use @string/amount -->
     <EditText
         android:id="@+id/etBudgetAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Amount"
+        android:hint="@string/amount"
         android:inputType="numberDecimal"
         android:padding="12dp" />
 
+    <!-- Category (Spinner): Use @string-array/budget_categories -->
     <Spinner
         android:id="@+id/spinnerCategory"
         android:layout_width="match_parent"
@@ -43,23 +45,23 @@
         android:layout_marginTop="8dp"
         android:padding="12dp" />
 
-    <!-- Save Button -->
+    <!-- Save Button: Use @string/save_budget -->
     <Button
         android:id="@+id/btnSaveBudget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#56C596"
-        android:text="Save Budget"
+        android:text="@string/save_budget"
         android:textColor="#FFFFFF" />
 
-    <!-- Back Button -->
+    <!-- Back Button: Use @string/back -->
     <Button
         android:id="@+id/btnBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="#FFA726"
-        android:text="Back"
+        android:text="@string/back"
         android:textColor="#FFFFFF" />
 </LinearLayout>

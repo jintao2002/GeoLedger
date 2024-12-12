@@ -4,35 +4,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
+
+    <!-- Name: Use @string/name -->
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name" />
+        android:hint="@string/name" />
 
+    <!-- Email: Use @string/email -->
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress" />
 
+    <!-- Phone: Use @string/phone -->
     <EditText
         android:id="@+id/editTextPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Phone"
+        android:hint="@string/phone"
         android:inputType="phone" />
 
+    <!-- Address: Use @string/address -->
     <EditText
         android:id="@+id/editTextAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Address" />
+        android:hint="@string/address" />
 
+    <!-- Save Button: Use @string/save -->
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save" />
+        android:text="@string/save" />
+
 </LinearLayout>

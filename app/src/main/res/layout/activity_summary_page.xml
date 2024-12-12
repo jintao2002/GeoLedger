@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F9FAFB"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Title -->
+    <!-- Title: Use @string/summary -->
     <TextView
         android:id="@+id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:text="Summary"
+        android:text="@string/summary"
         android:textSize="26sp"
         android:textStyle="bold" />
 
@@ -25,35 +26,38 @@
         android:layout_marginTop="16dp"
         android:orientation="horizontal">
 
+        <!-- Use @string/previous -->
         <Button
             android:id="@+id/previous"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="Previous" />
+            android:text="@string/previous" />
 
+        <!-- Use @string/month -->
         <TextView
             android:id="@+id/month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Month"
+            android:text="@string/month"
             android:textSize="24sp" />
 
+        <!-- Use @string/next -->
         <Button
             android:id="@+id/next"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Next" />
+            android:text="@string/next" />
     </LinearLayout>
 
-    <!-- New toggle button -->
+    <!-- New toggle button: Use @string/show_pie_chart -->
     <Button
         android:id="@+id/btnToggleChart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Pie Chart"
+        android:text="@string/show_pie_chart"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"/>
 
@@ -80,6 +84,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
+                <!-- Use @string/total_expenses -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,11 +92,12 @@
                     android:textSize="16sp"
                     android:textColor="#666666"/>
 
+                <!-- Use @string/_0_00 for $0.00 -->
                 <TextView
                     android:id="@+id/totalExpense"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$0.00"
+                    android:text="@string/_0_00"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="#000000"/>
@@ -103,6 +109,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
+                <!-- Use @string/daily_average -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -110,11 +117,12 @@
                     android:textSize="16sp"
                     android:textColor="#666666"/>
 
+                <!-- Use @string/_0_00 for $0.00 -->
                 <TextView
                     android:id="@+id/averageExpense"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$0.00"
+                    android:text="@string/_0_00"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="#000000"/>
@@ -150,31 +158,34 @@
         android:background="#F9FAFB"
         android:orientation="horizontal">
 
+        <!-- Use @string/record -->
         <Button
             android:id="@+id/btnRecord"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
-            android:text="Record"
+            android:text="@string/record"
             android:textColor="#37474F" />
 
+        <!-- Use @string/summary -->
         <Button
             android:id="@+id/btnSummary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#FFA726"
-            android:text="Summary"
+            android:text="@string/summary"
             android:textColor="#FFFFFF" />
 
+        <!-- Use @string/me -->
         <Button
             android:id="@+id/btnMe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
-            android:text="Me"
+            android:text="@string/me"
             android:textColor="#37474F" />
     </LinearLayout>
 </LinearLayout>

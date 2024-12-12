@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -13,53 +14,59 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Back button: Use @string/back -->
         <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="start"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Back"
+            android:contentDescription="@string/back"
             android:src="@android:drawable/btn_dialog" />
 
+        <!-- Sign In Title: Use @string/sign_up_with_email or a new string if needed, such as @string/sign_in_with_email -->
         <TextView
             android:id="@+id/tvSignInTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign In With Email"
+            android:text="@string/sign_up_with_email"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
             android:paddingBottom="16dp" />
 
+        <!-- Email: Use @string/email -->
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
+        <!-- Password: Use @string/password -->
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
 
+        <!-- Sign In: Use @string/sign_up or create a new @string/sign_in -->
         <Button
             android:id="@+id/btnSignIn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Sign In"
+            android:text="@string/sign_up"
             android:gravity="center"
             android:layout_marginTop="8dp"
             android:layout_gravity="center_horizontal" />
 
+        <!-- Need an account?: Use @string/create_an_account or a similar string -->
         <Button
             android:id="@+id/btnNeedAccount"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Need an account?"
+            android:text="@string/create_an_account"
             android:gravity="center"
             android:layout_marginTop="8dp"
             android:layout_gravity="center_horizontal" />

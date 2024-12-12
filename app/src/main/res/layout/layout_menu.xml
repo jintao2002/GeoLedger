@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <!-- Welcome Text -->
+    <!-- Welcome Text: Use @string/how_s_your_day -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="How's your day?"
+            android:text="@string/how_s_your_day"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -38,7 +38,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <!-- Record (replacing Account) -->
+        <!-- Record: Use @string/record -->
         <LinearLayout
             android:id="@+id/menuRecord"
             style="@style/MenuItemStyle">
@@ -49,10 +49,10 @@
 
             <TextView
                 style="@style/MenuTextStyle"
-                android:text="Record"/>
+                android:text="@string/record"/>
         </LinearLayout>
 
-        <!-- Language -->
+        <!-- Language: Use @string/language -->
         <LinearLayout
             android:id="@+id/menuLanguage"
             style="@style/MenuItemStyle">
@@ -63,10 +63,10 @@
 
             <TextView
                 style="@style/MenuTextStyle"
-                android:text="Language"/>
+                android:text="@string/language"/>
         </LinearLayout>
 
-        <!-- Appearance -->
+        <!-- Appearance: Use @string/appearance -->
         <LinearLayout
             android:id="@+id/menuAppearance"
             style="@style/MenuItemStyle">
@@ -77,10 +77,10 @@
 
             <TextView
                 style="@style/MenuTextStyle"
-                android:text="Appearance"/>
+                android:text="@string/appearance"/>
         </LinearLayout>
 
-        <!-- Report -->
+        <!-- Report: Use @string/report -->
         <LinearLayout
             android:id="@+id/menuReport"
             style="@style/MenuItemStyle">
@@ -91,10 +91,10 @@
 
             <TextView
                 style="@style/MenuTextStyle"
-                android:text="Report"/>
+                android:text="@string/report"/>
         </LinearLayout>
 
-        <!-- Terms of Use -->
+        <!-- Terms of Use: Use @string/terms_of_use -->
         <LinearLayout
             android:id="@+id/menuTerms"
             style="@style/MenuItemStyle">
@@ -105,7 +105,7 @@
 
             <TextView
                 style="@style/MenuTextStyle"
-                android:text="Terms of Use"/>
+                android:text="@string/terms_of_use_2"/>
         </LinearLayout>
     </LinearLayout>
 

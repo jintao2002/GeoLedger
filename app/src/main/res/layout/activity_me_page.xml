@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F9FAFB"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Title -->
+    <!-- Title: Use @string/me -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingBottom="16dp"
-        android:text="Me"
+        android:text="@string/me"
         android:textColor="#37474F"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -41,6 +42,7 @@
             android:background="#90CAF9"
             android:orientation="vertical">
 
+            <!-- Replace "Johnny Qin" with @string/name for demonstration -->
             <TextView
                 android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
@@ -48,59 +50,63 @@
                 android:layout_margin="0dp"
                 android:background="#90CAF9"
                 android:padding="0dp"
-                android:text="Johnny Qin"
+                android:text="@string/name"
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
+            <!-- Replace "Location" with @string/location -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
                 android:background="#90CAF9"
                 android:padding="0dp"
-                android:text="Location"
+                android:text="@string/location"
                 android:textColor="@android:color/black" />
         </LinearLayout>
     </LinearLayout>
 
     <!-- Buttons -->
+    <!-- Use @string/setting -->
     <Button
         android:id="@+id/btnSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#56C596"
-        android:text="Setting"
+        android:text="@string/setting"
         android:textColor="#FFFFFF" />
 
+    <!-- Use @string/add_budget -->
     <Button
         android:id="@+id/btnAddBudget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="#56C596"
-        android:text="Add budget"
+        android:text="@string/add_budget"
         android:textColor="#FFFFFF" />
 
+    <!-- Use @string/switch_to_map_view -->
     <Button
         android:id="@+id/btnMapView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="#56C596"
-        android:text="Switch to Map View"
+        android:text="@string/switch_to_map_view"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:background="#FFFFFF" />
 
-
+    <!-- Use @string/logout -->
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="#56C596"
-        android:text="Logout"
+        android:text="@string/logout"
         android:textColor="#FFFFFF" />
 
     <!-- Bottom Navigation -->
@@ -111,31 +117,34 @@
         android:gravity="bottom"
         android:orientation="horizontal">
 
+        <!-- Use @string/record -->
         <Button
             android:id="@+id/btnRecord"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#F9FAFB"
-            android:text="Record"
+            android:text="@string/record"
             android:textColor="#37474F" />
 
+        <!-- Use @string/summary -->
         <Button
             android:id="@+id/btnSummary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#F9FAFB"
-            android:text="Summary"
+            android:text="@string/summary"
             android:textColor="#37474F" />
 
+        <!-- Use @string/me -->
         <Button
             android:id="@+id/btnMe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#FFA726"
-            android:text="Me"
+            android:text="@string/me"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 </LinearLayout>
