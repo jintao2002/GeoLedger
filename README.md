@@ -13,7 +13,7 @@ GeoLedger is a comprehensive application designed for tracking personal expenses
 - **Location Integration**  
   Integration with Google Places API to select and save locations for records.
 
-- **Map View**
+- **Map View**  
   Record each expense as marker to place on a map, showing where each expense occurred
 
 - **Monthly Statistics**  
