@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">记账本</string>
+    <!-- 导航 -->
+    <string name="profile_photo">头像</string>
+    <string name="summary">总结</string>
+    <string name="record">记录</string>
+    <string name="me">我的</string>
+    <string name="add_record">添加记录</string>
+    <string name="geoledger">记账本</string>
+
+    <!-- 分类 -->
+    <string name="transportation">交通</string>
+    <string name="shopping">购物</string>
+    <string name="food">食物</string>
+    <string name="grocery">杂货</string>
+    <string name="power">电力</string>
+    <string name="education">教育</string>
+    <string name="snack">零食</string>
+    <string name="cloths">衣物</string>
+    <string name="travel">旅行</string>
+    <string name="communication">通讯</string>
+    <string name="fitness">健身</string>
+    <string name="furniture">家具</string>
+    <string name="restaurant">餐厅</string>
+
+    <!-- 记录页面 -->
+    <string name="daily_average">日均支出</string>
+    <string name="total_expenses">总支出</string>
+    <string name="item">项目</string>
+    <string name="location">位置</string>
+    <string name="amount">金额</string>
+    <string name="date">日期</string>
+    <string name="actions">操作</string>
+    <string name="category">类别</string>
+
+    <!-- 按钮 -->
+    <string name="cancelButtonAtAddNewPage">取消</string>
+    <string name="add_recordButtonAtAddNewPage">添加记录</string>
+
+    <!-- 预算分类 -->
+    <string-array name="budget_categories">
+        <item>食物</item>
+        <item>交通</item>
+        <item>娱乐</item>
+        <item>购物</item>
+        <item>账单</item>
+        <item>其他</item>
+    </string-array>
+
+    <!-- 常见问题 -->
+    <string name="faq_title">常见问题与解决方案</string>
+    <string name="faq_1_title">1. 应用启动时崩溃</string>
+    <string name="faq_1_solution">解决方案：清除应用缓存和数据，然后重启应用</string>
+    <string name="faq_2_title">2. 无法保存更改</string>
+    <string name="faq_2_solution">解决方案：检查网络连接并重试</string>
+    <string name="faq_3_title">3. 性能问题</string>
+    <string name="faq_3_solution">解决方案：确保设备有足够的存储空间</string>
+    <string name="contact">联系我们：bding26@wisc.edu</string>
+
+    <!-- 使用条款 -->
+    <string name="terms_of_use">使用条款\n\n...</string>
+</resources>

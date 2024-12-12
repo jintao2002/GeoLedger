@@ -3,6 +3,9 @@
     <style name="Base.Theme.Cs407FinalProject" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="android:windowBackground">@color/background_light</item>
+        <item name="android:textColor">@color/text_color_light</item>
     </style>
 
     <style name="Theme.Cs407FinalProject" parent="Base.Theme.Cs407FinalProject" />

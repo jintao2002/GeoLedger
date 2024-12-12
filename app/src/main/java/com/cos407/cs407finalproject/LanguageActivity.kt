@@ -41,21 +41,19 @@ class LanguageActivity : AppCompatActivity() {
     }
 
     private fun updateLocale(locale: Locale) {
+        // Save language setting
+        val editor = getSharedPreferences("Settings", MODE_PRIVATE).edit()
+        editor.putString("Language", locale.language)
+        editor.apply()
+
+        // Update configuration
         Locale.setDefault(locale)
         val config = resources.configuration
         config.setLocale(locale)
         resources.updateConfiguration(config, resources.displayMetrics)
 
-        // save language setting
-        val editor = getSharedPreferences("Settings", MODE_PRIVATE).edit()
-        editor.putString("Language", locale.language)
-        editor.apply()
-
-        // restart app to apply new language setting
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        finish()
+        // Recreate current activity instead of going back to MainActivity
+        recreate()
     }
 
     /**

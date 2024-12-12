@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.appcompat.app.AppCompatDelegate
 import com.cos407.cs407finalproject.database.AppDatabase
 import com.cos407.cs407finalproject.repository.RecordRepository
 import com.cos407.cs407finalproject.viewmodel.RecordViewModel
@@ -27,10 +28,32 @@ class MainActivity : AppCompatActivity() {
         RecordViewModelFactory(repository) // <-- Use repository here
     }
 
-
+     override fun attachBaseContext(newBase: Context) {
+        // Load saved language preference before creating activity
+        val preferences = newBase.getSharedPreferences("Settings", MODE_PRIVATE)
+        val language = preferences.getString("Language", "en") ?: "en"
+        
+        // Create configuration with saved language
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = newBase.resources.configuration
+        config.setLocale(locale)
+        val context = newBase.createConfigurationContext(config)
+        
+        super.attachBaseContext(context)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        
+        // saved theme setting
+        val isDarkTheme = getSharedPreferences("Settings", MODE_PRIVATE)
+            .getBoolean("DarkTheme", false)
+        
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDarkTheme) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
+        
         setContentView(R.layout.activity_main)
 
         // Handle edge insets

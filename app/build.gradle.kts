@@ -101,6 +101,8 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
 
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+
+    implementation ("androidx.appcompat:appcompat:1.6.1")
 }
 
 

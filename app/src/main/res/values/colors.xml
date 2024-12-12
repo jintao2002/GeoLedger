@@ -24,4 +24,14 @@
     <color name="colorCategory14">#FFD54F</color>  <!-- amber -->
     <color name="colorCategory15">#FFB74D</color>  <!-- orange -->
     <color name="colorCategory16">#FF8A65</color>  <!-- deep orange -->
+
+    <!-- Light theme colors -->
+    <color name="background_light">#FFFFFF</color>
+    <color name="text_color_light">#000000</color>
+    <color name="primary_color">#56C596</color>
+
+    <!-- Dark theme colors -->
+    <color name="background_dark">#121212</color>
+    <color name="text_color_dark">#FFFFFF</color>
+    <color name="primary_color_dark">#388E6B</color>
 </resources>

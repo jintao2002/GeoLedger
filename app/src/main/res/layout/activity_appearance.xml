@@ -1,39 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  Root layout uses SlideMenu. First child is layout_menu for side menu.
--->
-<com.cos407.cs407finalproject.SlideMenu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<com.cos407.cs407finalproject.SlideMenu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/slideMenu"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cos407.cs407finalproject.AppearanceActivity">
+    android:layout_height="match_parent">
 
-    <!-- Include the side menu layout -->
-    <include layout="@layout/layout_menu" />
+    <!-- Include the side menu layout as the first child -->
+    <include
+        layout="@layout/layout_menu" />
 
-    <!-- Main content area -->
+    <!-- The main content as the second child -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Button to open/close side menu -->
         <ImageView
             android:id="@+id/myProfilePhoto"
             android:layout_width="61dp"
             android:layout_height="52dp"
-            android:layout_marginBottom="20dp"
             android:clickable="true"
-            android:contentDescription="@string/profile_photo"
             android:focusable="true"
+            android:contentDescription="@string/profile_photo"
             android:src="@drawable/photo" />
 
-        <Switch
-            android:id="@+id/switchTheme"
+        <!-- Theme Switch -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Dark Theme" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Dark Theme"
+                android:textSize="16sp"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </LinearLayout>
+
 </com.cos407.cs407finalproject.SlideMenu>

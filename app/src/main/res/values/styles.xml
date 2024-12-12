@@ -1,12 +1,13 @@
 <resources>
-    <!-- 应用的全局主题 -->
+    <!-- Base application theme -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">#56C596</item> <!-- 主色（按钮和顶部栏） -->
-        <item name="colorPrimaryDark">#45A383</item> <!-- 深色状态栏 -->
-        <item name="colorAccent">#FFA726</item> <!-- 强调色（关键操作） -->
-        <item name="android:textColorPrimary">#37474F</item> <!-- 主要文字颜色 -->
-        <item name="android:textColorSecondary">#B0BEC5</item> <!-- 次要文字颜色 -->
-        <item name="android:background">#F9FAFB</item> <!-- 背景颜色 -->
+        <!-- Light theme colors -->
+        <item name="colorPrimary">#56C596</item>
+        <item name="colorPrimaryDark">#45A383</item>
+        <item name="colorAccent">#FFA726</item>
+        <item name="android:textColorPrimary">#37474F</item>
+        <item name="android:textColorSecondary">#B0BEC5</item>
+<!--        <item name="android:background">#F9FAFB</item>-->
     </style>
 
     <!-- Menu Item Style -->
