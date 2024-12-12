@@ -1,9 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Cs407FinalProject" parent="Theme.Material3.DayNight">
-        <!-- Customize your dark theme here. -->
-        <item name="colorPrimary">@color/primary_color_dark</item>
-        <item name="android:windowBackground">@color/background_dark</item>
-        <item name="android:textColor">@color/text_color_dark</item>
+    <style name="Theme.Cs407FinalProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Dark theme colors -->
+        <item name="colorPrimary">#388E6B</item>
+        <item name="colorPrimaryDark">#2C7254</item>
+        <item name="colorAccent">#FFB74D</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#B0BEC5</item>
+        <item name="android:windowBackground">#998f82</item>
     </style>
 </resources>

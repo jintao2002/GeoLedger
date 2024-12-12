@@ -8,7 +8,15 @@
         <item name="android:textColor">@color/text_color_light</item>
     </style>
 
-    <style name="Theme.Cs407FinalProject" parent="Base.Theme.Cs407FinalProject" />
+    <style name="Theme.Cs407FinalProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Light theme colors -->
+        <item name="colorPrimary">#56C596</item>
+        <item name="colorPrimaryDark">#45A383</item>
+        <item name="colorAccent">#FFA726</item>
+        <item name="android:textColorPrimary">#37474F</item>
+        <item name="android:textColorSecondary">#B0BEC5</item>
+        <item name="android:windowBackground">#FFFFFF</item>
+    </style>
 
     <!-- WelcomePage theme-->
     <style name="Theme.WelcomePage" parent="Theme.MaterialComponents.NoActionBar">
