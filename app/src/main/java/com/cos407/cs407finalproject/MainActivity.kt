@@ -1,6 +1,8 @@
 package com.cos407.cs407finalproject
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -15,6 +17,7 @@ import com.cos407.cs407finalproject.database.AppDatabase
 import com.cos407.cs407finalproject.repository.RecordRepository
 import com.cos407.cs407finalproject.viewmodel.RecordViewModel
 import com.cos407.cs407finalproject.viewmodel.RecordViewModelFactory
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val repository = RecordRepository(recordDao)
         RecordViewModelFactory(repository) // <-- Use repository here
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
