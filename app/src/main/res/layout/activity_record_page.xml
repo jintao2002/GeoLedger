@@ -32,7 +32,7 @@ The second child is the main Record Page layout.
             android:contentDescription="@string/profile_photo"
             android:src="@drawable/photo" />
 
-        <!-- Title -->
+        <!-- Title: Use @string/geoledger -->
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -40,11 +40,11 @@ The second child is the main Record Page layout.
             android:layout_centerHorizontal="true"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
-            android:text="GeoLedger"
+            android:text="@string/geoledger"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <!-- FloatingActionButton for Adding a Record -->
+        <!-- FloatingActionButton for Adding a Record: Use @string/add_record -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddRecord"
             android:layout_width="wrap_content"
@@ -117,6 +117,7 @@ The second child is the main Record Page layout.
             android:gravity="center"
             android:orientation="horizontal">
 
+            <!-- Use @string/record -->
             <Button
                 android:id="@+id/btnRecord"
                 android:layout_width="0dp"
@@ -126,6 +127,7 @@ The second child is the main Record Page layout.
                 android:text="@string/record"
                 android:textColor="#FFFFFF" />
 
+            <!-- Use @string/summary -->
             <Button
                 android:id="@+id/btnSummary"
                 android:layout_width="0dp"
@@ -135,6 +137,7 @@ The second child is the main Record Page layout.
                 android:text="@string/summary"
                 android:textColor="#37474F" />
 
+            <!-- Use @string/me -->
             <Button
                 android:id="@+id/btnMe"
                 android:layout_width="0dp"

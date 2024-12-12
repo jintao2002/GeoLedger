@@ -1,14 +1,8 @@
 <resources>
     <string name="app_name">记账本</string>
-    <!-- 导航 -->
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">你好，空白片段</string>
     <string name="profile_photo">头像</string>
-    <string name="summary">总结</string>
-    <string name="record">记录</string>
-    <string name="me">我的</string>
-    <string name="add_record">添加记录</string>
-    <string name="geoledger">记账本</string>
-
-    <!-- 分类 -->
     <string name="transportation">交通</string>
     <string name="shopping">购物</string>
     <string name="food">食物</string>
@@ -17,13 +11,13 @@
     <string name="education">教育</string>
     <string name="snack">零食</string>
     <string name="cloths">衣物</string>
+    <string name="cancelButtonAtAddNewPage">取消</string>
+    <string name="add_recordButtonAtAddNewPage">添加记录</string>
     <string name="travel">旅行</string>
     <string name="communication">通讯</string>
     <string name="fitness">健身</string>
     <string name="furniture">家具</string>
     <string name="restaurant">餐厅</string>
-
-    <!-- 记录页面 -->
     <string name="daily_average">日均支出</string>
     <string name="total_expenses">总支出</string>
     <string name="item">项目</string>
@@ -31,13 +25,11 @@
     <string name="amount">金额</string>
     <string name="date">日期</string>
     <string name="actions">操作</string>
-    <string name="category">类别</string>
-
-    <!-- 按钮 -->
-    <string name="cancelButtonAtAddNewPage">取消</string>
-    <string name="add_recordButtonAtAddNewPage">添加记录</string>
-
-    <!-- 预算分类 -->
+    <string name="summary">总结</string>
+    <string name="record">记录</string>
+    <string name="me">我的</string>
+    <string name="add_record">添加记录</string>
+    <string name="geoledger">记账本</string>
     <string-array name="budget_categories">
         <item>食物</item>
         <item>交通</item>
@@ -46,7 +38,6 @@
         <item>账单</item>
         <item>其他</item>
     </string-array>
-
     <!-- 常见问题 -->
     <string name="faq_title">常见问题与解决方案</string>
     <string name="faq_1_title">1. 应用启动时崩溃</string>
@@ -58,5 +49,64 @@
     <string name="contact">联系我们：bding26@wisc.edu</string>
 
     <!-- 使用条款 -->
-    <string name="terms_of_use">使用条款\n\n...</string>
+    <string name="terms_of_use">
+        使用条款\n\n
+        1. 接受条款\n
+        通过访问和使用本应用程序，您接受并同意受本协议条款的约束。\n\n
+        2. 使用许可\n
+        特此授予您在个人、非商业性过渡性使用的前提下临时下载本应用程序副本的许可。\n\n
+        3. 免责声明\n
+        本应用程序上的材料按“现状”提供。我们不作任何明示或暗示的保证，并特此否认和撤销包括但不限于适销性、针对特定用途的适用性以及非侵权性或其他权利侵犯的暗示性保证或条件。\n\n
+        4. 限制\n
+        在任何情况下，对于因使用或无法使用本应用程序材料而引起的任何损害（包括但不限于数据或利润损失，或业务中断），我们或我们的供应商概不负责。\n\n
+        5. 修订和勘误\n
+        本应用程序上的材料可能包括技术、印刷或摄影错误。我们不保证应用程序上的任何材料是准确、完整或最新的。
+    </string>
+    <string name="category">类别</string>
+    <string name="add_budget">添加预算</string>
+    <string name="budget_name">预算名称</string>
+    <string name="save_budget">保存预算</string>
+    <string name="back">返回</string>
+    <string name="dark_theme">深色主题</string>
+    <string name="name">姓名</string>
+    <string name="email">邮箱</string>
+    <string name="phone">电话</string>
+    <string name="address">地址</string>
+    <string name="save">保存</string>
+    <string name="sign_up_with_email">通过邮箱注册</string>
+    <string name="already_have_an_account">已有账号？</string>
+    <string name="username">用户名</string>
+    <string name="setting">设置</string>
+    <string name="switch_to_map_view">切换到地图视图</string>
+    <string name="logout">登出</string>
+    <string name="settings">设置</string>
+    <string name="edit_profile">编辑个人资料</string>
+    <string name="notifications">通知</string>
+    <string name="_0_00">¥0.00</string>
+    <string name="show_pie_chart">显示饼图</string>
+    <string name="next">下一步</string>
+    <string name="month">月</string>
+    <string name="previous">上一步</string>
+    <string name="by_signing_up_you_agree_with_the_terms_of_service_and_privacy_policy">注册即表示您同意服务条款和隐私政策</string>
+    <string name="sign_up">注册</string>
+    <string name="password">密码</string>
+    <string name="last_name">姓氏</string>
+    <string name="first_name">名字</string>
+    <string name="create_an_account">创建账号</string>
+    <string name="get_your_life">让你的生活</string>
+    <string name="organized">井井有条</string>
+    <string name="in_a_click">一键\n完成</string>
+    <string name="get_started">开始使用！</string>
+    <string name="date_not_selected">未选择日期</string>
+    <string name="select_date">选择日期</string>
+    <string name="location_not_selected">未选择位置</string>
+    <string name="select_location">选择位置</string>
+    <string name="enter_amount">输入金额</string>
+    <string name="enter_item">输入项目</string>
+    <string name="add_new_record">添加新记录</string>
+    <string name="how_s_your_day">今天过得怎么样？</string>
+    <string name="language">语言</string>
+    <string name="appearance">外观</string>
+    <string name="report">报告</string>
+    <string name="terms_of_use_2">使用条款</string>
 </resources>

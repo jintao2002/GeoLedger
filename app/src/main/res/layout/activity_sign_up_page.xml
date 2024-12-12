@@ -13,7 +13,7 @@
         android:layout_height="48dp"
         android:layout_gravity="start"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Back"
+        android:contentDescription="@string/back"
         android:src="@android:drawable/btn_dialog"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="@+id/linearLayout" />
@@ -29,70 +29,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Title: Use @string/create_an_account -->
         <TextView
             android:id="@+id/tvCreateAccountTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:paddingBottom="16dp"
-            android:text="Create An Account"
+            android:text="@string/create_an_account"
             android:textSize="24sp"
             android:textStyle="bold" />
 
+        <!-- First Name: Use @string/first_name -->
         <EditText
             android:id="@+id/etFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="First Name"
+            android:hint="@string/first_name"
             android:inputType="textPersonName" />
 
+        <!-- Last Name: Use @string/last_name -->
         <EditText
             android:id="@+id/etLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Last Name"
+            android:hint="@string/last_name"
             android:inputType="textPersonName" />
 
+        <!-- Email: Use @string/email -->
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
+        <!-- Password: Use @string/password -->
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
 
+        <!-- Sign Up: Use @string/sign_up -->
         <Button
             android:id="@+id/btnSignUp"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Sign Up"
-            android:layout_gravity="center_horizontal" />
+            android:text="@string/sign_up" />
 
+        <!-- Already have an account?: Use @string/already_have_an_account -->
         <Button
             android:id="@+id/btnAlreadyHaveAccount"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Already have an account?"
-            android:layout_gravity="center_horizontal" />
+            android:text="@string/already_have_an_account" />
 
+        <!-- By signing up...: Use @string/by_signing_up_you_agree_with_the_terms_of_service_and_privacy_policy -->
         <TextView
             android:id="@+id/tvAgreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="@string/by_signing_up_you_agree_with_the_terms_of_service_and_privacy_policy"
             android:textColor="#5555EE"
-            android:text="By signing up, you agree with the Terms of Service and Privacy Policy"
             android:textSize="12sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

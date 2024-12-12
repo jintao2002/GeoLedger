@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="24dp">
 
-    <!-- Title for the Dialog -->
+    <!-- Title for the Dialog: Use @string/add_new_record -->
     <TextView
         android:id="@+id/dialogTitle"
         android:layout_width="match_parent"
@@ -13,40 +14,40 @@
         android:layout_alignParentTop="true"
         android:gravity="center"
         android:paddingBottom="16dp"
-        android:text="Add New Record"
+        android:text="@string/add_new_record"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <!-- Input for Item -->
+    <!-- Input for Item: Use @string/enter_item -->
     <EditText
         android:id="@+id/etItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/dialogTitle"
         android:layout_marginBottom="16dp"
-        android:hint="Enter Item"
+        android:hint="@string/enter_item"
         android:padding="12dp" />
 
-    <!-- Input for Amount -->
+    <!-- Input for Amount: Use @string/enter_amount -->
     <EditText
         android:id="@+id/etAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/etItem"
         android:layout_marginBottom="16dp"
-        android:hint="Enter Amount"
+        android:hint="@string/enter_amount"
         android:padding="12dp" />
 
-    <!-- Button to Select Location -->
+    <!-- Button to Select Location: Use @string/select_location -->
     <Button
         android:id="@+id/btnSelectLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/etAmount"
         android:layout_marginBottom="8dp"
-        android:text="Select Location" />
+        android:text="@string/select_location" />
 
-    <!-- TextView to Display Selected Location -->
+    <!-- TextView to Display Selected Location: Use @string/location_not_selected -->
     <TextView
         android:id="@+id/tvLocation"
         android:layout_width="match_parent"
@@ -54,19 +55,19 @@
         android:layout_below="@id/btnSelectLocation"
         android:layout_marginBottom="16dp"
         android:padding="12dp"
-        android:text="Location not selected"
+        android:text="@string/location_not_selected"
         android:textSize="14sp" />
 
-    <!-- Button to Select Date -->
+    <!-- Button to Select Date: Use @string/select_date -->
     <Button
         android:id="@+id/btnSelectDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvLocation"
         android:layout_marginBottom="8dp"
-        android:text="Select Date" />
+        android:text="@string/select_date" />
 
-    <!-- TextView to Display Selected Date -->
+    <!-- TextView to Display Selected Date: Use @string/date_not_selected -->
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="match_parent"
@@ -74,10 +75,10 @@
         android:layout_below="@id/btnSelectDate"
         android:layout_marginBottom="24dp"
         android:padding="12dp"
-        android:text="Date not selected"
+        android:text="@string/date_not_selected"
         android:textSize="14sp" />
 
-    <!-- Added ScrollView -->
+    <!-- ScrollView for Categories -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -90,12 +91,12 @@
             android:id="@+id/categoryGrid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="4"
             android:alignmentMode="alignBounds"
-            android:useDefaultMargins="true"
-            android:rowOrderPreserved="true">
+            android:columnCount="4"
+            android:rowOrderPreserved="true"
+            android:useDefaultMargins="true">
 
-
+            <!-- Use @string/restaurant -->
             <Button
                 android:id="@+id/btnRestaurant"
                 android:layout_row="0"
@@ -113,6 +114,7 @@
                 app:iconTint="#FFF176"
                 android:text="@string/restaurant"/>
 
+            <!-- Use @string/transportation -->
             <Button
                 android:id="@+id/btnTransport"
                 android:layout_row="0"
@@ -130,6 +132,7 @@
                 app:iconTint="#FFF176"
                 android:text="@string/transportation" />
 
+            <!-- Use @string/shopping -->
             <Button
                 android:id="@+id/btnShopping"
                 android:layout_row="0"
@@ -147,6 +150,7 @@
                 app:iconTint="#FFF176"
                 android:text="@string/shopping"/>
 
+            <!-- Use @string/grocery -->
             <Button
                 android:id="@+id/btnGrocery"
                 android:layout_width="0dp"
@@ -165,6 +169,7 @@
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/power -->
             <Button
                 android:id="@+id/btnPower"
                 android:layout_width="0dp"
@@ -183,6 +188,7 @@
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/education -->
             <Button
                 android:id="@+id/btnEducation"
                 android:layout_width="0dp"
@@ -201,6 +207,7 @@
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/snack -->
             <Button
                 android:id="@+id/btnSnack"
                 android:layout_width="0dp"
@@ -219,6 +226,7 @@
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/cloths -->
             <Button
                 android:id="@+id/btnCloths"
                 android:layout_width="0dp"
@@ -237,6 +245,7 @@
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/furniture -->
             <Button
                 android:id="@+id/btnFurniture"
                 android:layout_width="0dp"
@@ -255,6 +264,7 @@
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/fitness -->
             <Button
                 android:id="@+id/btnFitness"
                 android:layout_width="0dp"
@@ -273,6 +283,7 @@
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/communication -->
             <Button
                 android:id="@+id/btnCommunication"
                 android:layout_width="0dp"
@@ -291,6 +302,7 @@
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/travel -->
             <Button
                 android:id="@+id/btnTravel"
                 android:layout_width="0dp"
@@ -309,6 +321,8 @@
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- For these categories, assume you have corresponding strings: gift, games, pets, medical -->
+            <!-- Use @string/gift -->
             <Button
                 android:id="@+id/btnGift"
                 android:layout_width="0dp"
@@ -320,13 +334,14 @@
                 android:layout_margin="8dp"
                 android:padding="8dp"
                 android:background="@drawable/category_button_bg"
-                android:text="@string/travel"
+                android:text="Gift"
                 app:icon="@drawable/gift"
                 app:iconGravity="top"
                 app:iconSize="54dp"
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/games -->
             <Button
                 android:id="@+id/btnGames"
                 android:layout_width="0dp"
@@ -338,13 +353,14 @@
                 android:layout_margin="8dp"
                 android:padding="8dp"
                 android:background="@drawable/category_button_bg"
-                android:text="@string/travel"
+                android:text="Games"
                 app:icon="@drawable/games"
                 app:iconGravity="top"
                 app:iconSize="54dp"
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/pets -->
             <Button
                 android:id="@+id/btnPets"
                 android:layout_width="0dp"
@@ -356,13 +372,14 @@
                 android:layout_margin="8dp"
                 android:padding="8dp"
                 android:background="@drawable/category_button_bg"
-                android:text="@string/travel"
+                android:text="Pets"
                 app:icon="@drawable/pets"
                 app:iconGravity="top"
                 app:iconSize="54dp"
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
 
+            <!-- Use @string/medical -->
             <Button
                 android:id="@+id/btnMedicals"
                 android:layout_width="0dp"
@@ -374,14 +391,12 @@
                 android:layout_margin="8dp"
                 android:padding="8dp"
                 android:background="@drawable/category_button_bg"
-                android:text="@string/travel"
+                android:text="Medical"
                 app:icon="@drawable/medical"
                 app:iconGravity="top"
                 app:iconSize="54dp"
                 app:iconPadding="2dp"
                 app:iconTint="#FFF176"/>
-
-            <!-- More categories to add -->
         </GridLayout>
     </ScrollView>
 
@@ -394,7 +409,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <!-- Cancel Button -->
+        <!-- Cancel Button: Use @string/cancelButtonAtAddNewPage -->
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
@@ -403,7 +418,7 @@
             android:layout_weight="1"
             android:text="@string/cancelButtonAtAddNewPage" />
 
-        <!-- Add Record Button -->
+        <!-- Add Record Button: Use @string/add_recordButtonAtAddNewPage -->
         <Button
             android:id="@+id/btnAddRecord"
             android:layout_width="0dp"
@@ -412,7 +427,4 @@
             android:layout_weight="1"
             android:text="@string/add_recordButtonAtAddNewPage" />
     </LinearLayout>
-
-
-
 </RelativeLayout>

@@ -13,6 +13,7 @@
         app:lottie_fileName="Animation.json"
         app:lottie_loop="true" />
 
+    <!-- Use @string/get_your_life with highlight color -->
     <TextView
         android:id="@+id/textView4"
         android:layout_width="616dp"
@@ -21,10 +22,11 @@
         android:layout_marginTop="100dp"
         android:fontFamily="sans-serif-black"
         android:gravity="start"
-        android:text=" Get your life"
+        android:text="@string/get_your_life"
         android:textColor="@color/highlightYellow"
         android:textSize="48sp" />
 
+    <!-- Use @string/get_your_life with blue color -->
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
@@ -33,10 +35,11 @@
         android:layout_marginTop="100dp"
         android:fontFamily="sans-serif-black"
         android:gravity="start"
-        android:text="Get your life"
+        android:text="@string/get_your_life"
         android:textColor="@color/thirdBlue"
         android:textSize="48sp" />
 
+    <!-- Use @string/organized with highlight color -->
     <TextView
         android:id="@+id/textView5"
         android:layout_width="438dp"
@@ -45,10 +48,11 @@
         android:layout_marginTop="180dp"
         android:fontFamily="sans-serif-black"
         android:gravity="start"
-        android:text=" Organized"
+        android:text="@string/organized"
         android:textColor="@color/highlightYellow"
         android:textSize="34sp" />
 
+    <!-- Use @string/organized with blue color -->
     <TextView
         android:layout_width="438dp"
         android:layout_height="wrap_content"
@@ -56,10 +60,11 @@
         android:layout_marginTop="180dp"
         android:fontFamily="sans-serif-black"
         android:gravity="start"
-        android:text="Organized"
+        android:text="@string/organized"
         android:textColor="@color/thirdBlue"
         android:textSize="34sp" />
 
+    <!-- Use @string/in_a_click with highlight color -->
     <TextView
         android:id="@+id/textView6"
         android:layout_width="171dp"
@@ -68,12 +73,13 @@
         android:layout_marginStart="20dp"
         android:gravity="start"
         android:lineSpacingExtra="34sp"
-        android:text=" In\n A\n Click"
+        android:text="@string/in_a_click"
         android:textColor="@color/highlightYellow"
         android:textSize="48sp"
         android:textStyle="bold"
         android:typeface="normal" />
 
+    <!-- Use @string/in_a_click with blue color -->
     <TextView
         android:layout_width="160dp"
         android:layout_height="258dp"
@@ -81,12 +87,13 @@
         android:layout_marginStart="20dp"
         android:gravity="start"
         android:lineSpacingExtra="34sp"
-        android:text="In\nA\nClick"
+        android:text="@string/in_a_click"
         android:textColor="@color/thirdBlue"
         android:textSize="48sp"
         android:textStyle="bold"
         android:typeface="normal" />
 
+    <!-- Use @string/get_started -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/startApp"
         android:layout_width="176dp"
@@ -94,7 +101,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="50dp"
         app:backgroundTint="@color/highlightYellow"
-        android:text="Get Started!"
+        android:text="@string/get_started"
         android:textColor="@color/strokeBlack"
         android:textSize="20sp" />
 

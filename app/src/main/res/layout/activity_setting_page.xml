@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingBottom="16dp"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textColor="#37474F"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="#56C596"
-            android:text="Edit Profile"
+            android:text="@string/edit_profile"
             android:textColor="#FFFFFF" />
 
         <!-- Notification Settings -->
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="#56C596"
-            android:text="Notifications"
+            android:text="@string/notifications"
             android:textColor="#FFFFFF" />
 
         <!-- Currency Settings -->
@@ -53,6 +53,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#FFA726"
-        android:text="Back"
+        android:text="@string/back"
         android:textColor="#FFFFFF" />
 </LinearLayout>
